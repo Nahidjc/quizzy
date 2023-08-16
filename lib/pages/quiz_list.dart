@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:quizzy/api_caller/quiz.dart';
-import 'package:quizzy/components/bottom-navigation.dart';
 import 'package:quizzy/components/custom_drawer.dart';
 import 'package:quizzy/models/quiz_model.dart';
 import 'package:quizzy/pages/quiz_details.dart';
@@ -157,6 +156,7 @@ class _QuizListState extends State<QuizList> {
                     },
                   ),
         endDrawer: const CustomDrawer(),
-        bottomNavigationBar: const BottomNav());
+      // bottomNavigationBar: const BottomNav()
+    );
   }
 }

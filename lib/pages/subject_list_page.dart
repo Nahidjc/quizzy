@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:quizzy/components/bottom-navigation.dart';
 import 'package:quizzy/components/custom_drawer.dart';
 import 'package:quizzy/components/info_message.dart';
 import 'package:quizzy/models/level_model.dart';
@@ -57,6 +56,7 @@ class SubjectList extends StatelessWidget {
               )
             : InfoMessage('No data available for $displayName'),
         endDrawer: const CustomDrawer(),
-        bottomNavigationBar: const BottomNav());
+      // bottomNavigationBar: const BottomNav()
+    );
   }
 }

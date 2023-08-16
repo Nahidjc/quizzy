@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:quickalert/quickalert.dart';
 import 'package:quizzy/api_caller/stage.dart';
-import 'package:quizzy/components/bottom-navigation.dart';
 import 'package:quizzy/components/custom_drawer.dart';
 import 'package:quizzy/models/stage_model.dart';
 import 'package:quizzy/pages/login_page.dart';
@@ -126,7 +125,8 @@ class _QuizLevelListState extends State<QuizLevelList> {
                 ),
         ),
         endDrawer: const CustomDrawer(),
-        bottomNavigationBar: const BottomNav());
+      // bottomNavigationBar: const BottomNav()
+    );
   }
 
   Widget buildLevelButton(BuildContext context, String levelName,

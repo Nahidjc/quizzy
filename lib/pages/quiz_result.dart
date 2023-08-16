@@ -82,8 +82,6 @@ class _QuizResultPageState extends State<QuizResultPage>
 
   @override
   Widget build(BuildContext context) {
-    print(widget.timeSpent);
-    print(widget.skipQuestion);
     return Scaffold(
         backgroundColor: Colors.white,
         body: Stack(children: [

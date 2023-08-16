@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:quizzy/api_caller/leaderboard.dart';
-import 'package:quizzy/components/bottom-navigation.dart';
-import 'package:quizzy/components/custom_drawer.dart';
 import 'package:quizzy/models/leaderboard.dart';
 
 class LeaderboardPage extends StatefulWidget {
@@ -104,8 +102,6 @@ class _LeaderboardPageState extends State<LeaderboardPage> {
           ],
         ),
       ),
-      endDrawer: const CustomDrawer(),
-      bottomNavigationBar: const BottomNav(currentIndex: 2),
     );
   }
 
