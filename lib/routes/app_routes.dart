@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:quizzy/pages/home_page.dart';
+import 'package:quizzy/pages/home.dart';
 import 'package:quizzy/pages/leaderboard.dart';
 import 'package:quizzy/pages/login_page.dart';
 import 'package:quizzy/pages/profile_page.dart';
@@ -18,7 +18,7 @@ class AppRoutes {
 
   static Map<String, WidgetBuilder> routes = {
     home: (context) => AuthenticatedRoute(
-          page: const HomePage(),
+          page: const Home(),
           isAuthenticated: Provider.of<AuthProvider>(context).isAuthenticated,
         ),
     login: (context) => const LoginPage(),

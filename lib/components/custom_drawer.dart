@@ -29,7 +29,7 @@ class CustomDrawer extends StatelessWidget {
               children: <Widget>[
                  DrawerHeader(
                   decoration: const BoxDecoration(
-                    color: Colors.purple,
+                    color: Color.fromARGB(255, 144, 106, 250),
                   ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -78,9 +78,9 @@ class CustomDrawer extends StatelessWidget {
                     leading: const Icon(Icons.currency_exchange),
                     title: const Text('Accounts'),
                     onTap: () {
-                      // Handle the drawer item tap here
+                      
                       Navigator.pop(context);
-                      // Implement your logic here
+                  
                     },
                   ),
                 ),
@@ -89,9 +89,9 @@ class CustomDrawer extends StatelessWidget {
                     leading: const Icon(Icons.history_edu),
                     title: const Text('Quiz History'),
                     onTap: () {
-                      // Handle the drawer item tap here
+                     
                       Navigator.pop(context);
-                      // Implement your logic here
+              
                     },
                   ),
                 ),
@@ -107,29 +107,29 @@ class CustomDrawer extends StatelessWidget {
                     },
                   ),
                 ),
-                // const Divider(
-                //   color: Colors.grey,
-                //   indent: 16,
-                // ),
               ],
             ),
           ),
           Card(
-            color: Colors.redAccent,
+            elevation: 4,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
             child: ListTile(
-              leading: const Icon(Icons.logout,color: Colors.white,),
+              leading: const Icon(
+                Icons.logout,
+                color: Colors.black,
+              ),
               title: const Text(
                 'Logout',
-                style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),
+                style:
+                    TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
               ),
               onTap: () {
-                // Navigator.pop(context);
-
                 if (user.isAuthenticated) {
                   user.logout();
                   Navigator.popUntil(context, (route) => route.isFirst);
                 }
-                
               },
             ),
           ),

@@ -92,7 +92,15 @@ class _UserProfilePageState extends State<UserProfilePage> {
   @override
   Widget build(BuildContext context) {
     final userProvider = Provider.of<UserProvider>(context);
-
+    AuthProvider user = Provider.of<AuthProvider>(context);
+    ImageProvider<Object>? backgroundImage;
+    if (user.profileUrl == null) {
+      backgroundImage = const AssetImage(
+        "assets/images/avatar.png",
+      );
+    } else {
+      backgroundImage = NetworkImage(user.profileUrl!);
+    }
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -120,15 +128,8 @@ class _UserProfilePageState extends State<UserProfilePage> {
                       child: CircleAvatar(
                         radius: 60,
                         backgroundImage:
-                            image != null ? FileImage(image!) : null,
+                            image != null ? FileImage(image!) : backgroundImage,
                         backgroundColor: Colors.white,
-                        child: image == null
-                            ? Image.asset(
-                                'assets/images/avatar.png',
-                                width: 80,
-                                height: 80,
-                              )
-                            : null,
                       ),
                     ),
                     const SizedBox(height: 16),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:quizzy/components/bottom-navigation.dart';
 import 'package:quizzy/components/category/categories.dart';
 import 'package:quizzy/components/category/category_skeleton.dart';
 import 'package:quizzy/components/custom_drawer.dart';
@@ -55,8 +54,6 @@ class _HomePageState extends State<HomePage> {
           )
         ]),
         endDrawer: const CustomDrawer(),
-        bottomNavigationBar: const BottomNav(
-          currentIndex: 0,
-        ));
+    );
   }
 }
