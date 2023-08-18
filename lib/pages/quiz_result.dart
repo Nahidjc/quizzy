@@ -393,7 +393,7 @@ class _QuizResultPageState extends State<QuizResultPage>
                           ),
                           GestureDetector(
                             onTap: () {
-                              Navigator.push(
+                              Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => ResultReviewPage(
@@ -480,7 +480,7 @@ class _QuizResultPageState extends State<QuizResultPage>
                           ),
                           GestureDetector(
                             onTap: () {
-                              Navigator.push(
+                              Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => const HomePage()),
@@ -511,7 +511,7 @@ class _QuizResultPageState extends State<QuizResultPage>
                           ),
                           GestureDetector(
                             onTap: () {
-                              Navigator.push(
+                              Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>

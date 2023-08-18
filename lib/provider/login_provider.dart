@@ -2,8 +2,10 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:quizzy/api_caller/app_url.dart';
+import 'package:quizzy/models/jwt_token_util.dart';
 import 'dart:async';
 import 'package:quizzy/models/user_model.dart';
+import 'package:quizzy/token/token_manager.dart';
 
 class AuthProvider extends ChangeNotifier {
   bool _isAuthenticated = false;
@@ -22,7 +24,6 @@ class AuthProvider extends ChangeNotifier {
   String get name => _name;
   int _coin = 0;
   int get coin => _coin;
-
   setAuthenticated(bool value) {
     _isAuthenticated = value;
     notifyListeners();
@@ -55,6 +56,7 @@ class AuthProvider extends ChangeNotifier {
         _coin = userDetails.coin;
         _userId = userDetails.id;
         _profileUrl = userDetails.profileUrl;
+        await TokenManager.saveToken(userDetails.token);
         notifyListeners();
         setLoading(false);
         setAuthenticated(true);
@@ -63,19 +65,6 @@ class AuthProvider extends ChangeNotifier {
         setAuthenticated(false);
         final responseBody = json.decode(response.body);
         _errorMessage = responseBody['message'] ?? 'Unknown error';
-        // ignore: use_build_context_synchronously
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            backgroundColor: Colors.red,
-            content: Text(_errorMessage,
-                style: const TextStyle(color: Colors.white, fontSize: 18.0)),
-            duration: const Duration(seconds: 5),
-          ),
-        );
-        Timer(const Duration(seconds: 3), () {
-          _errorMessage = '';
-          notifyListeners();
-        });
       }
       notifyListeners();
     } catch (e) {
@@ -113,18 +102,6 @@ class AuthProvider extends ChangeNotifier {
         final responseBody = json.decode(response.body);
         _errorMessage = responseBody['message'] ?? 'Unknown error';
         // ignore: use_build_context_synchronously
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            backgroundColor: Colors.red,
-            content: Text(_errorMessage,
-                style: const TextStyle(color: Colors.white, fontSize: 18.0)),
-            duration: const Duration(seconds: 5),
-          ),
-        );
-        Timer(const Duration(seconds: 3), () {
-          _errorMessage = '';
-          notifyListeners();
-        });
       }
       notifyListeners();
     } catch (e) {
@@ -161,11 +138,36 @@ class AuthProvider extends ChangeNotifier {
   }
 
   void logout() {
+    TokenManager.deleteToken();
     _errorMessage = '';
     _userId = '';
     _name = '';
     _coin = 0;
     setAuthenticated(false);
     notifyListeners();
+  }
+
+  Map<String, dynamic>? decodeJwt(String token) {
+    final parts = token.split('.');
+    if (parts.length != 3) {
+      return null;
+    }
+    final payload = parts[1];
+    final decodedPayload =
+        utf8.decode(base64Url.decode(base64Url.normalize(payload)));
+    return json.decode(decodedPayload);
+  }
+
+  void tokenToData(String token) {
+    var data = decodeJwt(token);
+    TokenModel userData = TokenModel.fromJson(data!);
+    _name = userData.firstName;
+    _userId = userData.id;
+    _coin = userData.coin;
+    _profileUrl = userData.profileUrl;
+    notifyListeners();
+    setLoading(false);
+    setAuthenticated(true);
+    _errorMessage = '';
   }
 }

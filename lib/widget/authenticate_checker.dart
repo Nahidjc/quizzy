@@ -6,6 +6,7 @@ class AuthenticatedRoute extends StatelessWidget {
   final bool isAuthenticated;
 
   const AuthenticatedRoute({
+    super.key, 
     required this.page,
     required this.isAuthenticated,
   });

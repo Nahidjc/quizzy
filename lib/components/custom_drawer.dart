@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:quizzy/components/campaign/campaign_leaderboard.dart';
 import 'package:quizzy/pages/leaderboard.dart';
 import 'package:quizzy/pages/login_page.dart';
 import 'package:quizzy/pages/update_user.dart';
@@ -103,6 +104,18 @@ class CustomDrawer extends StatelessWidget {
                       Navigator.pop(context);
                       Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => const LeaderboardPage(),
+                      ));
+                    },
+                  ),
+                ),
+                Card(
+                  child: ListTile(
+                    leading: const Icon(Icons.leaderboard),
+                    title: const Text('Campaign Leaderboard'),
+                    onTap: () {
+                      Navigator.pop(context);
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const CampaignLeaderboardPage(),
                       ));
                     },
                   ),

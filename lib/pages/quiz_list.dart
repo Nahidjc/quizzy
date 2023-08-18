@@ -135,13 +135,13 @@ class _QuizListState extends State<QuizList> {
                         margin: const EdgeInsets.all(5.0),
                         color: Colors.white,
                         child: ListTile(
-                          onTap: () => Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  QuizDetails(quiz: quizzes[index]),
-                            ),
+                        onTap: () => Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                QuizDetails(quiz: quizzes[index]),
                           ),
+                        ),
                           title: Text(
                             quizzes[index].title,
                             textAlign: TextAlign.center,

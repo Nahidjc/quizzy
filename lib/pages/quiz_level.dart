@@ -145,17 +145,19 @@ class _QuizLevelListState extends State<QuizLevelList> {
       child: InkWell(
         onTap: () {
           if (isUnlocked) {
-            Navigator.push(
+            Navigator.pushReplacement(
               context,
               MaterialPageRoute(
                 builder: (context) => QuizList(
-                    displayName: widget.displayName,
-                    subjectName: widget.subjectName,
-                    levelName: levelName,
-                    subjectId: widget.subjectId,
-                    stageId: stageId),
+                  displayName: widget.displayName,
+                  subjectName: widget.subjectName,
+                  levelName: levelName,
+                  subjectId: widget.subjectId,
+                  stageId: stageId,
+                ),
               ),
             );
+
           } else {
             if (!isPreviousUnlocked) {
               QuickAlert.show(

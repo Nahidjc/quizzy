@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:quizzy/components/campaign/campaign_leaderboard.dart';
 import 'package:quizzy/components/campaign/campaign_quiz_list.dart';
 import 'package:quizzy/pages/home_page.dart';
-import 'package:quizzy/pages/leaderboard.dart';
 
 class ContentItem {
   final IconData icon;
@@ -434,7 +434,7 @@ class _CampaignQuizResultPageState extends State<CampaignQuizResultPage>
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                        const LeaderboardPage()),
+                                        const CampaignLeaderboardPage()),
                               );
                             },
                             child: const Column(

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:quizzy/components/bottom-navigation.dart';
 import 'package:quizzy/components/custom_drawer.dart';
 import 'package:quizzy/components/review/multple_answer_result.dart';
 import 'package:quizzy/components/review/single_answer_result.dart';
@@ -63,7 +62,6 @@ class _ResultReviewPageState extends State<ResultReviewPage> {
             ],
           ),
         ),
-        endDrawer: const CustomDrawer(),
-        bottomNavigationBar: const BottomNav());
+        endDrawer: const CustomDrawer());
   }
 }
