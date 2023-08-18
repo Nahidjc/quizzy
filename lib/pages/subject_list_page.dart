@@ -33,7 +33,7 @@ class SubjectList extends StatelessWidget {
                     margin: const EdgeInsets.all(5.0),
                     color: Colors.white,
                     child: ListTile(
-                      onTap: () => Navigator.push(
+                    onTap: () => Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
                           builder: (context) => QuizLevelList(

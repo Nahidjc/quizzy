@@ -6,6 +6,7 @@ import 'package:quizzy/pages/login_page.dart';
 import 'package:quizzy/pages/profile_page.dart';
 import 'package:quizzy/pages/signup_page.dart';
 import 'package:quizzy/provider/login_provider.dart';
+import 'package:quizzy/splash/splash_screen.dart';
 import 'package:quizzy/widget/authenticate_checker.dart';
 
 class AppRoutes {
@@ -17,6 +18,7 @@ class AppRoutes {
   static const String leaderboard = '/leaderboard';
 
   static Map<String, WidgetBuilder> routes = {
+    splashscreen: (context) => const SplashScreen(),
     home: (context) => AuthenticatedRoute(
           page: const Home(),
           isAuthenticated: Provider.of<AuthProvider>(context).isAuthenticated,

@@ -40,6 +40,7 @@ class LeaderboardAPi {
       throw Exception('Error: $e');
     }
   }
+
   Future<List<Leaderboard>> getAllTimeLeaderboard() async {
     try {
       final url = Uri.parse('${AppUrl.baseUrl}/user/alltime/leaderboard');
@@ -50,6 +51,25 @@ class LeaderboardAPi {
         var weeklyLeaderboard =
             weeklyData.map((data) => Leaderboard.fromJson(data)).toList();
         return weeklyLeaderboard;
+      } else {
+        throw Exception('Failed to load data from API');
+      }
+    } catch (e) {
+      throw Exception('Error: $e');
+    }
+  }
+
+  Future<List<CampaignUserLeaderboard>> getCampaignLeaderboard() async {
+    try {
+      final url = Uri.parse('${AppUrl.baseUrl}/quiz/campaign/leaderboard');
+      final response = await http.get(url);
+      if (response.statusCode == 200) {
+        var jsonData = json.decode(response.body);
+        List<dynamic> campaignData = jsonData['data'];
+        var campaignLeaderboard = campaignData
+            .map((data) => CampaignUserLeaderboard.fromJson(data))
+            .toList();
+        return campaignLeaderboard;
       } else {
         throw Exception('Failed to load data from API');
       }

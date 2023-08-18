@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:quizzy/api_caller/campaign.dart';
-import 'package:quizzy/components/bottom-navigation.dart';
 import 'package:quizzy/components/campaign/quiz_item.dart';
 import 'package:quizzy/components/campaign/skeleton.dart';
 import 'package:quizzy/components/custom_drawer.dart';
@@ -20,33 +19,6 @@ class _CampaignQuizListState extends State<CampaignQuizList> {
   late List<CampaignModel> _campaignQuizList;
   final CampaignApi campaignApi = CampaignApi();
   bool isLoading = false;
-  // final List<Map<String, dynamic>> quizData = [
-  //   {
-  //     'title': 'Quiz 1',
-  //     'isAttempted': true,
-  //     'isCorrect': true,
-  //     'points': 10,
-  //     'startTime': DateTime.now().subtract(const Duration(minutes: 30)),
-  //     'endTime': DateTime.now().add(const Duration(minutes: 30)),
-  //   },
-  //   {
-  //     'title': 'Quiz 2',
-  //     'isAttempted': false,
-  //     'isCorrect': false,
-  //     'points': null,
-  //     'startTime': DateTime.now().add(const Duration(minutes: 10)),
-  //     'endTime': DateTime.now().add(const Duration(minutes: 40)),
-  //   },
-  //   {
-  //     'title': 'Quiz 3',
-  //     'isAttempted': false,
-  //     'isCorrect': false,
-  //     'points': null,
-  //     'startTime': DateTime.now().add(const Duration(minutes: 1)),
-  //     'endTime': DateTime.now().add(const Duration(minutes: 2)),
-  //   },
-  // ];
-
   @override
   void initState() {
     super.initState();
@@ -81,7 +53,11 @@ class _CampaignQuizListState extends State<CampaignQuizList> {
       ),
       body: isLoading
           ? const SkeletonBoxes()
-          : ListView(
+            : _campaignQuizList.isEmpty
+                ? NoQuizzesMessage(
+                    refreshQuizzes: _fetchCampaignQuiz,
+                  )
+                : ListView(
               children: _campaignQuizList.map((quiz) {
                 return CampaignQuizItem(
                     title: quiz.title,
@@ -92,8 +68,63 @@ class _CampaignQuizListState extends State<CampaignQuizList> {
                     quiz: quiz);
               }).toList(),
             ),
-             endDrawer: const CustomDrawer(),
-        bottomNavigationBar: const BottomNav()
+        endDrawer: const CustomDrawer());
+  }
+}
+
+class NoQuizzesMessage extends StatelessWidget {
+  final VoidCallback refreshQuizzes;
+
+  const NoQuizzesMessage({required this.refreshQuizzes, Key? key})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          const Icon(
+            Icons.lightbulb_outline,
+            size: 100,
+            color: Colors.grey,
+          ),
+          const SizedBox(height: 20),
+          const Text(
+            "No quizzes available at this time.",
+            style: TextStyle(
+              fontSize: 20,
+              color: Colors.grey,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          const SizedBox(height: 10),
+          const Text(
+            "Check back later for more exciting quizzes!",
+            style: TextStyle(
+              fontSize: 16,
+              color: Colors.grey,
+            ),
+          ),
+          const SizedBox(height: 20),
+          ElevatedButton(
+            onPressed: refreshQuizzes,
+            style: ElevatedButton.styleFrom(
+              foregroundColor: Colors.white,
+              backgroundColor: Colors.blue,
+              padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
+            ),
+            child: const Text(
+              "Refresh",
+              style: TextStyle(fontSize: 18),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

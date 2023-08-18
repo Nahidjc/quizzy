@@ -181,7 +181,7 @@ class _QuizDetailsState extends State<QuizDetails> {
               Expanded(
                 child: ElevatedButton(
                   onPressed: () {
-                    Navigator.push(
+                    Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
                         builder: (context) =>
@@ -208,11 +208,11 @@ class _QuizDetailsState extends State<QuizDetails> {
                   ),
                 ),
               ),
-              SizedBox(width: 8), // Add some spacing between buttons
+              const SizedBox(width: 8), // Add some spacing between buttons
               Expanded(
                 child: ElevatedButton(
                   onPressed: () {
-                    Navigator.push(
+                    Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
                         builder: (context) => QuizPage(quiz: widget.quiz),

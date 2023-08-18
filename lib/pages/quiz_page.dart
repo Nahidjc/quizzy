@@ -155,17 +155,18 @@ class _QuizPageState extends State<QuizPage> {
 
   void gottoNextPage(
       correctAnswers, quizpoint, selectedArray, skipQuestion, timeSpent) {
-    Navigator.push(
+    Navigator.pushReplacement(
       context,
       MaterialPageRoute(
         builder: (context) => QuizResultPage(
-            quizData: quizData,
-            correctAnswers: correctAnswers,
-            percentage: (correctAnswers / quizData.length) * 100,
-            quizpoint: quizpoint,
-            selectedArray: selectedArray,
-            skipQuestion: skipQuestion,
-            timeSpent: timeSpent),
+          quizData: quizData,
+          correctAnswers: correctAnswers,
+          percentage: (correctAnswers / quizData.length) * 100,
+          quizpoint: quizpoint,
+          selectedArray: selectedArray,
+          skipQuestion: skipQuestion,
+          timeSpent: timeSpent,
+        ),
       ),
     );
   }
@@ -219,7 +220,11 @@ class _QuizPageState extends State<QuizPage> {
 
     final List<dynamic> questionOptions = getOptions();
 
-    return Scaffold(
+    return WillPopScope(
+        onWillPop: () async {
+          return false;
+        },
+        child: Scaffold(
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
@@ -419,6 +424,6 @@ class _QuizPageState extends State<QuizPage> {
                 ],
               ),
             ),
-    );
+        ));
   }
 }
