@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:quizzy/ads/banner_ads.dart';
 import 'package:quizzy/components/category/categories.dart';
@@ -27,13 +26,14 @@ class _HomePageState extends State<HomePage> {
     fetchCategoryList();
   }
 
-void _loadAd() {
+  void _loadAd() {
     _bannerAdManager.loadAd((ad) {
       setState(() {
         _bannerAd = ad;
       });
     });
   }
+
   List categoryList = [];
   Future<void> fetchCategoryList() async {
     setState(() {
@@ -76,37 +76,13 @@ void _loadAd() {
               ),
             ),
           )
-
       ]),
       endDrawer: const CustomDrawer(),
     );
   }
 
-
-  // void _loadAd() async {
-  //   BannerAd(
-  //     adUnitId: _adUnitId,
-  //     request: const AdRequest(),
-  //     size: AdSize.banner,
-  //     listener: BannerAdListener(
-  //       onAdLoaded: (ad) {
-  //         setState(() {
-  //           _bannerAd = ad as BannerAd;
-  //         });
-  //       },
-  //       onAdFailedToLoad: (ad, err) {
-  //         ad.dispose();
-  //       },
-  //       onAdOpened: (Ad ad) {},
-  //       onAdClosed: (Ad ad) {},
-  //       onAdImpression: (Ad ad) {},
-  //     ),
-  //   ).load();
-  // }
-
   @override
   void dispose() {
-    // _bannerAd?.dispose();
     _bannerAdManager.dispose();
     super.dispose();
   }

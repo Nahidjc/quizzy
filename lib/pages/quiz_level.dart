@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
 import 'package:quickalert/quickalert.dart';
+import 'package:quizzy/ads/banner_ads.dart';
 import 'package:quizzy/api_caller/stage.dart';
 import 'package:quizzy/components/custom_drawer.dart';
 import 'package:quizzy/models/stage_model.dart';
@@ -29,14 +31,29 @@ class _QuizLevelListState extends State<QuizLevelList> {
   late AuthProvider user;
   List<dynamic> _stages = [];
   bool isLoading = false;
-
+  late BannerAdManager _bannerAdManager;
+  BannerAd? _bannerAd;
   @override
   void initState() {
     super.initState();
+    _bannerAdManager = BannerAdManager();
+    _loadAd();
     user = Provider.of<AuthProvider>(context, listen: false);
     _fetchStages();
   }
+  void _loadAd() {
+    _bannerAdManager.loadAd((ad) {
+      setState(() {
+        _bannerAd = ad;
+      });
+    });
+  }
 
+  @override
+  void dispose() {
+    _bannerAdManager.dispose();
+    super.dispose();
+  }
   Future<void> _fetchStages() async {
     setState(() {
       isLoading = true;
@@ -125,7 +142,17 @@ class _QuizLevelListState extends State<QuizLevelList> {
                 ),
         ),
         endDrawer: const CustomDrawer(),
-      // bottomNavigationBar: const BottomNav()
+      bottomNavigationBar: BottomAppBar(
+        child: SizedBox(
+          height: _bannerAd?.size.height.toDouble() ?? 0,
+          child: Stack(
+            alignment: Alignment.bottomCenter,
+            children: [
+              if (_bannerAd != null) AdWidget(ad: _bannerAd!),
+            ],
+          ),
+        ),
+      ),
     );
   }
 

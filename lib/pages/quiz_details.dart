@@ -130,11 +130,33 @@ class _QuizDetailsState extends State<QuizDetails> {
                 ),
                 height: passageHeight,
                 padding: const EdgeInsets.only(top: 10, bottom: 10),
-                child: const SingleChildScrollView(
-                  child: Text(
-                    "বিজ্ঞানের যে শাখায় পদার্থ এবং শক্তির মিথস্ক্রিয়া নিয়ে আলোচনা করা হয় তাকে পদার্থবিজ্ঞান বলে।",
-                    style: TextStyle(fontSize: 18),
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Center(
+                          child: Icon(
+                            Icons.info_outline,
+                            size: 60,
+                            color: Colors.grey[400], // Adjust color here
+                          ),
+                        ),
+                      ),
+                      Text(
+                        'No description available',
+                        style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.grey[400]), // Adjust color here
+                      ),
+                    ],
                   ),
+                  
+                  // Text(
+                  //   "বিজ্ঞানের যে শাখায় পদার্থ এবং শক্তির মিথস্ক্রিয়া নিয়ে আলোচনা করা হয় তাকে পদার্থবিজ্ঞান বলে।",
+                  //   style: TextStyle(fontSize: 18),
+                  // ),
                 ),
               ),
               const SizedBox(height: 24),
