@@ -70,7 +70,7 @@ class _SubjectListState extends State<SubjectList> {
                   margin: const EdgeInsets.all(5.0),
                   color: Colors.white,
                   child: ListTile(
-                    onTap: () => Navigator.pushReplacement(
+                    onTap: () => Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (context) => QuizLevelList(

@@ -169,7 +169,7 @@ class _LeaderboardPageState extends State<LeaderboardPage> {
                 ),
                 const SizedBox(height: 12),
                 Text(
-                  'No quiz attempts have been made yet. It\'s a great opportunity to challenge yourself and test your knowledge. Click the "Start Quiz" button to begin the exciting journey!',
+                  'No quiz attempts have been made yet. It\'s a great opportunity to challenge yourself and test your knowledge.',
                   style: TextStyle(
                     fontSize: 18, // Set font size to medium
                     color: Colors.blueGrey[600],

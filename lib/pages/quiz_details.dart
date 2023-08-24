@@ -203,7 +203,7 @@ class _QuizDetailsState extends State<QuizDetails> {
               Expanded(
                 child: ElevatedButton(
                   onPressed: () {
-                    Navigator.pushReplacement(
+                    Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (context) =>
@@ -230,7 +230,7 @@ class _QuizDetailsState extends State<QuizDetails> {
                   ),
                 ),
               ),
-              const SizedBox(width: 8), // Add some spacing between buttons
+              const SizedBox(width: 8),
               Expanded(
                 child: ElevatedButton(
                   onPressed: () {
@@ -246,7 +246,7 @@ class _QuizDetailsState extends State<QuizDetails> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
                     ),
-                    padding: EdgeInsets.symmetric(vertical: 16),
+                    padding: const EdgeInsets.symmetric(vertical: 16),
                     minimumSize:
                         Size(MediaQuery.of(context).size.width * 0.4, 0),
                   ),

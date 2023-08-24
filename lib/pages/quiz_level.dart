@@ -159,20 +159,20 @@ class _QuizLevelListState extends State<QuizLevelList> {
   Widget buildLevelButton(BuildContext context, String levelName,
       bool isUnlocked, String stageId, int cost, bool isPreviousUnlocked) {
     final user = Provider.of<AuthProvider>(context);
-    const double buttonWidth = 180.0;
-    const double buttonHeight = 60.0;
+    double buttonWidth = MediaQuery.of(context).size.width * 0.95;
+    const double buttonHeight = 50.0;
     const double borderRadius = 10.0;
-    const Color unlockedColor = Colors.blue;
-    const Color lockedColor = Colors.purple;
-    Color textColor = Colors.white;
-    Color boxShadowColor = Colors.black.withOpacity(0.3);
+    const Color unlockedColor = Colors.white;
+    const Color lockedColor = Colors.white;
+    Color textColor = Colors.black;
+    Color boxShadowColor = Colors.black.withOpacity(0.1);
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: InkWell(
         onTap: () {
           if (isUnlocked) {
-            Navigator.pushReplacement(
+            Navigator.push(
               context,
               MaterialPageRoute(
                 builder: (context) => QuizList(
@@ -229,8 +229,8 @@ class _QuizLevelListState extends State<QuizLevelList> {
               BoxShadow(
                 color: boxShadowColor,
                 spreadRadius: 1,
-                blurRadius: 3,
-                offset: const Offset(0, 2),
+                blurRadius: 2,
+                offset: const Offset(0, 1),
               ),
             ],
             color: isUnlocked ? unlockedColor : lockedColor,
@@ -246,7 +246,6 @@ class _QuizLevelListState extends State<QuizLevelList> {
                     style: TextStyle(
                       color: textColor,
                       fontSize: 18.0,
-                      fontWeight: FontWeight.bold,
                     ),
                   ),
                   if (!isUnlocked)
