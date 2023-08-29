@@ -1,5 +1,6 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:quizzy/components/bottom-navigation.dart';
+import 'package:quizzy/ads/interstitial_ads.dart';
 import 'package:quizzy/components/custom_drawer.dart';
 import 'package:quizzy/pages/home_page.dart';
 import 'package:quizzy/pages/leaderboard.dart';
@@ -48,9 +49,15 @@ class _QuizResultPageState extends State<QuizResultPage>
   late AnimationController _animationController;
   late Animation<double> _animation;
   late int quizLength;
+  late InterstitialAdManager _interstitialAdManager;
+  int _counter = 2;
+  late Timer _timer;
   @override
   void initState() {
     super.initState();
+    _interstitialAdManager = InterstitialAdManager();
+    _interstitialAdManager.loadAd();
+    _startTimer();
     quizLength = widget.quizData.length;
     _animationController = AnimationController(
       vsync: this,
@@ -68,8 +75,20 @@ class _QuizResultPageState extends State<QuizResultPage>
 
   @override
   void dispose() {
+    _timer.cancel();
     _animationController.dispose();
     super.dispose();
+  }
+
+  void _startTimer() {
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      setState(() => _counter--);
+
+      if (_counter == 0) {
+        _interstitialAdManager.showAd();
+        timer.cancel();
+      }
+    });
   }
 
   String getGreetingMessage() {
@@ -83,475 +102,475 @@ class _QuizResultPageState extends State<QuizResultPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
-        body: Stack(children: [
-          ClipRRect(
-            borderRadius: const BorderRadius.only(
-              bottomLeft: Radius.circular(15.0),
-              bottomRight: Radius.circular(15.0),
-            ),
-            child: Container(
-              height: MediaQuery.of(context).size.height * 0.5,
-              color: const Color(0xFF9B52D4),
-            ),
+      backgroundColor: Colors.white,
+      body: Stack(children: [
+        ClipRRect(
+          borderRadius: const BorderRadius.only(
+            bottomLeft: Radius.circular(15.0),
+            bottomRight: Radius.circular(15.0),
           ),
-          CustomPaint(
-            painter: CirclePainter(),
-            child: Container(
-              height: MediaQuery.of(context).size.height * 0.5,
-            ),
+          child: Container(
+            height: MediaQuery.of(context).size.height * 0.5,
+            color: const Color(0xFF9B52D4),
           ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Expanded(
-                  child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Flexible(
-                    child: Container(
-                        padding: const EdgeInsets.only(top: 125),
-                        child: AnimatedBuilder(
-                          animation: _animationController,
-                          builder: (context, child) {
-                            return SizedBox(
-                                width: 150,
-                                height: 150,
-                                child: DecoratedBox(
-                                  decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(100)),
-                                  child: CustomPaint(
-                                    painter: CircleProgressBarPainter(
-                                      progress: _animation.value,
-                                      color: Colors.green,
-                                      backgroundColor: Colors.red,
-                                      strokeWidth: 10,
-                                    ),
-                                    child: Center(
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          const Text(
-                                            "Your Score",
-                                            style: TextStyle(
-                                              color: Colors.purple,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 15,
-                                            ),
+        ),
+        CustomPaint(
+          painter: CirclePainter(),
+          child: Container(
+            height: MediaQuery.of(context).size.height * 0.5,
+          ),
+        ),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Expanded(
+                child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Flexible(
+                  child: Container(
+                      padding: const EdgeInsets.only(top: 125),
+                      child: AnimatedBuilder(
+                        animation: _animationController,
+                        builder: (context, child) {
+                          return SizedBox(
+                              width: 150,
+                              height: 150,
+                              child: DecoratedBox(
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(100)),
+                                child: CustomPaint(
+                                  painter: CircleProgressBarPainter(
+                                    progress: _animation.value,
+                                    color: Colors.green,
+                                    backgroundColor: Colors.red,
+                                    strokeWidth: 10,
+                                  ),
+                                  child: Center(
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        const Text(
+                                          "Your Score",
+                                          style: TextStyle(
+                                            color: Colors.purple,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 15,
                                           ),
-                                          RichText(
-                                            text: TextSpan(
-                                              children: [
-                                                TextSpan(
-                                                  text:
-                                                      '${widget.quizpoint.toInt()}',
-                                                  style: const TextStyle(
-                                                    fontSize: 30.0,
-                                                    color: Colors.purple,
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
+                                        ),
+                                        RichText(
+                                          text: TextSpan(
+                                            children: [
+                                              TextSpan(
+                                                text:
+                                                    '${widget.quizpoint.toInt()}',
+                                                style: const TextStyle(
+                                                  fontSize: 30.0,
+                                                  color: Colors.purple,
+                                                  fontWeight: FontWeight.bold,
                                                 ),
-                                                const TextSpan(
-                                                  text: 'pt',
-                                                  style: TextStyle(
-                                                    color: Colors.purple,
-                                                    fontSize: 14.0,
-                                                  ),
+                                              ),
+                                              const TextSpan(
+                                                text: 'pt',
+                                                style: TextStyle(
+                                                  color: Colors.purple,
+                                                  fontSize: 14.0,
                                                 ),
-                                              ],
-                                            ),
+                                              ),
+                                            ],
                                           ),
-                                        ],
-                                      ),
+                                        ),
+                                      ],
                                     ),
                                   ),
-                                ));
-                          },
-                        )),
-                  ),
-                ],
-              )),
-              Expanded(
-                child: Row(
-                  children: [
-                    Flexible(
-                        child: Center(
-                      child: FractionallySizedBox(
-                        widthFactor: 0.9,
-                        heightFactor: 0.70,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.3),
-                                spreadRadius: 5,
-                                blurRadius: 7,
-                              ),
-                            ],
-                            borderRadius: BorderRadius.circular(20.0),
-                          ),
-                          padding: const EdgeInsets.only(
-                              left: 50.0, top: 15, bottom: 15),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Expanded(
-                                child: Row(
-                                  children: [
-                                    Expanded(
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            '${widget.percentage.toInt()}%',
-                                            style: const TextStyle(
-                                                color: Colors.purple,
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 16.0),
-                                          ),
-                                          const Text(
-                                            'Completion',
-                                            style: TextStyle(
-                                                color: Colors.black,
-                                                fontSize: 14.0),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    Expanded(
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.stretch,
-                                        children: [
-                                          Text(
-                                            '$quizLength',
-                                            style: const TextStyle(
-                                                color: Colors.purple,
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 16.0),
-                                          ),
-                                          const Text(
-                                            'Total Question',
-                                            style: TextStyle(
-                                                color: Colors.black,
-                                                fontSize: 14.0),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
                                 ),
-                              ),
-                              Expanded(
-                                child: Row(
-                                  children: [
-                                    Expanded(
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.stretch,
-                                        children: [
-                                          Text(
-                                            '${widget.correctAnswers}',
-                                            style: const TextStyle(
-                                                color: Colors.green,
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 16.0),
-                                          ),
-                                          const Text(
-                                            'Correct',
-                                            style: TextStyle(
-                                                color: Colors.black,
-                                                fontSize: 14.0),
-                                          ),
-                                        ],
-                                      ),
+                              ));
+                        },
+                      )),
+                ),
+              ],
+            )),
+            Expanded(
+              child: Row(
+                children: [
+                  Flexible(
+                      child: Center(
+                    child: FractionallySizedBox(
+                      widthFactor: 0.9,
+                      heightFactor: 0.70,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.3),
+                              spreadRadius: 5,
+                              blurRadius: 7,
+                            ),
+                          ],
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
+                        padding: const EdgeInsets.only(
+                            left: 50.0, top: 15, bottom: 15),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Expanded(
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          '${widget.percentage.toInt()}%',
+                                          style: const TextStyle(
+                                              color: Colors.purple,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 16.0),
+                                        ),
+                                        const Text(
+                                          'Completion',
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 14.0),
+                                        ),
+                                      ],
                                     ),
-                                    Expanded(
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.stretch,
-                                        children: [
-                                          Text(
-                                            '${quizLength - widget.correctAnswers - widget.skipQuestion}',
-                                            style: const TextStyle(
-                                                color: Colors.orange,
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 16.0),
-                                          ),
-                                          const Text(
-                                            'Wrong',
-                                            style: TextStyle(
-                                                color: Colors.black,
-                                                fontSize: 14.0),
-                                          ),
-                                        ],
-                                      ),
+                                  ),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.stretch,
+                                      children: [
+                                        Text(
+                                          '$quizLength',
+                                          style: const TextStyle(
+                                              color: Colors.purple,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 16.0),
+                                        ),
+                                        const Text(
+                                          'Total Question',
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 14.0),
+                                        ),
+                                      ],
                                     ),
-                                  ],
-                                ),
+                                  ),
+                                ],
                               ),
-                              Expanded(
-                                child: Row(
-                                  children: [
-                                    Expanded(
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.stretch,
-                                        children: [
-                                          Text(
-                                            formatDuration(Duration(
-                                                seconds: widget.timeSpent)),
-                                            style: const TextStyle(
+                            ),
+                            Expanded(
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.stretch,
+                                      children: [
+                                        Text(
+                                          '${widget.correctAnswers}',
+                                          style: const TextStyle(
                                               color: Colors.green,
                                               fontWeight: FontWeight.bold,
-                                              fontSize: 16.0,
-                                            ),
-                                          ),
-                                          const Text(
-                                            'Spent time',
-                                            style: TextStyle(
+                                              fontSize: 16.0),
+                                        ),
+                                        const Text(
+                                          'Correct',
+                                          style: TextStyle(
                                               color: Colors.black,
-                                              fontSize: 14.0,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
+                                              fontSize: 14.0),
+                                        ),
+                                      ],
                                     ),
-                                    Expanded(
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.stretch,
-                                        children: [
-                                          Text(
-                                            '${widget.skipQuestion}',
-                                            style: const TextStyle(
-                                                color: Colors.orange,
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 16.0),
-                                          ),
-                                          const Text(
-                                            'Skipped Question',
-                                            style: TextStyle(
-                                                color: Colors.black,
-                                                fontSize: 14.0),
-                                          ),
-                                        ],
-                                      ),
+                                  ),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.stretch,
+                                      children: [
+                                        Text(
+                                          '${quizLength - widget.correctAnswers - widget.skipQuestion}',
+                                          style: const TextStyle(
+                                              color: Colors.orange,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 16.0),
+                                        ),
+                                        const Text(
+                                          'Wrong',
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 14.0),
+                                        ),
+                                      ],
                                     ),
-                                  ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Expanded(
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.stretch,
+                                      children: [
+                                        Text(
+                                          formatDuration(Duration(
+                                              seconds: widget.timeSpent)),
+                                          style: const TextStyle(
+                                            color: Colors.green,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 16.0,
+                                          ),
+                                        ),
+                                        const Text(
+                                          'Spent time',
+                                          style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 14.0,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.stretch,
+                                      children: [
+                                        Text(
+                                          '${widget.skipQuestion}',
+                                          style: const TextStyle(
+                                              color: Colors.orange,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 16.0),
+                                        ),
+                                        const Text(
+                                          'Skipped Question',
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 14.0),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  )),
+                ],
+              ),
+            ),
+            Expanded(
+              child: Row(
+                children: [
+                  Flexible(
+                    child: GridView.count(
+                      crossAxisCount: 3,
+                      padding: const EdgeInsets.only(left: 26, right: 26),
+                      childAspectRatio: 1.2,
+                      mainAxisSpacing: 0.0,
+                      crossAxisSpacing: 0.0,
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            // Handle 'Play again' tapped
+                          },
+                          child: const Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              CircleAvatar(
+                                backgroundColor: Colors.blue,
+                                child: Icon(
+                                  Icons.refresh,
+                                  color: Colors.white,
+                                  size: 25.0,
                                 ),
+                              ),
+                              SizedBox(height: 2.0),
+                              Text(
+                                'Play again',
+                                style: TextStyle(
+                                  fontSize: 14.0,
+                                  color: Colors.black,
+                                ),
+                                textAlign: TextAlign.center,
                               ),
                             ],
                           ),
                         ),
-                      ),
-                    )),
-                  ],
-                ),
-              ),
-              Expanded(
-                child: Row(
-                  children: [
-                    Flexible(
-                      child: GridView.count(
-                        crossAxisCount: 3,
-                        padding: const EdgeInsets.only(left: 26, right: 26),
-                        childAspectRatio: 1.2,
-                        mainAxisSpacing: 0.0,
-                        crossAxisSpacing: 0.0,
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              // Handle 'Play again' tapped
-                            },
-                            child: const Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                CircleAvatar(
-                                  backgroundColor: Colors.blue,
-                                  child: Icon(
-                                    Icons.refresh,
-                                    color: Colors.white,
-                                    size: 25.0,
-                                  ),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => ResultReviewPage(
+                                      quizData: widget.quizData,
+                                      selectedAnswers: widget.selectedArray)),
+                            );
+                          },
+                          child: const Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              CircleAvatar(
+                                backgroundColor: Colors.orange,
+                                child: Icon(
+                                  Icons.remove_red_eye,
+                                  color: Colors.white,
+                                  size: 25.0,
                                 ),
-                                SizedBox(height: 2.0),
-                                Text(
-                                  'Play again',
-                                  style: TextStyle(
-                                    fontSize: 14.0,
-                                    color: Colors.black,
-                                  ),
-                                  textAlign: TextAlign.center,
+                              ),
+                              SizedBox(height: 2.0),
+                              Text(
+                                'Review answer',
+                                style: TextStyle(
+                                  fontSize: 14.0,
+                                  color: Colors.black,
                                 ),
-                              ],
-                            ),
+                                textAlign: TextAlign.center,
+                              ),
+                            ],
                           ),
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => ResultReviewPage(
-                                        quizData: widget.quizData,
-                                        selectedAnswers: widget.selectedArray)),
-                              );
-                            },
-                            child: const Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                CircleAvatar(
-                                  backgroundColor: Colors.orange,
-                                  child: Icon(
-                                    Icons.remove_red_eye,
-                                    color: Colors.white,
-                                    size: 25.0,
-                                  ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            // Handle 'Share score' tapped
+                          },
+                          child: const Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              CircleAvatar(
+                                backgroundColor: Colors.purple,
+                                child: Icon(
+                                  Icons.share,
+                                  color: Colors.white,
+                                  size: 25.0,
                                 ),
-                                SizedBox(height: 2.0),
-                                Text(
-                                  'Review answer',
-                                  style: TextStyle(
-                                    fontSize: 14.0,
-                                    color: Colors.black,
-                                  ),
-                                  textAlign: TextAlign.center,
+                              ),
+                              SizedBox(height: 2.0),
+                              Text(
+                                'Share score',
+                                style: TextStyle(
+                                  fontSize: 14.0,
+                                  color: Colors.black,
                                 ),
-                              ],
-                            ),
+                                textAlign: TextAlign.center,
+                              ),
+                            ],
                           ),
-                          GestureDetector(
-                            onTap: () {
-                              // Handle 'Share score' tapped
-                            },
-                            child: const Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                CircleAvatar(
-                                  backgroundColor: Colors.purple,
-                                  child: Icon(
-                                    Icons.share,
-                                    color: Colors.white,
-                                    size: 25.0,
-                                  ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            // Handle 'Generate PDF' tapped
+                          },
+                          child: const Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              CircleAvatar(
+                                backgroundColor: Colors.indigo,
+                                child: Icon(
+                                  Icons.picture_as_pdf,
+                                  color: Colors.white,
+                                  size: 25.0,
                                 ),
-                                SizedBox(height: 2.0),
-                                Text(
-                                  'Share score',
-                                  style: TextStyle(
-                                    fontSize: 14.0,
-                                    color: Colors.black,
-                                  ),
-                                  textAlign: TextAlign.center,
+                              ),
+                              SizedBox(height: 2.0),
+                              Text(
+                                'Generate PDF',
+                                style: TextStyle(
+                                  fontSize: 14.0,
+                                  color: Colors.black,
                                 ),
-                              ],
-                            ),
+                                textAlign: TextAlign.center,
+                              ),
+                            ],
                           ),
-                          GestureDetector(
-                            onTap: () {
-                              // Handle 'Generate PDF' tapped
-                            },
-                            child: const Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                CircleAvatar(
-                                  backgroundColor: Colors.indigo,
-                                  child: Icon(
-                                    Icons.picture_as_pdf,
-                                    color: Colors.white,
-                                    size: 25.0,
-                                  ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const HomePage()),
+                            );
+                          },
+                          child: const Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              CircleAvatar(
+                                backgroundColor: Colors.lime,
+                                child: Icon(
+                                  Icons.home,
+                                  color: Colors.white,
+                                  size: 25.0,
                                 ),
-                                SizedBox(height: 2.0),
-                                Text(
-                                  'Generate PDF',
-                                  style: TextStyle(
-                                    fontSize: 14.0,
-                                    color: Colors.black,
-                                  ),
-                                  textAlign: TextAlign.center,
+                              ),
+                              SizedBox(height: 2.0),
+                              Text(
+                                'Home',
+                                style: TextStyle(
+                                  fontSize: 14.0,
+                                  color: Colors.black,
                                 ),
-                              ],
-                            ),
+                                textAlign: TextAlign.center,
+                              ),
+                            ],
                           ),
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const HomePage()),
-                              );
-                            },
-                            child: const Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                CircleAvatar(
-                                  backgroundColor: Colors.lime,
-                                  child: Icon(
-                                    Icons.home,
-                                    color: Colors.white,
-                                    size: 25.0,
-                                  ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      const LeaderboardPage()),
+                            );
+                          },
+                          child: const Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              CircleAvatar(
+                                backgroundColor: Colors.teal,
+                                child: Icon(
+                                  Icons.leaderboard,
+                                  color: Colors.white,
+                                  size: 25.0,
                                 ),
-                                SizedBox(height: 2.0),
-                                Text(
-                                  'Home',
-                                  style: TextStyle(
-                                    fontSize: 14.0,
-                                    color: Colors.black,
-                                  ),
-                                  textAlign: TextAlign.center,
+                              ),
+                              SizedBox(height: 2.0),
+                              Text(
+                                'Leaderboard',
+                                style: TextStyle(
+                                  fontSize: 14.0,
+                                  color: Colors.black,
                                 ),
-                              ],
-                            ),
+                                textAlign: TextAlign.center,
+                              ),
+                            ],
                           ),
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        const LeaderboardPage()),
-                              );
-                            },
-                            child: const Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                CircleAvatar(
-                                  backgroundColor: Colors.teal,
-                                  child: Icon(
-                                    Icons.leaderboard,
-                                    color: Colors.white,
-                                    size: 25.0,
-                                  ),
-                                ),
-                                SizedBox(height: 2.0),
-                                Text(
-                                  'Leaderboard',
-                                  style: TextStyle(
-                                    fontSize: 14.0,
-                                    color: Colors.black,
-                                  ),
-                                  textAlign: TextAlign.center,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-              )
-            ],
-          )
-        ]),
-        endDrawer: const CustomDrawer(),
-        bottomNavigationBar: const BottomNav());
+                  ),
+                ],
+              ),
+            )
+          ],
+        )
+      ]),
+      endDrawer: const CustomDrawer(),
+    );
   }
 
   String formatDuration(Duration duration) {

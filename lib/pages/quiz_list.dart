@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:quizzy/ads/banner_ads.dart';
 import 'package:quizzy/api_caller/quiz.dart';
 import 'package:quizzy/components/custom_drawer.dart';
 import 'package:quizzy/models/quiz_model.dart';
@@ -37,12 +39,29 @@ class QuizList extends StatefulWidget {
 
 class _QuizListState extends State<QuizList> {
   List<QuizData> quizzes = [];
+  late BannerAdManager _bannerAdManager;
+  BannerAd? _bannerAd;
   @override
   void initState() {
     super.initState();
+    _bannerAdManager = BannerAdManager();
+    _loadAd();
     fetchQuizData();
   }
 
+  void _loadAd() {
+    _bannerAdManager.loadAd((ad) {
+      setState(() {
+        _bannerAd = ad;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    _bannerAdManager.dispose();
+    super.dispose();
+  }
   bool isLoading = false;
   Future<void> fetchQuizData() async {
     setState(() {
@@ -135,7 +154,7 @@ class _QuizListState extends State<QuizList> {
                         margin: const EdgeInsets.all(5.0),
                         color: Colors.white,
                         child: ListTile(
-                        onTap: () => Navigator.pushReplacement(
+                        onTap: () => Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder: (context) =>
@@ -156,7 +175,17 @@ class _QuizListState extends State<QuizList> {
                     },
                   ),
         endDrawer: const CustomDrawer(),
-      // bottomNavigationBar: const BottomNav()
+      bottomNavigationBar: BottomAppBar(
+        child: SizedBox(
+          height: _bannerAd?.size.height.toDouble() ?? 0,
+          child: Stack(
+            alignment: Alignment.bottomCenter,
+            children: [
+              if (_bannerAd != null) AdWidget(ad: _bannerAd!),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

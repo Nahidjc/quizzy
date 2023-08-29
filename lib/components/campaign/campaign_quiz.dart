@@ -156,7 +156,7 @@ class _CampaignQuizState extends State<CampaignQuiz> {
 
   void gottoNextPage(
       correctAnswers, quizpoint, selectedArray, skipQuestion, timeSpent) {
-    Navigator.push(
+    Navigator.pushReplacement(
       context,
       MaterialPageRoute(
         builder: (context) => CampaignQuizResultPage(
