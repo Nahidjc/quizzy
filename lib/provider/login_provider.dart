@@ -11,9 +11,11 @@ class AuthProvider extends ChangeNotifier {
   bool _isAuthenticated = false;
   bool _isRegistered = false;
   String _errorMessage = '';
+  String _successMessage = '';
   String _userId = '';
   String get userId => _userId;
   String get errorMessage => _errorMessage;
+  String get successMessage => _successMessage;
   bool _isLoading = false;
   bool get isAuthenticated => _isAuthenticated;
   bool get isLoading => _isLoading;
@@ -65,6 +67,10 @@ class AuthProvider extends ChangeNotifier {
         setAuthenticated(false);
         final responseBody = json.decode(response.body);
         _errorMessage = responseBody['message'] ?? 'Unknown error';
+        Timer(const Duration(seconds: 3), () {
+          _errorMessage = '';
+          notifyListeners();
+        });
       }
       notifyListeners();
     } catch (e) {
@@ -96,12 +102,20 @@ class AuthProvider extends ChangeNotifier {
         setLoading(false);
         _isRegistered = true;
         _errorMessage = '';
+        _successMessage = 'User created successfully. Please login';
+        Timer(const Duration(seconds: 3), () {
+          _successMessage = '';
+          notifyListeners();
+        });
         notifyListeners();
       } else {
         setLoading(false);
         final responseBody = json.decode(response.body);
         _errorMessage = responseBody['message'] ?? 'Unknown error';
-        // ignore: use_build_context_synchronously
+        Timer(const Duration(seconds: 3), () {
+          _errorMessage = '';
+          notifyListeners();
+        });
       }
       notifyListeners();
     } catch (e) {
