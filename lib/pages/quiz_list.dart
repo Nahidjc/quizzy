@@ -171,23 +171,15 @@ class _QuizListState extends State<QuizList> {
                           ),
                           title: SizedBox(
                             width: 150.0,
-                            child: Align(
-                              alignment: Alignment.center,
-                              child: LayoutBuilder(
-                                builder: (context, constraints) {
-                                  return FittedBox(
-                                    fit: BoxFit.scaleDown,
-                                    child: Text(
-                                      quizzes[index].title,
-                                      softWrap: true,
-                                      style: TextStyle(
-                                        fontSize: constraints.maxHeight * 0.5,
-                                        fontWeight: FontWeight.normal,
-                                        color: Colors.black,
-                                      ),
-                                    ),
-                                  );
-                                },
+                            child: Center(
+                              child: Text(
+                                quizzes[index].title,
+                                textAlign: TextAlign.center,
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.normal,
+                                  color: Colors.black,
+                                ),
                               ),
                             ),
                           ),
@@ -195,7 +187,7 @@ class _QuizListState extends State<QuizList> {
                       );
                     },
                   ),
-),
+                ),
       endDrawer: const CustomDrawer(),
       bottomNavigationBar: BottomAppBar(
         child: SizedBox(
