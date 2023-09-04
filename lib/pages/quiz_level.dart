@@ -120,26 +120,36 @@ class _QuizLevelListState extends State<QuizLevelList> {
         body: Center(
           child: isLoading
               ? const Center(child: CircularProgressIndicator())
-              : Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: _stages.map((levelData) {
-                    String levelName = levelData.levelName;
-                    bool isUnlocked = levelData.isAccessible;
-                    String stageId = levelData.id;
-                    int cost = levelData.cost;
-                    int currentIndex = _stages.indexOf(levelData);
-                    StageData? previousStage;
-                    if (currentIndex > 0) {
-                      previousStage = _stages[currentIndex - 1];
-                    }
-
-                    bool isPreviousUnlocked =
-                        previousStage != null && previousStage.isAccessible;
-
-                    return buildLevelButton(context, levelName, isUnlocked,
-                        stageId, cost, isPreviousUnlocked);
-                  }).toList(),
+            : GridView.builder(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 3,
+                  mainAxisSpacing: 10.0,
+                  crossAxisSpacing: 10.0,
                 ),
+                padding: const EdgeInsets.all(10.0),
+                itemBuilder: (BuildContext context, int index) {
+                  if (index >= _stages.length) {
+                    return Container();
+                  }
+
+                  StageData levelData = _stages[index];
+                  String levelName = levelData.levelName;
+                  bool isUnlocked = levelData.isAccessible;
+                  String stageId = levelData.id;
+                  int cost = levelData.cost;
+                  StageData? previousStage;
+                  if (index > 0) {
+                    previousStage = _stages[index - 1];
+                  }
+                  bool isPreviousUnlocked =
+                      previousStage != null && previousStage.isAccessible;
+                  return buildLevelButton(context, levelName, isUnlocked,
+                      stageId, cost, isPreviousUnlocked);
+                },
+                itemCount: _stages.length,
+              ),
+
+
         ),
         endDrawer: const CustomDrawer(),
       bottomNavigationBar: BottomAppBar(
@@ -159,13 +169,13 @@ class _QuizLevelListState extends State<QuizLevelList> {
   Widget buildLevelButton(BuildContext context, String levelName,
       bool isUnlocked, String stageId, int cost, bool isPreviousUnlocked) {
     final user = Provider.of<AuthProvider>(context);
-    double buttonWidth = MediaQuery.of(context).size.width * 0.95;
-    const double buttonHeight = 50.0;
+    const double buttonWidth = 110.0;
+    const double buttonHeight = 110.0;
     const double borderRadius = 10.0;
-    const Color unlockedColor = Colors.white;
-    const Color lockedColor = Colors.white;
-    Color textColor = Colors.black;
-    Color boxShadowColor = Colors.black.withOpacity(0.1);
+    const Color unlockedColor = Colors.blue;
+    const Color lockedColor = Colors.purple;
+    Color textColor = Colors.white;
+    Color boxShadowColor = Colors.black.withOpacity(0.3);
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -176,21 +186,25 @@ class _QuizLevelListState extends State<QuizLevelList> {
               context,
               MaterialPageRoute(
                 builder: (context) => QuizList(
-                  displayName: widget.displayName,
-                  subjectName: widget.subjectName,
-                  levelName: levelName,
-                  subjectId: widget.subjectId,
-                  stageId: stageId,
-                ),
+                    displayName: widget.displayName,
+                    subjectName: widget.subjectName,
+                    levelName: levelName,
+                    subjectId: widget.subjectId,
+                    stageId: stageId),
               ),
             );
-
           } else {
             if (!isPreviousUnlocked) {
               QuickAlert.show(
                 context: context,
                 type: QuickAlertType.warning,
                 text: "You need to subscribe to the previous Level first.",
+              );
+            } else if (user.coin < cost) {
+              QuickAlert.show(
+                context: context,
+                type: QuickAlertType.warning,
+                text: "You don't have enough coins to unlock this level",
               );
             } else {
               PanaraConfirmDialog.show(
@@ -204,15 +218,7 @@ class _QuizLevelListState extends State<QuizLevelList> {
                 },
                 onTapConfirm: () {
                   Navigator.pop(context);
-                  if (user.coin < cost) {
-                    QuickAlert.show(
-                      context: context,
-                      type: QuickAlertType.warning,
-                      text: "You don't have enough coins to unlock this level",
-                    );
-                  } else {
-                    _stageSubscribe(user.userId, stageId);
-                  }
+                  _stageSubscribe(user.userId, stageId);
                 },
                 panaraDialogType: PanaraDialogType.normal,
                 barrierDismissible: false,
@@ -221,44 +227,44 @@ class _QuizLevelListState extends State<QuizLevelList> {
           }
         },
         child: Container(
-          width: buttonWidth,
-          height: buttonHeight,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(borderRadius),
-            boxShadow: [
-              BoxShadow(
-                color: boxShadowColor,
-                spreadRadius: 1,
-                blurRadius: 2,
-                offset: const Offset(0, 1),
-              ),
-            ],
-            color: isUnlocked ? unlockedColor : lockedColor,
-          ),
-          child: Stack(
-            alignment: Alignment.center,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    levelName,
-                    style: TextStyle(
-                      color: textColor,
-                      fontSize: 18.0,
+            width: buttonWidth,
+            height: buttonHeight,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(borderRadius),
+              boxShadow: [
+                BoxShadow(
+                  color: boxShadowColor,
+                  spreadRadius: 1,
+                  blurRadius: 3,
+                  offset: const Offset(0, 2),
+                ),
+              ],
+              color: isUnlocked ? unlockedColor : lockedColor,
+            ),
+            child: Container(
+              alignment: Alignment.center,
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    if (!isUnlocked)
+                      Icon(
+                        Icons.lock,
+                        color: textColor,
+                        size: 24.0,
+                      ),
+                    Text(
+                      levelName,
+                      style: TextStyle(
+                        color: textColor,
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
-                  if (!isUnlocked)
-                    Icon(
-                      Icons.lock,
-                      color: textColor,
-                      size: 24.0,
-                    ),
-                ],
+                  ],
+                ),
               ),
-            ],
-          ),
-        ),
+            )),
       ),
     );
   }
