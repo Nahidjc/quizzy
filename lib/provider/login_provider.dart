@@ -80,7 +80,7 @@ class AuthProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> register(BuildContext context, String firstName, String lastName,
+  Future<void> register(BuildContext context, String firstName,
       String email, String mobileNo, String password) async {
     try {
       final url = Uri.parse('${AppUrl.baseUrl}/auth/signup');
@@ -91,7 +91,6 @@ class AuthProvider extends ChangeNotifier {
         body: json.encode(
           {
             'firstName': firstName,
-            'lastName': lastName,
             'email': email,
             'mobileNumber': mobileNo,
             'password': password,

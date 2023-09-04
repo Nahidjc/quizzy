@@ -16,6 +16,10 @@ class _LeaderboardPageState extends State<LeaderboardPage> {
   bool showTodayLeaderboard = true;
   bool showWeeklyLeaderboard = false;
   bool isLoading = false;
+  String todayRewardText =
+      'Daily leaderboard rewards: 1st place gets 50 coins, 2nd place earns 30 coins, and 3rd place receives 20 coins.';
+  String weeklyRewardText =
+      'Weekly leaderboard rewards: 1st place gets 200 coins, 2nd place earns 100 coins, and 3rd place receives 50 coins.';
 
   @override
   void initState() {
@@ -23,6 +27,7 @@ class _LeaderboardPageState extends State<LeaderboardPage> {
     fetchDailyLeaderboardData();
     currentLeaderboardData = dailyLeaderboard;
   }
+
   Future<void> fetchDailyLeaderboardData() async {
     setState(() {
       isLoading = true;
@@ -74,6 +79,22 @@ class _LeaderboardPageState extends State<LeaderboardPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Container(
+              margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: Colors.red,
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+              child: Text(
+                showTodayLeaderboard ? todayRewardText : weeklyRewardText,
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
               child: Row(
@@ -85,7 +106,6 @@ class _LeaderboardPageState extends State<LeaderboardPage> {
                   const SizedBox(width: 10),
                   _buildLeaderboardOption('All Time',
                       !showTodayLeaderboard && !showWeeklyLeaderboard),
-
                 ],
               ),
             ),
@@ -177,7 +197,6 @@ class _LeaderboardPageState extends State<LeaderboardPage> {
                   textAlign: TextAlign.justify,
                 ),
                 const SizedBox(height: 12),
-            
               ],
             ),
           ),
@@ -213,8 +232,8 @@ class _LeaderboardPageState extends State<LeaderboardPage> {
       child: Row(
         children: [
           Container(
-            width: 60,
-            height: 60,
+            width: 40,
+            height: 40,
             margin: const EdgeInsets.all(10),
             decoration: BoxDecoration(
               shape: BoxShape.circle,

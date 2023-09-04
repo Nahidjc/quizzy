@@ -61,10 +61,10 @@ class _HomePageState extends State<HomePage> {
             child: isLoading
                 ? const CategorySkeleton()
                 : Categories(categoryList: categoryList)),
-        SizedBox(
-          height: 130,
-          child: CarouselSliderCustom(),
-        ),
+        // SizedBox(
+        //   height: 130,
+        //   child: CarouselSliderCustom(),
+        // ),
         const SizedBox(height: 10),
         if (_bannerAd != null)
           Align(

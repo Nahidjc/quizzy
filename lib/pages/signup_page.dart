@@ -10,8 +10,7 @@ class SignupPage extends StatefulWidget {
 }
 
 class _SignupPageState extends State<SignupPage> {
-  final TextEditingController _firstNameController = TextEditingController();
-  final TextEditingController _lastNameController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
   final TextEditingController _mobileNoController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -22,8 +21,7 @@ class _SignupPageState extends State<SignupPage> {
 
   @override
   void dispose() {
-    _firstNameController.dispose();
-    _lastNameController.dispose();
+    _nameController.dispose();
     _mobileNoController.dispose();
     _emailController.dispose();
     _passwordController.dispose();
@@ -33,13 +31,12 @@ class _SignupPageState extends State<SignupPage> {
 
   void _submitForm() {
     if (_formKey.currentState!.validate()) {
-      String firstName = _firstNameController.text;
-      String lastName = _lastNameController.text;
+      String name = _nameController.text;
       String mobileNo = _mobileNoController.text;
       String email = _emailController.text;
       String password = _passwordController.text;
       Provider.of<AuthProvider>(context, listen: false)
-          .register(context, firstName, lastName, email, mobileNo, password);
+          .register(context, name, email, mobileNo, password);
       _mobileNoController.clear();
       _emailController.clear();
       _passwordController.clear();
@@ -113,10 +110,10 @@ class _SignupPageState extends State<SignupPage> {
                         ),
                       const SizedBox(height: 20.0),
                       TextFormField(
-                        controller: _firstNameController,
+                        controller: _nameController,
                         keyboardType: TextInputType.text,
                         decoration: InputDecoration(
-                          labelText: 'FirstName',
+                          labelText: 'Name',
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(8),
                           ),
@@ -125,26 +122,7 @@ class _SignupPageState extends State<SignupPage> {
                         ),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Please enter your first name';
-                          }
-                          return null;
-                        },
-                      ),
-                      const SizedBox(height: 20.0),
-                      TextFormField(
-                        controller: _lastNameController,
-                        keyboardType: TextInputType.text,
-                        decoration: InputDecoration(
-                          labelText: 'LastName',
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          prefixIcon:
-                              const Icon(Icons.email_outlined, size: 24),
-                        ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter your last name';
+                            return 'Please enter your full name';
                           }
                           return null;
                         },

@@ -89,22 +89,19 @@ class _SubjectListState extends State<SubjectList> {
                           ),
                         ),
                       ),
-                      title: Align(
-                        alignment: Alignment.center,
-                        child: LayoutBuilder(
-                          builder: (context, constraints) {
-                            return FittedBox(
-                              fit: BoxFit.scaleDown,
-                              child: Text(
-                                subject.subjectName,
-                                style: TextStyle(
-                                  fontSize: constraints.maxHeight * 0.2,
-                                  fontWeight: FontWeight.normal,
-                                  color: Colors.black,
-                                ),
-                              ),
-                            );
-                          },
+                      title: SizedBox(
+                        width: double.infinity,
+                        height: double.infinity,
+                        child: Center(
+                          child: Text(
+                            subject.subjectName,
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.normal,
+                              color: Colors.black,
+                            ),
+                          ),
                         ),
                       ),
                     ),
