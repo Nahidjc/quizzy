@@ -62,6 +62,7 @@ class _QuizListState extends State<QuizList> {
     _bannerAdManager.dispose();
     super.dispose();
   }
+
   bool isLoading = false;
   Future<void> fetchQuizData() async {
     setState(() {
@@ -86,95 +87,116 @@ class _QuizListState extends State<QuizList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          toolbarHeight: 80.0,
-          centerTitle: true,
-          backgroundColor: const Color.fromARGB(255, 144, 106, 250),
-          iconTheme: const IconThemeData(color: Colors.white),
-          title: Breadcrumbs(
-            crumbs: [
-              TextSpan(text: widget.displayName),
-              TextSpan(text: widget.subjectName),
-              TextSpan(text: widget.levelName),
-            ],
-            separator: ' > ',
-            style: const TextStyle(color: Colors.white, fontSize: 18.0),
-          ),
-          actions: [Container()],
+      appBar: AppBar(
+        toolbarHeight: 80.0,
+        centerTitle: true,
+        backgroundColor: const Color.fromARGB(255, 144, 106, 250),
+        iconTheme: const IconThemeData(color: Colors.white),
+        title: Breadcrumbs(
+          crumbs: [
+            TextSpan(text: widget.displayName),
+            TextSpan(text: widget.subjectName),
+            TextSpan(text: widget.levelName),
+          ],
+          separator: ' > ',
+          style: const TextStyle(color: Colors.white, fontSize: 18.0),
         ),
-        body: isLoading
-            ? const Center(child: CircularProgressIndicator())
-            : quizzes.isEmpty
-                ? Center(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        const Icon(
-                          Icons.sentiment_dissatisfied,
-                          color: Colors.deepOrange,
-                          size: 72,
+        actions: [Container()],
+      ),
+      body: isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : quizzes.isEmpty
+              ? Center(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Icon(
+                        Icons.sentiment_dissatisfied,
+                        color: Colors.deepOrange,
+                        size: 72,
+                      ),
+                      const SizedBox(height: 16),
+                      const Text(
+                        "Oops!",
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
                         ),
-                        const SizedBox(height: 16),
-                        const Text(
-                          "Oops!",
-                          style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                          ),
+                      ),
+                      const SizedBox(height: 8),
+                      const Text(
+                        "We're sorry, but there are no quizzes available for this subject and level at the moment.",
+                        style: TextStyle(fontSize: 18, color: Colors.black),
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(height: 24),
+                      ElevatedButton(
+                        onPressed: fetchQuizData,
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.purple,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8)),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 12),
                         ),
-                        const SizedBox(height: 8),
-                        const Text(
-                          "We're sorry, but there are no quizzes available for this subject and level at the moment.",
-                          style: TextStyle(fontSize: 18, color: Colors.black),
-                          textAlign: TextAlign.center,
+                        child: const Text(
+                          "Refresh",
+                          style: TextStyle(fontSize: 18, color: Colors.white),
                         ),
-                        const SizedBox(height: 24),
-                        ElevatedButton(
-                          onPressed: fetchQuizData,
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.purple,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8)),
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 20, vertical: 12),
-                          ),
-                          child: const Text(
-                            "Refresh",
-                            style: TextStyle(fontSize: 18, color: Colors.white),
-                          ),
-                        ),
-                      ],
+                      ),
+                    ],
+                  ),
+                )
+              : Padding(
+                  padding: const EdgeInsets.fromLTRB(16.0, 16.0, 10.0, 0.0),
+                  child: GridView.builder(
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: _getCrossAxisCount(context),
+                      crossAxisSpacing: 10.0,
+                      mainAxisSpacing: 10.0,
                     ),
-                  )
-                : ListView.builder(
                     itemCount: quizzes.length,
                     itemBuilder: (context, index) {
                       return Card(
                         margin: const EdgeInsets.all(5.0),
                         color: Colors.white,
                         child: ListTile(
-                        onTap: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) =>
-                                QuizDetails(quiz: quizzes[index]),
+                          onTap: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  QuizDetails(quiz: quizzes[index]),
+                            ),
                           ),
-                        ),
-                          title: Text(
-                            quizzes[index].title,
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.normal,
-                              color: Colors.black,
+                          title: SizedBox(
+                            width: 150.0,
+                            child: Align(
+                              alignment: Alignment.center,
+                              child: LayoutBuilder(
+                                builder: (context, constraints) {
+                                  return FittedBox(
+                                    fit: BoxFit.scaleDown,
+                                    child: Text(
+                                      quizzes[index].title,
+                                      softWrap: true,
+                                      style: TextStyle(
+                                        fontSize: constraints.maxHeight * 0.5,
+                                        fontWeight: FontWeight.normal,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
                             ),
                           ),
                         ),
                       );
                     },
                   ),
-        endDrawer: const CustomDrawer(),
+),
+      endDrawer: const CustomDrawer(),
       bottomNavigationBar: BottomAppBar(
         child: SizedBox(
           height: _bannerAd?.size.height.toDouble() ?? 0,
@@ -187,5 +209,14 @@ class _QuizListState extends State<QuizList> {
         ),
       ),
     );
+  }
+
+  int _getCrossAxisCount(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    if (screenWidth >= 400) {
+      return 4;
+    } else {
+      return 3;
+    }
   }
 }
