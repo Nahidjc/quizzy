@@ -43,6 +43,7 @@ class _SubjectListState extends State<SubjectList> {
     _bannerAdManager.dispose();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,36 +63,54 @@ class _SubjectListState extends State<SubjectList> {
         ),
       ),
       body: widget.subjectList.isNotEmpty
-          ? ListView.builder(
-              itemCount: widget.subjectList.length,
-              itemBuilder: (context, index) {
-                Subject subject = widget.subjectList[index];
-                return Card(
-                  margin: const EdgeInsets.all(5.0),
-                  color: Colors.white,
-                  child: ListTile(
-                    onTap: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => QuizLevelList(
-                          subjectName: subject.subjectName,
-                          displayName: widget.displayName,
-                          subjectId: subject.id,
+          ? Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10),
+              child: GridView.builder(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: _getCrossAxisCount(context),
+                  crossAxisSpacing: 10.0,
+                  mainAxisSpacing: 10.0,
+                ),
+                itemCount: widget.subjectList.length,
+                itemBuilder: (context, index) {
+                  Subject subject = widget.subjectList[index];
+                  return Card(
+                    margin: const EdgeInsets.all(5.0),
+                    color: Colors.white,
+                    child: ListTile(
+                      onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => QuizLevelList(
+                            subjectName: subject.subjectName,
+                            displayName: widget.displayName,
+                            subjectId: subject.id,
+                          ),
+                        ),
+                      ),
+                      title: Align(
+                        alignment: Alignment.center,
+                        child: LayoutBuilder(
+                          builder: (context, constraints) {
+                            return FittedBox(
+                              fit: BoxFit.scaleDown,
+                              child: Text(
+                                subject.subjectName,
+                                style: TextStyle(
+                                  fontSize: constraints.maxHeight * 0.2,
+                                  fontWeight: FontWeight.normal,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            );
+                          },
                         ),
                       ),
                     ),
-                    title: Text(
-                      subject.subjectName,
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.normal,
-                        color: Colors.black,
-                      ),
-                    ),
-                  ),
-                );
-              },
+                  );
+                },
+              ),
             )
           : InfoMessage('No data available for ${widget.displayName}'),
       endDrawer: const CustomDrawer(),
@@ -107,5 +126,14 @@ class _SubjectListState extends State<SubjectList> {
         ),
       ),
     );
+  }
+
+  int _getCrossAxisCount(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    if (screenWidth >= 400) {
+      return 4;
+    } else {
+      return 3;
+    }
   }
 }
