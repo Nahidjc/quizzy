@@ -14,6 +14,7 @@ class _CampaignLeaderboardPageState extends State<CampaignLeaderboardPage> {
   List<dynamic> campaignLeaderboardData = [];
   late List<dynamic> currentLeaderboardData = [];
   bool isLoading = false;
+  bool isError = false;
 
   @override
   void initState() {
@@ -25,9 +26,15 @@ class _CampaignLeaderboardPageState extends State<CampaignLeaderboardPage> {
     setState(() {
       isLoading = true;
     });
-    LeaderboardAPi leaderboardApi = LeaderboardAPi();
-    campaignLeaderboardData = await leaderboardApi.getCampaignLeaderboard();
-    currentLeaderboardData = campaignLeaderboardData;
+    try {
+      LeaderboardAPi leaderboardApi = LeaderboardAPi();
+      campaignLeaderboardData = await leaderboardApi.getCampaignLeaderboard();
+      currentLeaderboardData = campaignLeaderboardData;
+    } catch (e) {
+      setState(() {
+        isError = true;
+      });
+    }
     setState(() {
       isLoading = false;
     });
@@ -166,7 +173,26 @@ class _CampaignLeaderboardPageState extends State<CampaignLeaderboardPage> {
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: isLoading
                       ? _buildSkeletonLoader()
-                      : Column(
+                      : isError
+                          ? Center(
+                              child: Container(
+                                margin:
+                                    const EdgeInsets.symmetric(vertical: 20),
+                                padding: const EdgeInsets.all(16),
+                                decoration: BoxDecoration(
+                                  color: Colors.red,
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: const Text(
+                                  'Currently, No active quiz campaigns found',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                              ),
+                            )
+                          : Column(
                           children: currentLeaderboardData
                               .asMap()
                               .entries

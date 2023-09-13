@@ -71,10 +71,10 @@ class LeaderboardAPi {
             .toList();
         return campaignLeaderboard;
       } else {
-        throw Exception('Failed to load data from API');
+        throw Exception('Currrently no longer running campaign leaderboards');
       }
     } catch (e) {
-      throw Exception('Error: $e');
+      throw Exception('$e');
     }
   }
 }
