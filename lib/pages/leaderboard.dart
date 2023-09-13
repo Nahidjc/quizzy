@@ -253,7 +253,7 @@ class _LeaderboardPageState extends State<LeaderboardPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  entry.firstName,
+                  entry.name,
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 16,

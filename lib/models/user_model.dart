@@ -27,14 +27,14 @@ class UserDetails {
 class UserData {
   int coin;
   String id;
-  String firstName;
+  String name;
   String message;
   String? profileUrl;
 
   UserData({
     required this.coin,
     required this.id,
-    required this.firstName,
+    required this.name,
     required this.message,
     this.profileUrl,
   });
@@ -43,7 +43,7 @@ class UserData {
     return UserData(
       coin: json['data']['coin'] as int,
       id: json['data']['id'] as String,
-      firstName: json['data']['firstName'] as String,
+      name: json['data']['name'] as String,
       message: json['message'] as String,
       profileUrl: json['data']['profileUrl'], 
     );
@@ -54,7 +54,7 @@ class UserData {
       'data': {
         'coin': coin,
         'id': id,
-        'firstName': firstName,
+        'name': name,
         'profileUrl': profileUrl,
       },
       'message': message,

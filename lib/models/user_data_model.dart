@@ -1,8 +1,7 @@
 class UserDataModel {
   final int coin;
   final String id;
-  final String firstName;
-  final String lastName;
+  final String name;
   final String? profileUrl;
   final String? mobileNumber;
   final String role;
@@ -11,8 +10,7 @@ class UserDataModel {
   UserDataModel({
     required this.coin,
     required this.id,
-    required this.firstName,
-    required this.lastName,
+    required this.name,
     this.profileUrl,
     this.mobileNumber,
     required this.role,
@@ -23,8 +21,7 @@ class UserDataModel {
     return UserDataModel(
       coin: json['coin'] as int,
       id: json['id'] as String,
-      firstName: json['firstName'] as String,
-      lastName: json['lastName'] as String,
+      name: json['name'] as String,
       profileUrl: json['profileUrl'] as String?,
       mobileNumber: json['mobileNumber'] as String?,
       role: json['role'] as String,

@@ -14,13 +14,13 @@ class JwtTokenUtil {
 
 class TokenModel {
   final String id;
-  final String firstName;
+  final String name;
   final String? profileUrl;
   final int coin;
 
   TokenModel({
     required this.id,
-    required this.firstName,
+    required this.name,
     this.profileUrl,
     required this.coin,
   });
@@ -28,7 +28,7 @@ class TokenModel {
   factory TokenModel.fromJson(Map<String, dynamic> json) {
     return TokenModel(
       id: json['id'],
-      firstName: json['firstName'],
+      name: json['name'],
       profileUrl: json['profileUrl'],
       coin: json['coin'] ?? 0,
     );
@@ -37,7 +37,7 @@ class TokenModel {
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'firstName': firstName,
+      'name': name,
       'profileUrl': profileUrl,
       'coin': coin,
     };

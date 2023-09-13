@@ -80,7 +80,7 @@ class AuthProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> register(BuildContext context, String firstName,
+  Future<void> register(BuildContext context, String name,
       String email, String mobileNo, String password) async {
     try {
       final url = Uri.parse('${AppUrl.baseUrl}/auth/signup');
@@ -90,7 +90,7 @@ class AuthProvider extends ChangeNotifier {
         headers: {'Content-Type': 'application/json'},
         body: json.encode(
           {
-            'firstName': firstName,
+            'name': name,
             'email': email,
             'mobileNumber': mobileNo,
             'password': password,
@@ -134,7 +134,7 @@ class AuthProvider extends ChangeNotifier {
         var jsonResponse = json.decode(response.body);
         UserData userData = UserData.fromJson(jsonResponse);
         _coin = userData.coin;
-        _name = userData.firstName;
+        _name = userData.name;
         _profileUrl = userData.profileUrl;
       }
     } catch (e) {
@@ -174,7 +174,7 @@ class AuthProvider extends ChangeNotifier {
   void tokenToData(String token) {
     var data = decodeJwt(token);
     TokenModel userData = TokenModel.fromJson(data!);
-    _name = userData.firstName;
+    _name = userData.name;
     _userId = userData.id;
     _coin = userData.coin;
     _profileUrl = userData.profileUrl;
