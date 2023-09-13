@@ -62,7 +62,6 @@ class _UserProfilePageState extends State<UserProfilePage> {
     });
     if (userDetails != null) {
       firstnameController.text = userDetails!.name;
-      lastnameController.text = userDetails!.lastName;
       mobileController.text = userDetails!.mobileNumber ?? '';
     }
   }
@@ -171,12 +170,10 @@ class _UserProfilePageState extends State<UserProfilePage> {
                               ),
                         onPressed: () async {
                           final updatedFirstName = firstnameController.text;
-                          final updatedlastName = lastnameController.text;
                           final updatedMobile = mobileController.text;
 
                           final isUpdate = await userProvider.updateUserProfile(
                             name: updatedFirstName,
-                            lastName: updatedlastName,
                             mobileNumber: updatedMobile,
                             profilePicPath: image?.path,
                             userId: widget.userId,
