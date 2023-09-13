@@ -20,7 +20,6 @@ class UserProfilePage extends StatefulWidget {
 
 class _UserProfilePageState extends State<UserProfilePage> {
   TextEditingController firstnameController = TextEditingController();
-  TextEditingController lastnameController = TextEditingController();
   TextEditingController mobileController = TextEditingController();
   bool isLoading = true;
   UserDataModel? userDetails;
@@ -79,7 +78,6 @@ class _UserProfilePageState extends State<UserProfilePage> {
   @override
   void dispose() {
     firstnameController.dispose();
-    lastnameController.dispose();
     mobileController.dispose();
     super.dispose();
   }
@@ -136,14 +134,6 @@ class _UserProfilePageState extends State<UserProfilePage> {
                       controller: firstnameController,
                       decoration: const InputDecoration(
                         labelText: 'First Name',
-                        prefixIcon: Icon(Icons.person),
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-                    TextFormField(
-                      controller: lastnameController,
-                      decoration: const InputDecoration(
-                        labelText: 'Last Name',
                         prefixIcon: Icon(Icons.person),
                       ),
                     ),
