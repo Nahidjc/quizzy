@@ -36,7 +36,7 @@ class UserProvider extends ChangeNotifier {
   }
 
   Future<bool> updateUserProfile({
-    String? firstName,
+    String? name,
     String? lastName,
     String? mobileNumber,
     String? profilePicPath,
@@ -47,7 +47,7 @@ class UserProvider extends ChangeNotifier {
       notifyListeners();
       final url = Uri.parse('${AppUrl.baseUrl}/user/update/$userId');
       final request = http.MultipartRequest('POST', url);
-      request.fields['firstName'] = firstName ?? '';
+      request.fields['name'] = name ?? '';
       request.fields['lastName'] = lastName ?? '';
       request.fields['mobileNumber'] = mobileNumber ?? '';
       if (profilePicPath != null) {

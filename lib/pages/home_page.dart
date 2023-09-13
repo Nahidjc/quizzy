@@ -5,7 +5,7 @@ import 'package:quizzy/components/category/category_skeleton.dart';
 import 'package:quizzy/components/custom_drawer.dart';
 import 'package:quizzy/components/header.dart';
 import 'package:quizzy/api_caller/categories.dart';
-import 'package:quizzy/components/slider.dart';
+// import 'package:quizzy/components/slider.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 class HomePage extends StatefulWidget {

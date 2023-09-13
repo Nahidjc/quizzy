@@ -61,7 +61,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
       isLoading = false;
     });
     if (userDetails != null) {
-      firstnameController.text = userDetails!.firstName;
+      firstnameController.text = userDetails!.name;
       lastnameController.text = userDetails!.lastName;
       mobileController.text = userDetails!.mobileNumber ?? '';
     }
@@ -175,7 +175,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                           final updatedMobile = mobileController.text;
 
                           final isUpdate = await userProvider.updateUserProfile(
-                            firstName: updatedFirstName,
+                            name: updatedFirstName,
                             lastName: updatedlastName,
                             mobileNumber: updatedMobile,
                             profilePicPath: image?.path,

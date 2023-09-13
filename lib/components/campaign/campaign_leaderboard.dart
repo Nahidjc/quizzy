@@ -94,7 +94,7 @@ class _CampaignLeaderboardPageState extends State<CampaignLeaderboardPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  entry.firstName,
+                  entry.name,
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 16,
@@ -185,13 +185,13 @@ class _CampaignLeaderboardPageState extends State<CampaignLeaderboardPage> {
 }
 
 class CampaignLeaderboardEntry {
-  final String firstName;
+  final String name;
   final int totalPoints;
   final String? profileUrl;
   final String userId;
 
   CampaignLeaderboardEntry({
-    required this.firstName,
+    required this.name,
     required this.totalPoints,
     this.profileUrl,
     required this.userId,
