@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:quizzy/pages/home_page.dart';
 import 'package:quizzy/pages/signup_page.dart';
 import 'package:quizzy/provider/login_provider.dart';
 
@@ -34,11 +33,20 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   @override
+  void didChangeDependencies() {
+    Future.delayed(const Duration(seconds: 2)).then((value) {
+      final authState = Provider.of<AuthProvider>(context, listen: false);
+      if (authState.isAuthenticated) {
+        Navigator.of(context).pushNamed("/home");
+      }
+    });
+
+    super.didChangeDependencies();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final authState = Provider.of<AuthProvider>(context);
-    if (authState.isAuthenticated) {
-      return const HomePage();
-    }
     return Scaffold(
       body: authState.isLoading
           ? const Center(child: CircularProgressIndicator())
