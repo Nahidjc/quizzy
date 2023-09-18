@@ -1,7 +1,12 @@
+import 'dart:convert';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:quizzy/pages/signup_page.dart';
 import 'package:quizzy/provider/login_provider.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:http/http.dart' as http;
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -13,6 +18,7 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  bool isPushingHome = false;
 
   @override
   void dispose() {
@@ -33,11 +39,17 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   @override
-  void didChangeDependencies() {
-    Future.delayed(const Duration(seconds: 2)).then((value) {
+  void didChangeDependencies() async {
+    // final currentRoute = ModalRoute.of(context)?.settings?.name;
+    Future.delayed(const Duration(seconds: 2)).then((value) async {
       final authState = Provider.of<AuthProvider>(context, listen: false);
       if (authState.isAuthenticated) {
-        Navigator.of(context).pushNamed("/home");
+        isPushingHome = true;
+        if (!isPushingHome) {
+          Navigator.of(context).pushNamed("/home").then((value) {
+            isPushingHome = false;
+          });
+        }
       }
     });
 
@@ -45,8 +57,72 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   @override
+  void initState() {
+    isPushingHome = false;
+    listenForAuthStateChange();
+    super.initState();
+  }
+
+  void listenForAuthStateChange() {
+    final provider = Provider.of<AuthProvider>(context, listen: false);
+    try {
+      FirebaseAuth.instance.userChanges().listen((User? user) async {
+        if (user != null) {
+          final token = await user.getIdToken();
+          bool hasSuccessfullySignedup =
+              await provider.createUserFromSocailSignup(token as String);
+          if (hasSuccessfullySignedup) {
+            provider.socialloginProvider(token);
+          }
+        }
+      });
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future<UserCredential> signInWithGoogle() async {
+    final provider = Provider.of<AuthProvider>(context, listen: false);
+    provider.setLoading(true);
+    final GoogleSignInAccount? googleUser = await GoogleSignIn(
+      scopes: [
+        'email',
+        'https://www.googleapis.com/auth/contacts.readonly',
+      ],
+    ).signIn();
+
+    // Obtain the auth details from the request
+    final GoogleSignInAuthentication? googleAuth =
+        await googleUser?.authentication;
+
+    // Create a new credential
+    final credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth?.accessToken,
+      idToken: googleAuth?.idToken,
+    );
+
+    // Once signed in, return the UserCredential
+    return await FirebaseAuth.instance.signInWithCredential(credential);
+  }
+
+  Future<UserCredential?> signInWithFacebook() async {
+    final provider = Provider.of<AuthProvider>(context, listen: false);
+    provider.setLoading(true);
+    final LoginResult result = await FacebookAuth.instance.login();
+    if (result.status == LoginStatus.success) {
+      // Create a credential from the access token
+      final OAuthCredential credential =
+          FacebookAuthProvider.credential(result.accessToken!.token);
+      // Once signed in, return the UserCredential
+      return await FirebaseAuth.instance.signInWithCredential(credential);
+    }
+    return null;
+  }
+
+  @override
   Widget build(BuildContext context) {
     final authState = Provider.of<AuthProvider>(context);
+
     return Scaffold(
       body: authState.isLoading
           ? const Center(child: CircularProgressIndicator())
@@ -183,7 +259,27 @@ class _LoginPageState extends State<LoginPage> {
                               style: TextStyle(color: Colors.white)),
                         ),
                       ),
-                      const SizedBox(height: 20.0),
+                      const SizedBox(height: 10.0),
+                      const Text(
+                        "Sign in using",
+                      ),
+                      const SizedBox(height: 10.0),
+                      Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            IconButton(
+                                style: IconButton.styleFrom(
+                                    backgroundColor: Colors.grey.shade300),
+                                onPressed: signInWithGoogle,
+                                icon: const Icon(Icons.g_mobiledata)),
+                            IconButton(
+                                style: IconButton.styleFrom(
+                                    backgroundColor: Colors.grey.shade300),
+                                onPressed: signInWithFacebook,
+                                icon: const Icon(Icons.facebook))
+                          ]),
+                      const SizedBox(height: 10.0),
                       GestureDetector(
                         child: const Padding(
                           padding: EdgeInsets.only(right: 8.0),
