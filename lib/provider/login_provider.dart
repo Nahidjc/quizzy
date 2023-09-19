@@ -40,7 +40,7 @@ class AuthProvider extends ChangeNotifier {
 
   Future<bool> createUserFromSocailSignup(String token) async {
     try {
-      final url = Uri.parse('http://192.168.1.157:10001/v1/auth/social-signup');
+      final url = Uri.parse('${AppUrl.baseUrl}/auth/social-signup');
       final response = await http.post(url,
           headers: {
             'Content-Type': 'application/json',
@@ -54,7 +54,7 @@ class AuthProvider extends ChangeNotifier {
   }
 
   Future<void> socialloginProvider(String token) async {
-    final url = Uri.parse('http://192.168.1.157:10001/v1/auth/social-login');
+    final url = Uri.parse('${AppUrl.baseUrl}/auth/social-login');
     final response = await http.post(url,
         headers: {
           'Content-Type': 'application/json',
@@ -75,9 +75,9 @@ class AuthProvider extends ChangeNotifier {
     _profileUrl = userDetails.profileUrl;
     await TokenManager.saveToken(userDetails.token);
     notifyListeners();
-    setLoading(false);
     setAuthenticated(true);
     _errorMessage = '';
+    setLoading(false);
   }
 
   failedLoginHandler(http.Response response) async {
