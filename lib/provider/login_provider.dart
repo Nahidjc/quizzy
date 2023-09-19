@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'dart:io';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:quizzy/api_caller/app_url.dart';
@@ -36,10 +38,62 @@ class AuthProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<bool> createUserFromSocailSignup(String token) async {
+    try {
+      final url = Uri.parse('${AppUrl.baseUrl}/auth/social-signup');
+      final response = await http.post(url,
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: jsonEncode({"token": token}));
+
+      return response.statusCode == 200;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  Future<void> socialloginProvider(String token) async {
+    final url = Uri.parse('${AppUrl.baseUrl}/auth/social-login');
+    final response = await http.post(url,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode({"token": token}));
+
+    return response.statusCode == 200
+        ? successfulLoginHandler(response)
+        : failedLoginHandler(response);
+  }
+
+  successfulLoginHandler(http.Response response) async {
+    var jsonResponse = json.decode(response.body);
+    UserDetails userDetails = UserDetails.fromJson(jsonResponse['data']);
+    _name = userDetails.name;
+    _coin = userDetails.coin;
+    _userId = userDetails.id;
+    _profileUrl = userDetails.profileUrl;
+    await TokenManager.saveToken(userDetails.token);
+    notifyListeners();
+    setAuthenticated(true);
+    _errorMessage = '';
+    setLoading(false);
+  }
+
+  failedLoginHandler(http.Response response) async {
+    setAuthenticated(false);
+    final responseBody = json.decode(response.body);
+    _errorMessage = responseBody['message'] ?? 'Unknown error';
+    Timer(const Duration(seconds: 3), () {
+      _errorMessage = '';
+      notifyListeners();
+    });
+  }
+
   Future<void> loginProvider(
       BuildContext context, String email, String password) async {
-    final url = Uri.parse('${AppUrl.baseUrl}/auth/login');
     setLoading(true);
+    final url = Uri.parse('${AppUrl.baseUrl}/auth/login');
     try {
       final response = await http.post(
         url,
@@ -52,25 +106,9 @@ class AuthProvider extends ChangeNotifier {
         ),
       );
       if (response.statusCode == 200) {
-        var jsonResponse = json.decode(response.body);
-        UserDetails userDetails = UserDetails.fromJson(jsonResponse['data']);
-        _name = userDetails.name;
-        _coin = userDetails.coin;
-        _userId = userDetails.id;
-        _profileUrl = userDetails.profileUrl;
-        await TokenManager.saveToken(userDetails.token);
-        notifyListeners();
-        setLoading(false);
-        setAuthenticated(true);
-        _errorMessage = '';
+        successfulLoginHandler(response);
       } else {
-        setAuthenticated(false);
-        final responseBody = json.decode(response.body);
-        _errorMessage = responseBody['message'] ?? 'Unknown error';
-        Timer(const Duration(seconds: 3), () {
-          _errorMessage = '';
-          notifyListeners();
-        });
+        failedLoginHandler(response);
       }
       notifyListeners();
     } catch (e) {
@@ -80,8 +118,8 @@ class AuthProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> register(BuildContext context, String name,
-      String email, String mobileNo, String password) async {
+  Future<void> register(BuildContext context, String name, String email,
+      String mobileNo, String password) async {
     try {
       final url = Uri.parse('${AppUrl.baseUrl}/auth/signup');
       setLoading(true);
@@ -157,6 +195,7 @@ class AuthProvider extends ChangeNotifier {
     _name = '';
     _coin = 0;
     setAuthenticated(false);
+    FirebaseAuth.instance.signOut();
     notifyListeners();
   }
 
