@@ -43,8 +43,8 @@ class _LoginPageState extends State<LoginPage> {
     Future.delayed(const Duration(seconds: 2)).then((value) async {
       final authState = Provider.of<AuthProvider>(context, listen: false);
       if (authState.isAuthenticated) {
-        isPushingHome = true;
         if (!isPushingHome) {
+          isPushingHome = true;
           Navigator.of(context).pushNamed("/home").then((value) {
             isPushingHome = false;
           });
