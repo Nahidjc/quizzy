@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quizzy/configs/variables.dart';
 import 'package:quizzy/pages/subject_list_page.dart';
 import 'package:quizzy/models/level_model.dart';
 
@@ -9,78 +10,120 @@ class Categories extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: GridView.builder(
+    return Padding(
+      padding: const EdgeInsets.all(20),
+      child: GridView.builder(
         padding: const EdgeInsets.all(16.0),
-        itemCount: categoryList.length,
+        itemCount: categoryList.length + 1,
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 3,
+          crossAxisCount: 2,
           childAspectRatio: 1.0,
-          crossAxisSpacing: 16.0,
-          mainAxisSpacing: 16.0,
+          crossAxisSpacing: 22.0,
+          mainAxisSpacing: 22.0,
         ),
-        itemBuilder: (BuildContext context, int index) {
+        itemBuilder: (BuildContext context, int i) {
+          final index = categoryList.length == i ? categoryList.length - 1 : i;
           QuizLevel category = categoryList[index];
-          return GestureDetector(
-            onTap: () => Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => SubjectList(
-                    subjectList: category.subjectList,
-                    displayName: category.displayName),
-              ),
-            ),
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(10.0),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.3),
-                    spreadRadius: 2,
-                    blurRadius: 5,
-                    offset: const Offset(0, 3),
-                  ),
-                ],
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Icon(
-                    Icons.school,
-                    size: 48.0,
-                    color: Color.fromARGB(255, 144, 106, 250),
-                  ),
-                  const SizedBox(height: 8.0),
-                  Center(
-                    child: LayoutBuilder(
-                      builder: (context, constraints) {
-                        double fontSize = constraints.maxWidth * 0.12;
-                        return Text(
-                          category.displayName,
+          return categoryList.length == i
+              ? GestureDetector(
+                  child: Container(
+                    decoration: gradientBoxDecoration,
+                    height: 30,
+                    width: 100,
+                    child: const Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.add_box_rounded,
+                          color: Colors.white,
+                          size: 40,
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Text(
+                          "Load More..",
                           style: TextStyle(
-                            color: const Color.fromARGB(255, 144, 106, 250),
-                            fontSize: fontSize,
-                            fontWeight: FontWeight.bold,
-                            fontStyle: FontStyle.italic,
-                            shadows: [
-                              Shadow(
-                                color: Colors.black.withOpacity(0.2),
-                                offset: const Offset(1, 1),
-                                blurRadius: 1.0,
-                              ),
-                            ],
-                          ),
-                        );
-                      },
+                              fontSize: 14,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold),
+                        )
+                      ],
                     ),
                   ),
-                ],
-              ),
-            ),
-          );
+                )
+              : GestureDetector(
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => SubjectList(
+                          subjectList: category.subjectList,
+                          displayName: category.displayName),
+                    ),
+                  ),
+                  child: Container(
+                    decoration: gradientBoxDecoration,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Icon(
+                          Icons.school,
+                          size: 40.0,
+                          color: Colors.white,
+                        ),
+                        const SizedBox(height: 8.0),
+                        Center(
+                          child: LayoutBuilder(
+                            builder: (context, constraints) {
+                              double fontSize = constraints.maxWidth * 0.10;
+                              return Text(
+                                category.displayName,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: fontSize,
+                                  fontWeight: FontWeight.bold,
+                                  shadows: [
+                                    Shadow(
+                                      color: Colors.black.withOpacity(0.2),
+                                      offset: const Offset(1, 1),
+                                      blurRadius: 1.0,
+                                    ),
+                                  ],
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
         },
       ),
     );
   }
 }
+
+final gradientBoxDecoration = BoxDecoration(
+  gradient: const LinearGradient(
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    colors: [
+      Color(0xFF7953E1),
+      Color.fromRGBO(141, 105, 240, 0.79),
+    ],
+    stops: [0.0, 1.0],
+    tileMode: TileMode.clamp,
+    transform: GradientRotation(230.54 * (3.14159265359 / 180.0)),
+  ),
+  borderRadius: BorderRadius.circular(10.0),
+  boxShadow: [
+    BoxShadow(
+      color: Variables.primaryColor.withOpacity(.3),
+      spreadRadius: 2,
+      blurRadius: 5,
+      offset: const Offset(0, 3),
+    ),
+  ],
+);

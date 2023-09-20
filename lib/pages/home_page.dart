@@ -49,34 +49,61 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const MyAppBar(),
-      body: Column(children: [
+      // appBar: const MyAppBar(),
+      body: Stack(alignment: Alignment.topLeft, children: [
         Container(
-            alignment: Alignment.centerLeft,
-            margin: const EdgeInsets.fromLTRB(15.0, 20.0, 15, 0.0),
-            child: const Text("Competitions Categories",
-                textAlign: TextAlign.start,
-                style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold))),
-        Expanded(
-            child: isLoading
-                ? const CategorySkeleton()
-                : Categories(categoryList: categoryList)),
-        // SizedBox(
-        //   height: 130,
-        //   child: CarouselSliderCustom(),
-        // ),
-        const SizedBox(height: 10),
-        if (_bannerAd != null)
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: SafeArea(
-              child: SizedBox(
-                width: MediaQuery.of(context).size.width,
-                height: _bannerAd!.size.height.toDouble(),
-                child: AdWidget(ad: _bannerAd!),
+          height: double.infinity,
+        ),
+        const SizedBox(
+          height: 300,
+          child: MyAppBar(),
+        ),
+        Positioned(
+            top: 240,
+            left: 25,
+            child: SizedBox(
+              width: MediaQuery.of(context).size.width - 50,
+              height: MediaQuery.of(context).size.height - 300,
+              child: Container(
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: Colors.white),
+                child: Column(children: [
+                  Container(
+                      alignment: Alignment.centerLeft,
+                      margin: const EdgeInsets.fromLTRB(15.0, 20.0, 15, 0.0),
+                      child: const Center(
+                        child: Text("Featured Categories",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                color: Color.fromRGBO(121, 73, 255, 1),
+                                fontSize: 16.0,
+                                fontWeight: FontWeight.bold)),
+                      )),
+                  Expanded(
+                      child: isLoading
+                          ? const CategorySkeleton()
+                          : Categories(categoryList: categoryList)),
+                  // SizedBox(
+                  //   height: 130,
+                  //   child: CarouselSliderCustom(),
+                  // ),
+
+                  const SizedBox(height: 10),
+                  if (_bannerAd != null)
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: SafeArea(
+                        child: SizedBox(
+                          width: MediaQuery.of(context).size.width,
+                          height: _bannerAd!.size.height.toDouble(),
+                          child: AdWidget(ad: _bannerAd!),
+                        ),
+                      ),
+                    )
+                ]),
               ),
-            ),
-          )
+            ))
       ]),
       endDrawer: const CustomDrawer(),
     );

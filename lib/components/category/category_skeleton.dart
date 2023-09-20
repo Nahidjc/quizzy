@@ -8,13 +8,13 @@ class CategorySkeleton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: GridView.builder(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(20.0),
         itemCount: 6,
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 3,
+          crossAxisCount: 2,
           childAspectRatio: 1.0,
-          crossAxisSpacing: 16.0,
-          mainAxisSpacing: 16.0,
+          crossAxisSpacing: 22.0,
+          mainAxisSpacing: 22.0,
         ),
         itemBuilder: (BuildContext context, int index) {
           return Shimmer.fromColors(
