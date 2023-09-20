@@ -163,14 +163,14 @@ class _MyAppBarState extends State<MyAppBar>
                                   children: [
                                     const Icon(
                                       Icons.emoji_events,
-                                      color: Variables.primaryColor,
+                                      color: Colors.orange,
                                       size: 20.0,
                                     ),
                                     const SizedBox(width: 4.0),
                                     Text(
                                       coinString,
                                       style: const TextStyle(
-                                        color: Variables.primaryColor,
+                                        color: Colors.orange,
                                         fontSize: 14.0,
                                       ),
                                     ),

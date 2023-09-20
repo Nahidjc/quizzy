@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:quizzy/api_caller/leaderboard.dart';
+import 'package:quizzy/configs/variables.dart';
 import 'package:quizzy/models/leaderboard.dart';
 
 class CampaignLeaderboardPage extends StatefulWidget {
@@ -122,7 +123,7 @@ class _CampaignLeaderboardPageState extends State<CampaignLeaderboardPage> {
             alignment: Alignment.center,
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
             decoration: BoxDecoration(
-              color: Colors.blue,
+              color: Variables.primaryColor,
               borderRadius: BorderRadius.circular(20),
             ),
             child: Text(
@@ -180,7 +181,7 @@ class _CampaignLeaderboardPageState extends State<CampaignLeaderboardPage> {
                                     const EdgeInsets.symmetric(vertical: 20),
                                 padding: const EdgeInsets.all(16),
                                 decoration: BoxDecoration(
-                                  color: Colors.red,
+                                  color: Variables.primaryColor,
                                   borderRadius: BorderRadius.circular(8),
                                 ),
                                 child: const Text(

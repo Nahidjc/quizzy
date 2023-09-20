@@ -58,8 +58,11 @@ class _HomePageState extends State<HomePage> {
           height: 300,
           child: MyAppBar(),
         ),
+        const SizedBox(
+          height: 30,
+        ),
         Positioned(
-            top: 240,
+            top: 250,
             left: 25,
             child: SizedBox(
               width: MediaQuery.of(context).size.width - 50,

@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:quizzy/api_caller/quiz.dart';
 import 'package:quizzy/components/multiple_answer_quiz.dart';
 import 'package:quizzy/components/single_answer_quiz.dart';
+import 'package:quizzy/configs/variables.dart';
 import 'package:quizzy/models/quiz_convert.dart';
 import 'package:quizzy/models/quiz_model.dart';
 import 'package:quizzy/pages/quiz_result.dart';
@@ -400,27 +401,81 @@ class _QuizPageState extends State<QuizPage> {
                   ),
                   const SizedBox(height: 20),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      if (currentQuestionIndex > 0)
-                        ElevatedButton(
-                          onPressed: previousQuestion,
-                          child: const Text('Previous'),
-                        ),
-                      const SizedBox(width: 20),
-                      if (currentQuestionIndex < quizData.length - 1)
-                        ElevatedButton(
-                          onPressed: nextQuestion,
-                          child: const Text('Next'),
-                        ),
-                      const SizedBox(width: 20),
-                      if (currentQuestionIndex == quizData.length - 1)
-                        ElevatedButton(
-                          onPressed: showWarningIfQuestionsNotFilled,
-                          child: const Text('Submit Quiz'),
-                        ),
-                    ],
-                  )
+                        mainAxisAlignment: MainAxisAlignment
+                            .spaceEvenly, // Set mainAxisAlignment to spaceEvenly
+                        children: [
+                          if (currentQuestionIndex > 0)
+                            ElevatedButton(
+                              onPressed: previousQuestion,
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Variables.primaryColor,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 16),
+                                minimumSize: Size(
+                                    MediaQuery.of(context).size.width * 0.4, 0),
+                              ),
+                              child: Text(
+                                'Previous',
+                                style: TextStyle(
+                                  fontSize: MediaQuery.of(context).size.height *
+                                      0.018,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          if (currentQuestionIndex < quizData.length - 1)
+                            ElevatedButton(
+                              onPressed: nextQuestion,
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Variables.primaryColor,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 16),
+                                minimumSize: Size(
+                                    MediaQuery.of(context).size.width * 0.4, 0),
+                              ),
+                              child: Text(
+                                'Next',
+                                style: TextStyle(
+                                  fontSize: MediaQuery.of(context).size.height *
+                                      0.018,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          if (currentQuestionIndex == quizData.length - 1)
+                            ElevatedButton(
+                              onPressed: showWarningIfQuestionsNotFilled,
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Variables.primaryColor,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 16),
+                                minimumSize: Size(
+                                    MediaQuery.of(context).size.width * 0.4, 0),
+                              ),
+                              child: Text(
+                                'Submit Quiz',
+                                style: TextStyle(
+                                  fontSize: MediaQuery.of(context).size.height *
+                                      0.018,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                        ],
+                      )
+
                 ],
               ),
             ),

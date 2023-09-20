@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:quizzy/api_caller/quiz.dart';
+import 'package:quizzy/configs/variables.dart';
 import 'package:quizzy/models/quiz_model.dart';
 import 'package:quizzy/pages/practice_questions.dart';
 import 'package:quizzy/pages/quiz_page.dart';
@@ -18,6 +19,7 @@ class _QuizDetailsState extends State<QuizDetails> {
   void initState() {
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
@@ -30,10 +32,11 @@ class _QuizDetailsState extends State<QuizDetails> {
       appBar: AppBar(
         title: const Text(
           "Ready for the challenge",
-          style: TextStyle(fontSize: 18),
+          style: TextStyle(fontSize: 18, color: Colors.white),
         ),
         centerTitle: true,
         elevation: 4,
+        backgroundColor: Variables.primaryColor,
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -76,7 +79,7 @@ class _QuizDetailsState extends State<QuizDetails> {
                             child: Text(
                               "$len Questions",
                               style: TextStyle(
-                                color: Colors.deepPurple,
+                                color: Variables.primaryColor,
                                 fontWeight: FontWeight.bold,
                                 fontSize:
                                     MediaQuery.of(context).size.width * 0.04,
@@ -130,33 +133,31 @@ class _QuizDetailsState extends State<QuizDetails> {
                 ),
                 height: passageHeight,
                 padding: const EdgeInsets.only(top: 10, bottom: 10),
-                child: SingleChildScrollView(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Center(
-                          child: Icon(
-                            Icons.info_outline,
-                            size: 60,
-                            color: Colors.grey[400], // Adjust color here
+                child: const Center(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.all(16.0),
+                          child: Center(
+                            child: Icon(
+                              Icons.info_outline,
+                              size: 60,
+                              color: Variables.primaryColor,
+                            ),
                           ),
                         ),
-                      ),
-                      Text(
-                        'No description available',
-                        style: TextStyle(
+                        Text(
+                          'No description available',
+                          style: TextStyle(
                             fontSize: 16,
-                            color: Colors.grey[400]), // Adjust color here
-                      ),
-                    ],
+                            color: Variables.primaryColor,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                  
-                  // Text(
-                  //   "বিজ্ঞানের যে শাখায় পদার্থ এবং শক্তির মিথস্ক্রিয়া নিয়ে আলোচনা করা হয় তাকে পদার্থবিজ্ঞান বলে।",
-                  //   style: TextStyle(fontSize: 18),
-                  // ),
                 ),
               ),
               const SizedBox(height: 24),
@@ -212,7 +213,7 @@ class _QuizDetailsState extends State<QuizDetails> {
                     );
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blue,
+                    backgroundColor: Variables.primaryColor,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
                     ),
@@ -242,7 +243,7 @@ class _QuizDetailsState extends State<QuizDetails> {
                     );
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blueAccent,
+                    backgroundColor: Variables.primaryColor,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
                     ),
@@ -264,8 +265,6 @@ class _QuizDetailsState extends State<QuizDetails> {
           ),
         ),
       ),
-
-
     );
   }
 }
