@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:quizzy/components/custom_drawer.dart';
+import 'package:quizzy/configs/variables.dart';
 import 'package:quizzy/pages/home_page.dart';
 import 'package:quizzy/pages/leaderboard.dart';
 import 'package:quizzy/pages/profile_page.dart';
@@ -53,7 +54,7 @@ class _HomeState extends State<Home> {
           ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: Colors.amber[800],
+        selectedItemColor: Variables.primaryColor,
         onTap: (index) {
           if (index == 2) {
             _openDrawer();
@@ -65,7 +66,6 @@ class _HomeState extends State<Home> {
         showUnselectedLabels: false,
       ),
       drawer: const CustomDrawer(),
-      
     );
   }
 }
