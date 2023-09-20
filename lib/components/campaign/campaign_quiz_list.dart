@@ -4,6 +4,7 @@ import 'package:quizzy/api_caller/campaign.dart';
 import 'package:quizzy/components/campaign/quiz_item.dart';
 import 'package:quizzy/components/campaign/skeleton.dart';
 import 'package:quizzy/components/custom_drawer.dart';
+import 'package:quizzy/configs/variables.dart';
 import 'package:quizzy/models/campaign_quiz.dart';
 import 'package:quizzy/provider/login_provider.dart';
 
@@ -48,7 +49,11 @@ class _CampaignQuizListState extends State<CampaignQuizList> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Campaign Quiz'),
+          title: const Text(
+            'Campaign Quiz',
+            style: TextStyle(color: Colors.white),
+          ),
+          backgroundColor: Variables.primaryColor,
         actions: [Container()],
       ),
       body: isLoading
@@ -88,14 +93,14 @@ class NoQuizzesMessage extends StatelessWidget {
           const Icon(
             Icons.lightbulb_outline,
             size: 100,
-            color: Colors.grey,
+            color: Variables.primaryColor,
           ),
           const SizedBox(height: 20),
           const Text(
             "No quizzes available at this time.",
             style: TextStyle(
               fontSize: 20,
-              color: Colors.grey,
+              color: Variables.primaryColor,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -104,7 +109,7 @@ class NoQuizzesMessage extends StatelessWidget {
             "Check back later for more exciting quizzes!",
             style: TextStyle(
               fontSize: 16,
-              color: Colors.grey,
+              color: Variables.primaryColor,
             ),
           ),
           const SizedBox(height: 20),
@@ -112,7 +117,7 @@ class NoQuizzesMessage extends StatelessWidget {
             onPressed: refreshQuizzes,
             style: ElevatedButton.styleFrom(
               foregroundColor: Colors.white,
-              backgroundColor: Colors.blue,
+              backgroundColor: Variables.primaryColor,
               padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8),

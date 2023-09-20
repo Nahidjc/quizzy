@@ -3,6 +3,7 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:quizzy/ads/banner_ads.dart';
 import 'package:quizzy/components/custom_drawer.dart';
 import 'package:quizzy/components/info_message.dart';
+import 'package:quizzy/configs/variables.dart';
 import 'package:quizzy/models/level_model.dart';
 import 'package:quizzy/pages/quiz_level.dart';
 
@@ -50,7 +51,7 @@ class _SubjectListState extends State<SubjectList> {
       appBar: AppBar(
         toolbarHeight: 80.0,
         centerTitle: true,
-        backgroundColor: const Color.fromARGB(255, 144, 106, 250),
+        backgroundColor: Variables.primaryColor,
         iconTheme: const IconThemeData(color: Colors.white),
         actions: [Container()],
         title: Text(
@@ -69,16 +70,13 @@ class _SubjectListState extends State<SubjectList> {
               child: GridView.builder(
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: _getCrossAxisCount(context),
-                  crossAxisSpacing: 10.0,
-                  mainAxisSpacing: 10.0,
+                  crossAxisSpacing: 20.0,
+                  mainAxisSpacing: 20.0,
                 ),
                 itemCount: widget.subjectList.length,
                 itemBuilder: (context, index) {
                   Subject subject = widget.subjectList[index];
-                  return Card(
-                    margin: const EdgeInsets.all(5.0),
-                    color: Colors.white,
-                    child: ListTile(
+                  return GestureDetector(
                       onTap: () => Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -89,21 +87,40 @@ class _SubjectListState extends State<SubjectList> {
                           ),
                         ),
                       ),
-                      title: SizedBox(
-                        width: double.infinity,
-                        height: double.infinity,
-                        child: Center(
-                          child: Text(
-                            subject.subjectName,
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.normal,
-                              color: Colors.black,
+                    child: Container(
+                      decoration: gradientBoxDecoration,
+                      child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Icon(
+                              Icons.subject_outlined,
+                              size: 40.0,
+                              color: Colors.white,
                             ),
-                          ),
-                        ),
-                      ),
+                            const SizedBox(height: 8.0),
+                            Center(
+                              child: LayoutBuilder(
+                                builder: (context, constraints) {
+                                  double fontSize = constraints.maxWidth * 0.12;
+                                  return Text(
+                                    subject.subjectName,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: fontSize,
+                                      fontWeight: FontWeight.bold,
+                                      shadows: [
+                                        Shadow(
+                                          color: Colors.black.withOpacity(0.2),
+                                          offset: const Offset(1, 1),
+                                          blurRadius: 1.0,
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                          ]),
                     ),
                   );
                 },
@@ -134,3 +151,27 @@ class _SubjectListState extends State<SubjectList> {
     }
   }
 }
+
+
+final gradientBoxDecoration = BoxDecoration(
+  gradient: const LinearGradient(
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    colors: [
+      Color(0xFF7953E1),
+      Color.fromRGBO(141, 105, 240, 0.79),
+    ],
+    stops: [0.0, 1.0],
+    tileMode: TileMode.clamp,
+    transform: GradientRotation(230.54 * (3.14159265359 / 180.0)),
+  ),
+  borderRadius: BorderRadius.circular(10.0),
+  boxShadow: [
+    BoxShadow(
+      color: Variables.primaryColor.withOpacity(.3),
+      spreadRadius: 2,
+      blurRadius: 5,
+      offset: const Offset(0, 3),
+    ),
+  ],
+);

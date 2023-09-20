@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:quizzy/api_caller/quiz.dart';
 import 'package:quizzy/components/practice/practice_multple_answer_result.dart';
 import 'package:quizzy/components/practice/practice_single_answer_result.dart';
+import 'package:quizzy/configs/variables.dart';
 import 'package:quizzy/models/quiz_convert.dart';
 import 'package:quizzy/models/quiz_model.dart';
 
@@ -47,10 +48,11 @@ class _PracticeQuestionPageState extends State<PracticeQuestionPage> {
       appBar: AppBar(
         title: const Text(
           "Related Questions for Practice",
-          style: TextStyle(fontSize: 18),
+          style: TextStyle(fontSize: 18, color: Colors.white),
         ),
         centerTitle: true,
         elevation: 4,
+        backgroundColor: Variables.primaryColor,
       ),
       body: isLoading
           ? const Center(child: CircularProgressIndicator())

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:quizzy/ads/interstitial_ads.dart';
 import 'package:quizzy/components/custom_drawer.dart';
+import 'package:quizzy/configs/variables.dart';
 import 'package:quizzy/pages/home_page.dart';
 import 'package:quizzy/pages/leaderboard.dart';
 import 'package:quizzy/pages/result_review.dart';
@@ -111,7 +112,7 @@ class _QuizResultPageState extends State<QuizResultPage>
           ),
           child: Container(
             height: MediaQuery.of(context).size.height * 0.5,
-            color: const Color(0xFF9B52D4),
+            color: Variables.primaryColor,
           ),
         ),
         CustomPaint(
@@ -144,7 +145,7 @@ class _QuizResultPageState extends State<QuizResultPage>
                                   painter: CircleProgressBarPainter(
                                     progress: _animation.value,
                                     color: Colors.green,
-                                    backgroundColor: Colors.red,
+                                    backgroundColor: Variables.primaryColor,
                                     strokeWidth: 10,
                                   ),
                                   child: Center(
@@ -155,7 +156,7 @@ class _QuizResultPageState extends State<QuizResultPage>
                                         const Text(
                                           "Your Score",
                                           style: TextStyle(
-                                            color: Colors.purple,
+                                            color: Variables.primaryColor,
                                             fontWeight: FontWeight.bold,
                                             fontSize: 15,
                                           ),
@@ -168,14 +169,14 @@ class _QuizResultPageState extends State<QuizResultPage>
                                                     '${widget.quizpoint.toInt()}',
                                                 style: const TextStyle(
                                                   fontSize: 30.0,
-                                                  color: Colors.purple,
+                                                  color: Variables.primaryColor,
                                                   fontWeight: FontWeight.bold,
                                                 ),
                                               ),
                                               const TextSpan(
                                                 text: 'pt',
                                                 style: TextStyle(
-                                                  color: Colors.purple,
+                                                  color: Variables.primaryColor,
                                                   fontSize: 14.0,
                                                 ),
                                               ),
@@ -228,7 +229,7 @@ class _QuizResultPageState extends State<QuizResultPage>
                                         Text(
                                           '${widget.percentage.toInt()}%',
                                           style: const TextStyle(
-                                              color: Colors.purple,
+                                              color: Variables.primaryColor,
                                               fontWeight: FontWeight.bold,
                                               fontSize: 16.0),
                                         ),
@@ -249,7 +250,7 @@ class _QuizResultPageState extends State<QuizResultPage>
                                         Text(
                                           '$quizLength',
                                           style: const TextStyle(
-                                              color: Colors.purple,
+                                              color: Variables.primaryColor,
                                               fontWeight: FontWeight.bold,
                                               fontSize: 16.0),
                                         ),
@@ -598,7 +599,7 @@ class CircleProgressBarPainter extends CustomPainter {
     final center = Offset(size.width / 2, size.height / 2);
     const circle4Radius = 90.0;
     final circle4Paint = Paint()
-      ..color = const Color.fromARGB(255, 220, 174, 255);
+      ..color = Variables.secondaryColor;
     canvas.drawCircle(center, circle4Radius, circle4Paint);
     const circle1Radius = 75.0;
     final circle1Paint = Paint()..color = Colors.white;
@@ -643,17 +644,17 @@ class CirclePainter extends CustomPainter {
     const circle1 = Offset(-20, 140);
     const circle1Radius = 80.0;
     final circle1Paint = Paint()
-      ..color = const Color.fromARGB(255, 220, 174, 255);
+      ..color = Variables.secondaryColor;
 
     const circle2 = Offset(190, 0);
     const circle2Radius = 70.0;
     final circle2Paint = Paint()
-      ..color = const Color.fromARGB(255, 220, 174, 255);
+      ..color = Variables.secondaryColor;
 
     const circle3 = Offset(420, 200);
     const circle3Radius = 80.0;
     final circle3Paint = Paint()
-      ..color = const Color.fromARGB(255, 220, 174, 255);
+      ..color = Variables.secondaryColor;
     canvas.drawCircle(circle1, circle1Radius, circle1Paint);
     canvas.drawCircle(circle2, circle2Radius, circle2Paint);
     canvas.drawCircle(circle3, circle3Radius, circle3Paint);

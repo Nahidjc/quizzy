@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
+import 'package:quizzy/configs/variables.dart';
 import 'package:quizzy/pages/signup_page.dart';
 import 'package:quizzy/provider/login_provider.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -269,13 +270,15 @@ class _LoginPageState extends State<LoginPage> {
                 child: ElevatedButton(
                   style: ButtonStyle(
                     backgroundColor:
-                        MaterialStateProperty.all<Color>(Colors.purple),
+                        MaterialStateProperty.all<Color>(
+                        Variables.primaryColor),
                   ),
                   onPressed: _submitForm,
                   child: const Text("Login",
                       style: TextStyle(color: Colors.white)),
                 ),
               ),
+              
               if (authState.isLoading)
                 const Column(
                   children: [

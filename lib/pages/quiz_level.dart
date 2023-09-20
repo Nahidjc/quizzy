@@ -5,6 +5,7 @@ import 'package:quickalert/quickalert.dart';
 import 'package:quizzy/ads/banner_ads.dart';
 import 'package:quizzy/api_caller/stage.dart';
 import 'package:quizzy/components/custom_drawer.dart';
+import 'package:quizzy/configs/variables.dart';
 import 'package:quizzy/models/stage_model.dart';
 import 'package:quizzy/pages/login_page.dart';
 import 'package:quizzy/pages/quiz_list.dart';
@@ -123,8 +124,8 @@ class _QuizLevelListState extends State<QuizLevelList> {
             : GridView.builder(
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 3,
-                  mainAxisSpacing: 10.0,
-                  crossAxisSpacing: 10.0,
+                  mainAxisSpacing: 20.0,
+                  crossAxisSpacing: 20.0,
                 ),
                 padding: const EdgeInsets.all(10.0),
                 itemBuilder: (BuildContext context, int index) {
@@ -171,15 +172,11 @@ class _QuizLevelListState extends State<QuizLevelList> {
     final user = Provider.of<AuthProvider>(context);
     const double buttonWidth = 110.0;
     const double buttonHeight = 110.0;
-    const double borderRadius = 10.0;
-    const Color unlockedColor = Colors.blue;
-    const Color lockedColor = Colors.purple;
     Color textColor = Colors.white;
-    Color boxShadowColor = Colors.black.withOpacity(0.3);
 
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: InkWell(
+      padding: const EdgeInsets.symmetric(vertical: 0),
+      child: GestureDetector(
         onTap: () {
           if (isUnlocked) {
             Navigator.push(
@@ -229,18 +226,7 @@ class _QuizLevelListState extends State<QuizLevelList> {
         child: Container(
             width: buttonWidth,
             height: buttonHeight,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(borderRadius),
-              boxShadow: [
-                BoxShadow(
-                  color: boxShadowColor,
-                  spreadRadius: 1,
-                  blurRadius: 3,
-                  offset: const Offset(0, 2),
-                ),
-              ],
-              color: isUnlocked ? unlockedColor : lockedColor,
-            ),
+            decoration: gradientBoxDecoration,
             child: Container(
               alignment: Alignment.center,
               child: Center(
@@ -269,3 +255,26 @@ class _QuizLevelListState extends State<QuizLevelList> {
     );
   }
 }
+
+final gradientBoxDecoration = BoxDecoration(
+  gradient: const LinearGradient(
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    colors: [
+      Color(0xFF7953E1),
+      Color.fromRGBO(141, 105, 240, 0.79),
+    ],
+    stops: [0.0, 1.0],
+    tileMode: TileMode.clamp,
+    transform: GradientRotation(230.54 * (3.14159265359 / 180.0)),
+  ),
+  borderRadius: BorderRadius.circular(10.0),
+  boxShadow: [
+    BoxShadow(
+      color: Variables.primaryColor.withOpacity(.3),
+      spreadRadius: 2,
+      blurRadius: 5,
+      offset: const Offset(0, 3),
+    ),
+  ],
+);

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:quizzy/api_caller/leaderboard.dart';
+import 'package:quizzy/configs/variables.dart';
 import 'package:quizzy/models/leaderboard.dart';
 
 class LeaderboardPage extends StatefulWidget {
@@ -70,10 +71,11 @@ class _LeaderboardPageState extends State<LeaderboardPage> {
       appBar: AppBar(
         title: const Text(
           "Leaderboard",
-          style: TextStyle(fontSize: 18),
+          style: TextStyle(fontSize: 18, color: Colors.white),
         ),
         centerTitle: true,
         elevation: 4,
+        backgroundColor: Variables.primaryColor,
       ),
       body: SafeArea(
         child: Column(
@@ -83,7 +85,7 @@ class _LeaderboardPageState extends State<LeaderboardPage> {
               margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: Colors.red,
+                color: Variables.primaryColor,
                 borderRadius: BorderRadius.circular(10.0),
               ),
               child: Text(
@@ -143,10 +145,10 @@ class _LeaderboardPageState extends State<LeaderboardPage> {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         decoration: BoxDecoration(
-          color: isSelected ? Colors.blue : Colors.white,
+          color: isSelected ? Variables.primaryColor : Colors.white,
           borderRadius: BorderRadius.circular(20),
           border: Border.all(
-            color: Colors.blue,
+            color: Variables.primaryColor,
             width: isSelected ? 2.0 : 1.0,
           ),
           boxShadow: [
@@ -176,7 +178,7 @@ class _LeaderboardPageState extends State<LeaderboardPage> {
           child: Container(
             padding: const EdgeInsets.all(20),
             decoration: BoxDecoration(
-              color: Colors.blueGrey[50], // Background color
+              color: Variables.primaryColor,
               borderRadius: BorderRadius.circular(12),
             ),
             child: Column(
@@ -219,7 +221,7 @@ class _LeaderboardPageState extends State<LeaderboardPage> {
       margin: const EdgeInsets.symmetric(vertical: 8),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
-        color: Colors.grey[200],
+        color: Variables.primaryColor,
         boxShadow: [
           BoxShadow(
             color: Colors.grey.withOpacity(0.4),
@@ -256,14 +258,15 @@ class _LeaderboardPageState extends State<LeaderboardPage> {
                   entry.name,
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
+                    color: Colors.white,
                     fontSize: 16,
                   ),
                 ),
                 Text(
                   '${entry.totalPoints} Points',
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontWeight: FontWeight.bold,
-                    color: Colors.grey[600],
+                    color: Colors.white,
                     fontSize: 14,
                   ),
                 ),
@@ -274,7 +277,7 @@ class _LeaderboardPageState extends State<LeaderboardPage> {
             alignment: Alignment.center,
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
             decoration: BoxDecoration(
-              color: Colors.blue,
+              color: Variables.secondaryColor,
               borderRadius: BorderRadius.circular(20),
             ),
             child: Text(
