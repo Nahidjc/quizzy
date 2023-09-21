@@ -40,7 +40,7 @@ class _HomePageState extends State<HomePage> {
       isLoading = true;
     });
     List<dynamic> levels = await CategoryList().fetchData();
-    categoryList = levels;
+    categoryList = levels.sublist(0, 4);
     setState(() {
       isLoading = false;
     });
