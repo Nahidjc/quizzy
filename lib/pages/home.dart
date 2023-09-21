@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:quizzy/components/custom_drawer.dart';
 import 'package:quizzy/configs/variables.dart';
+import 'package:quizzy/pages/all_quiz_categories.dart';
 import 'package:quizzy/pages/home_page.dart';
 import 'package:quizzy/pages/leaderboard.dart';
 import 'package:quizzy/pages/profile_page.dart';
@@ -17,6 +18,7 @@ class _HomeState extends State<Home> {
 
   final List<Widget> _pages = [
     const HomePage(),
+    const AllQuizCategories(),
     const LeaderboardPage(),
     const ProfilePage(),
   ];
@@ -39,10 +41,15 @@ class _HomeState extends State<Home> {
       key: _scaffoldKey,
       body: _pages[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.school),
+            label: 'Quiz',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.leaderboard_rounded),
@@ -56,7 +63,7 @@ class _HomeState extends State<Home> {
         currentIndex: _selectedIndex,
         selectedItemColor: Variables.primaryColor,
         onTap: (index) {
-          if (index == 2) {
+          if (index == 3) {
             _openDrawer();
           } else {
             _onItemTapped(index);
