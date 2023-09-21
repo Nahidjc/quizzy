@@ -14,91 +14,61 @@ class Categories extends StatelessWidget {
       padding: const EdgeInsets.all(20),
       child: GridView.builder(
         padding: const EdgeInsets.all(16.0),
-        itemCount: categoryList.length + 1,
+        itemCount: categoryList.length,
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
           childAspectRatio: 1.0,
           crossAxisSpacing: 22.0,
           mainAxisSpacing: 22.0,
         ),
-        itemBuilder: (BuildContext context, int i) {
-          final index = categoryList.length == i ? categoryList.length - 1 : i;
+        itemBuilder: (BuildContext context, int index) {
           QuizLevel category = categoryList[index];
-          return categoryList.length == i
-              ? GestureDetector(
-                  child: Container(
-                    decoration: gradientBoxDecoration,
-                    height: 30,
-                    width: 100,
-                    child: const Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.add_box_rounded,
-                          color: Colors.white,
-                          size: 40,
-                        ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        Text(
-                          "Load More..",
+          return GestureDetector(
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => SubjectList(
+                    subjectList: category.subjectList,
+                    displayName: category.displayName),
+              ),
+            ),
+            child: Container(
+              decoration: gradientBoxDecoration,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(
+                    Icons.school,
+                    size: 40.0,
+                    color: Colors.white,
+                  ),
+                  const SizedBox(height: 8.0),
+                  Center(
+                    child: LayoutBuilder(
+                      builder: (context, constraints) {
+                        double fontSize = constraints.maxWidth * 0.10;
+                        return Text(
+                          category.displayName,
                           style: TextStyle(
-                              fontSize: 14,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold),
-                        )
-                      ],
-                    ),
-                  ),
-                )
-              : GestureDetector(
-                  onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => SubjectList(
-                          subjectList: category.subjectList,
-                          displayName: category.displayName),
-                    ),
-                  ),
-                  child: Container(
-                    decoration: gradientBoxDecoration,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Icon(
-                          Icons.school,
-                          size: 40.0,
-                          color: Colors.white,
-                        ),
-                        const SizedBox(height: 8.0),
-                        Center(
-                          child: LayoutBuilder(
-                            builder: (context, constraints) {
-                              double fontSize = constraints.maxWidth * 0.10;
-                              return Text(
-                                category.displayName,
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: fontSize,
-                                  fontWeight: FontWeight.bold,
-                                  shadows: [
-                                    Shadow(
-                                      color: Colors.black.withOpacity(0.2),
-                                      offset: const Offset(1, 1),
-                                      blurRadius: 1.0,
-                                    ),
-                                  ],
-                                ),
-                              );
-                            },
+                            color: Colors.white,
+                            fontSize: fontSize,
+                            fontWeight: FontWeight.bold,
+                            shadows: [
+                              Shadow(
+                                color: Colors.black.withOpacity(0.2),
+                                offset: const Offset(1, 1),
+                                blurRadius: 1.0,
+                              ),
+                            ],
                           ),
-                        ),
-                      ],
+                        );
+                      },
                     ),
                   ),
-                );
+                ],
+              ),
+            ),
+          );
         },
       ),
     );

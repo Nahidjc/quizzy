@@ -243,17 +243,21 @@ class _MyAppBarState extends State<MyAppBar>
                                       ),
                                     ),
                                     const SizedBox(height: 6.0, width: 6),
-                                    Text(
-                                      "No active campaigns at the moment",
-                                      style: TextStyle(
-                                        fontSize:
-                                            MediaQuery.of(context).size.height *
-                                                0.020,
-                                        color: Colors.white,
-                                        letterSpacing: 0.5,
+                                    Flexible(
+                                      child: Text(
+                                        "No active campaigns at the moment",
+                                        style: TextStyle(
+                                          fontSize: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
+                                              0.020,
+                                          color: Colors.white,
+                                          letterSpacing: 0.5,
+                                        ),
+                                        textAlign: TextAlign.center,
+                                        maxLines: 2,
                                       ),
-                                      textAlign: TextAlign.center,
-                                    ),
+                                    )
                                   ],
                                 ),
                               ),
