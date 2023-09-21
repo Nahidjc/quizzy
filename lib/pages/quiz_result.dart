@@ -500,11 +500,7 @@ class _QuizResultPageState extends State<QuizResultPage>
                         ),
                         GestureDetector(
                           onTap: () {
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const HomePage()),
-                            );
+                            Navigator.of(context).pushNamed("/home");
                           },
                           child: const Column(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -598,8 +594,7 @@ class CircleProgressBarPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     final center = Offset(size.width / 2, size.height / 2);
     const circle4Radius = 90.0;
-    final circle4Paint = Paint()
-      ..color = Variables.secondaryColor;
+    final circle4Paint = Paint()..color = Variables.secondaryColor;
     canvas.drawCircle(center, circle4Radius, circle4Paint);
     const circle1Radius = 75.0;
     final circle1Paint = Paint()..color = Colors.white;
@@ -643,18 +638,15 @@ class CirclePainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     const circle1 = Offset(-20, 140);
     const circle1Radius = 80.0;
-    final circle1Paint = Paint()
-      ..color = Variables.secondaryColor;
+    final circle1Paint = Paint()..color = Variables.secondaryColor;
 
     const circle2 = Offset(190, 0);
     const circle2Radius = 70.0;
-    final circle2Paint = Paint()
-      ..color = Variables.secondaryColor;
+    final circle2Paint = Paint()..color = Variables.secondaryColor;
 
     const circle3 = Offset(420, 200);
     const circle3Radius = 80.0;
-    final circle3Paint = Paint()
-      ..color = Variables.secondaryColor;
+    final circle3Paint = Paint()..color = Variables.secondaryColor;
     canvas.drawCircle(circle1, circle1Radius, circle1Paint);
     canvas.drawCircle(circle2, circle2Radius, circle2Paint);
     canvas.drawCircle(circle3, circle3Radius, circle3Paint);
