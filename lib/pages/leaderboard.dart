@@ -181,24 +181,24 @@ class _LeaderboardPageState extends State<LeaderboardPage> {
               color: Variables.primaryColor,
               borderRadius: BorderRadius.circular(12),
             ),
-            child: Column(
+            child: const Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 Icon(
                   Icons.info_outline,
-                  color: Colors.blueGrey[600],
+                  color: Colors.white,
                   size: 40,
                 ),
-                const SizedBox(height: 12),
+                SizedBox(height: 12),
                 Text(
                   'No quiz attempts have been made yet. It\'s a great opportunity to challenge yourself and test your knowledge.',
                   style: TextStyle(
-                    fontSize: 18, // Set font size to medium
-                    color: Colors.blueGrey[600],
+                    fontSize: 18,
+                    color: Colors.white,
                   ),
                   textAlign: TextAlign.justify,
                 ),
-                const SizedBox(height: 12),
+                SizedBox(height: 12),
               ],
             ),
           ),
