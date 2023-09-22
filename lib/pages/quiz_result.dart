@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:quizzy/ads/interstitial_ads.dart';
 import 'package:quizzy/components/custom_drawer.dart';
 import 'package:quizzy/configs/variables.dart';
-import 'package:quizzy/pages/home_page.dart';
 import 'package:quizzy/pages/leaderboard.dart';
 import 'package:quizzy/pages/result_review.dart';
 

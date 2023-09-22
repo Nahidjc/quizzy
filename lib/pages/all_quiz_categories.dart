@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:quizzy/ads/banner_ads.dart';
 import 'package:quizzy/components/category/categories.dart';
 import 'package:quizzy/components/category/category_skeleton.dart';
-import 'package:quizzy/components/custom_drawer.dart';
-import 'package:quizzy/components/header.dart';
+// import 'package:quizzy/components/custom_drawer.dart';
+// import 'package:quizzy/components/header.dart';
 import 'package:quizzy/api_caller/categories.dart';
 // import 'package:quizzy/components/slider.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
@@ -52,7 +52,7 @@ class _AllQuizCategoriesState extends State<AllQuizCategories> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          "All Quiz",
+          "Quiz Categories",
           style: TextStyle(fontSize: 18, color: Colors.white),
         ),
         centerTitle: true,

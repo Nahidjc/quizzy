@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:quizzy/components/campaign/campaign_quiz.dart';
+import 'package:quizzy/configs/variables.dart';
 import 'dart:async';
 
 import 'package:quizzy/models/campaign_quiz.dart';
@@ -97,7 +98,7 @@ class _CampaignQuizItemState extends State<CampaignQuizItem> {
       margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Variables.primaryColor,
         borderRadius: BorderRadius.circular(10),
         boxShadow: [
           BoxShadow(
@@ -117,7 +118,8 @@ class _CampaignQuizItemState extends State<CampaignQuizItem> {
               Text(
                 widget.title,
                 style: const TextStyle(
-                  fontSize: 18,
+                  fontSize: 16,
+                  color: Colors.white,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -141,12 +143,12 @@ class _CampaignQuizItemState extends State<CampaignQuizItem> {
                 Row(
                   children: [
                     Icon(Icons.timer,
-                        color: isRunning ? Colors.red : Colors.green),
+                        color: isRunning ? Colors.red : Colors.white),
                     const SizedBox(width: 5),
                     Text(
                       'Time ${isRunning ? "Left" : "Start"}: ${_formatDuration(_remainingDuration)}',
                       style: TextStyle(
-                          color: isRunning ? Colors.red : Colors.green),
+                          color: isRunning ? Colors.red : Colors.white),
                     ),
                   ],
                 )
@@ -157,7 +159,7 @@ class _CampaignQuizItemState extends State<CampaignQuizItem> {
             const Text(
               'Attempted',
               style: TextStyle(
-                color: Colors.green,
+                color: Colors.orange,
               ),
             )
           else
@@ -181,7 +183,7 @@ class _CampaignQuizItemState extends State<CampaignQuizItem> {
                       );
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.green,
+                      backgroundColor: Colors.orange,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8.0),
                       ),
@@ -201,7 +203,7 @@ class _CampaignQuizItemState extends State<CampaignQuizItem> {
                   const Text(
                     'Upcoming',
                     style: TextStyle(
-                      color: Colors.green,
+                      color: Colors.white,
                       fontSize: 14,
                       fontWeight: FontWeight.bold,
                     ),
