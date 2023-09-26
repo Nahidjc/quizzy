@@ -217,6 +217,12 @@ class _LeaderboardPageState extends State<LeaderboardPage> {
   }
 
   Widget _buildTopPerformerRow(Leaderboard entry, int position) {
+    ImageProvider<Object>? backgroundImage;
+    if (entry.profileUrl == null) {
+      backgroundImage = const AssetImage("assets/images/avatar.png");
+    } else {
+      backgroundImage = NetworkImage(entry.profileUrl!);
+    }
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 8),
       decoration: BoxDecoration(
@@ -244,9 +250,9 @@ class _LeaderboardPageState extends State<LeaderboardPage> {
                 width: 2,
               ),
             ),
-            child: const CircleAvatar(
+            child: CircleAvatar(
               radius: 20,
-              backgroundImage: AssetImage('assets/images/avatar.png'),
+              backgroundImage: backgroundImage,
             ),
           ),
           Expanded(
