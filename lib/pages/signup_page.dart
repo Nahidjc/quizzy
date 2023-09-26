@@ -65,9 +65,19 @@ class _SignupPageState extends State<SignupPage> {
     return Scaffold(
       body: authState.isLoading
           ? const Center(child: CircularProgressIndicator())
-          : SingleChildScrollView(
-              child: Container(
-                padding: const EdgeInsets.all(20.0),
+          : Container(
+              padding: const EdgeInsets.all(15),
+              height: MediaQuery.of(context).size.height,
+              decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  Color.fromARGB(255, 232, 230, 235), // Primary color
+                  Color.fromRGBO(208, 196, 242, 1), // Secondary color
+                ],
+              )),
+              child: SingleChildScrollView(
                 child: Form(
                   key: _formKey,
                   child: Column(
@@ -110,151 +120,173 @@ class _SignupPageState extends State<SignupPage> {
                           ),
                         ),
                       const SizedBox(height: 20.0),
-                      TextFormField(
-                        controller: _nameController,
-                        keyboardType: TextInputType.text,
-                        decoration: InputDecoration(
-                          labelText: 'Name',
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          prefixIcon:
-                              const Icon(Icons.email_outlined, size: 24),
+                      Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white38,
+                          borderRadius: BorderRadius.circular(10),
                         ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter your full name';
-                          }
-                          return null;
-                        },
-                      ),
-                      const SizedBox(height: 20.0),
-                      TextFormField(
-                        controller: _emailController,
-                        keyboardType: TextInputType.emailAddress,
-                        decoration: InputDecoration(
-                          labelText: 'Email',
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          prefixIcon:
-                              const Icon(Icons.email_outlined, size: 24),
-                        ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter your email';
-                          }
-                          if (!value.contains('@')) {
-                            return 'Invalid email format';
-                          }
-                          return null;
-                        },
-                      ),
-                      const SizedBox(height: 20.0),
-                      TextFormField(
-                        controller: _mobileNoController,
-                        keyboardType: TextInputType.phone,
-                        maxLength: 11,
-                        decoration: InputDecoration(
-                          labelText: 'Mobile Number',
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          prefixIcon: const Icon(Icons.phone_rounded, size: 24),
-                        ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter your mobile number';
-                          }
-                          if (value.length != 11) {
-                            return 'Mobile number must be exactly 11 digits';
-                          }
-                          return null;
-                        },
-                      ),
-                      const SizedBox(height: 10.0),
-                      TextFormField(
-                        controller: _passwordController,
-                        keyboardType: TextInputType.number,
-                        obscureText: _obscured,
-                        decoration: InputDecoration(
-                          labelText: 'Password',
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          prefixIcon: const Icon(Icons.lock_rounded, size: 24),
-                          suffixIcon: Padding(
-                            padding: const EdgeInsets.fromLTRB(0, 0, 4, 0),
-                            child: GestureDetector(
-                              onTap: _toggleObscured,
-                              child: Icon(
-                                _obscured
-                                    ? Icons.visibility_rounded
-                                    : Icons.visibility_off_rounded,
-                                size: 24,
+                        child: Padding(
+                          padding: const EdgeInsets.all(15),
+                          child: Column(children: [
+                            TextFormField(
+                              controller: _nameController,
+                              keyboardType: TextInputType.text,
+                              decoration: InputDecoration(
+                                labelText: 'Name',
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                prefixIcon:
+                                    const Icon(Icons.email_outlined, size: 24),
                               ),
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Please enter your full name';
+                                }
+                                return null;
+                              },
                             ),
-                          ),
-                        ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter your password';
-                          }
-                          return null;
-                        },
-                      ),
-                      const SizedBox(height: 10.0),
-                      TextFormField(
-                        controller: _confirmPasswordController,
-                        obscureText: _obscured,
-                        keyboardType: TextInputType.number,
-                        focusNode: textFieldFocusNode,
-                        decoration: InputDecoration(
-                          labelText: 'Confirm Password',
-                          filled: true,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          prefixIcon: const Icon(Icons.lock_rounded, size: 24),
-                          suffixIcon: Padding(
-                            padding: const EdgeInsets.fromLTRB(0, 0, 4, 0),
-                            child: GestureDetector(
-                              onTap: _toggleObscured,
-                              child: Icon(
-                                _obscured
-                                    ? Icons.visibility_rounded
-                                    : Icons.visibility_off_rounded,
-                                size: 24,
+                            const SizedBox(height: 15.0),
+                            TextFormField(
+                              controller: _emailController,
+                              keyboardType: TextInputType.emailAddress,
+                              decoration: InputDecoration(
+                                labelText: 'Email',
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                prefixIcon:
+                                    const Icon(Icons.email_outlined, size: 24),
                               ),
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Please enter your email';
+                                }
+                                if (!value.contains('@')) {
+                                  return 'Invalid email format';
+                                }
+                                return null;
+                              },
                             ),
-                          ),
+                            const SizedBox(height: 15.0),
+                            TextFormField(
+                              controller: _mobileNoController,
+                              keyboardType: TextInputType.phone,
+                              maxLength: 11,
+                              decoration: InputDecoration(
+                                labelText: 'Mobile Number',
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                prefixIcon:
+                                    const Icon(Icons.phone_rounded, size: 24),
+                              ),
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Please enter your mobile number';
+                                }
+                                if (value.length != 11) {
+                                  return 'Mobile number must be exactly 11 digits';
+                                }
+                                return null;
+                              },
+                            ),
+                            const SizedBox(height: 10.0),
+                            TextFormField(
+                              controller: _passwordController,
+                              keyboardType: TextInputType.number,
+                              obscureText: _obscured,
+                              decoration: InputDecoration(
+                                labelText: 'Password',
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                prefixIcon:
+                                    const Icon(Icons.lock_rounded, size: 24),
+                                suffixIcon: Padding(
+                                  padding:
+                                      const EdgeInsets.fromLTRB(0, 0, 4, 0),
+                                  child: GestureDetector(
+                                    onTap: _toggleObscured,
+                                    child: Icon(
+                                      _obscured
+                                          ? Icons.visibility_rounded
+                                          : Icons.visibility_off_rounded,
+                                      size: 24,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Please enter your password';
+                                }
+                                return null;
+                              },
+                            ),
+                            const SizedBox(height: 10.0),
+                            TextFormField(
+                              controller: _confirmPasswordController,
+                              obscureText: _obscured,
+                              keyboardType: TextInputType.number,
+                              focusNode: textFieldFocusNode,
+                              decoration: InputDecoration(
+                                labelText: 'Confirm Password',
+                                filled: true,
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                prefixIcon:
+                                    const Icon(Icons.lock_rounded, size: 24),
+                                suffixIcon: Padding(
+                                  padding:
+                                      const EdgeInsets.fromLTRB(0, 0, 4, 0),
+                                  child: GestureDetector(
+                                    onTap: _toggleObscured,
+                                    child: Icon(
+                                      _obscured
+                                          ? Icons.visibility_rounded
+                                          : Icons.visibility_off_rounded,
+                                      size: 24,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Please confirm your password';
+                                }
+                                if (value != _passwordController.text) {
+                                  return 'Passwords do not match';
+                                }
+                                return null;
+                              },
+                            ),
+                            const SizedBox(height: 15.0),
+                            SizedBox(
+                                width: double.infinity,
+                                height: 50.0,
+                                child: ElevatedButton(
+                                  style: ButtonStyle(
+                                    shape: MaterialStateProperty.all<
+                                            RoundedRectangleBorder>(
+                                        RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                    )),
+                                    backgroundColor:
+                                        MaterialStateProperty.all<Color>(
+                                            Variables.primaryColor),
+                                  ),
+                                  onPressed: _submitForm,
+                                  child: const Text(
+                                    "Create Account",
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                )),
+                          ]),
                         ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please confirm your password';
-                          }
-                          if (value != _passwordController.text) {
-                            return 'Passwords do not match';
-                          }
-                          return null;
-                        },
                       ),
-                      const SizedBox(height: 10.0),
-                      SizedBox(
-                          width: double.infinity,
-                          height: 50.0,
-                          child: ElevatedButton(
-                            style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all<Color>(
-                                  Variables.primaryColor),
-                            ),
-                            onPressed: _submitForm,
-                            child: const Text(
-                              "Create Account",
-                              style: TextStyle(color: Colors.white),
-                            ),
-                          )),
-                      const SizedBox(height: 20.0),
+                      const SizedBox(height: 15.0),
                       GestureDetector(
                         onTap: () {
                           Navigator.push(

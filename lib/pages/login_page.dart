@@ -149,7 +149,17 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
         body: SingleChildScrollView(
       child: Container(
+        height: MediaQuery.of(context).size.height,
         padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 40.0),
+        decoration: const BoxDecoration(
+            gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            Color.fromARGB(255, 232, 230, 235), // Primary color
+            Color.fromRGBO(208, 196, 242, 1), // Secondary color
+          ],
+        )),
         child: Form(
           key: _formKey,
           child: Column(
@@ -162,13 +172,6 @@ class _LoginPageState extends State<LoginPage> {
                 fit: BoxFit.cover,
               ),
               const SizedBox(height: 20.0),
-              const Text(
-                'Log In to your account',
-                style: TextStyle(
-                  fontSize: 16.0,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
               const SizedBox(height: 20.0),
               if (!authState.isAuthenticated &&
                   authState.errorMessage.isNotEmpty)
@@ -223,62 +226,94 @@ class _LoginPageState extends State<LoginPage> {
                     ],
                   ),
                 ),
-              const SizedBox(height: 20.0),
-              TextFormField(
-                controller: _emailController,
-                keyboardType: TextInputType.emailAddress,
-                decoration: InputDecoration(
-                  labelText: 'Email',
-                  border: OutlineInputBorder(
-                    borderRadius:
-                        BorderRadius.circular(8), // Apply corner radius
-                  ),
-                  prefixIcon: const Icon(Icons.email_outlined, size: 24),
+              Container(
+                decoration: BoxDecoration(
+                  color: Colors.white38,
+                  borderRadius: BorderRadius.circular(10),
                 ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your email';
-                  }
-                  if (!value.contains('@')) {
-                    return 'Invalid email format';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: 20.0),
-              TextFormField(
-                controller: _passwordController,
-                keyboardType: TextInputType.text,
-                obscureText: true,
-                decoration: InputDecoration(
-                    labelText: 'Password',
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    prefixIcon: const Icon(Icons.lock, size: 24)),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your password';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: 20.0),
-              SizedBox(
-                width: double.infinity,
-                height: 50.0,
-                child: ElevatedButton(
-                  style: ButtonStyle(
-                    backgroundColor:
-                        MaterialStateProperty.all<Color>(
-                        Variables.primaryColor),
+                child: Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Column(
+                    children: [
+                      const SizedBox(height: 20.0),
+                      TextFormField(
+                        controller: _emailController,
+                        keyboardType: TextInputType.emailAddress,
+                        decoration: InputDecoration(
+                          labelText: 'Email',
+                          border: OutlineInputBorder(
+                            borderRadius:
+                                BorderRadius.circular(8), // Apply corner radius
+                          ),
+                          prefixIcon:
+                              const Icon(Icons.email_outlined, size: 24),
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter your email';
+                          }
+                          if (!value.contains('@')) {
+                            return 'Invalid email format';
+                          }
+                          return null;
+                        },
+                      ),
+                      const SizedBox(height: 20.0),
+                      TextFormField(
+                        controller: _passwordController,
+                        keyboardType: TextInputType.text,
+                        obscureText: true,
+                        decoration: InputDecoration(
+                            labelText: 'Password',
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            prefixIcon: const Icon(Icons.lock, size: 24)),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter your password';
+                          }
+                          return null;
+                        },
+                      ),
+                      const SizedBox(height: 20.0),
+                      SizedBox(
+                        width: double.infinity,
+                        height: 50.0,
+                        child: ElevatedButton(
+                          style: ButtonStyle(
+                            shape: MaterialStateProperty.all<
+                                RoundedRectangleBorder>(RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            )),
+                            backgroundColor: MaterialStateProperty.all<Color>(
+                                Variables.primaryColor),
+                          ),
+                          onPressed: _submitForm,
+                          child: const Text("SIGN IN",
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 18)),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      GestureDetector(
+                        child: const Padding(
+                          padding: EdgeInsets.only(right: 8.0),
+                          child: Text(
+                            'Forget password?',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Variables.primaryColor,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                  onPressed: _submitForm,
-                  child: const Text("Login",
-                      style: TextStyle(color: Colors.white)),
                 ),
               ),
-              
               if (authState.isLoading)
                 const Column(
                   children: [
@@ -293,6 +328,7 @@ class _LoginPageState extends State<LoginPage> {
               const SizedBox(height: 10.0),
               const Text(
                 "Sign in using",
+                style: TextStyle(),
               ),
               const SizedBox(height: 10.0),
               Row(
@@ -300,28 +336,24 @@ class _LoginPageState extends State<LoginPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     IconButton(
+                        color: Variables.primaryColor,
                         style: IconButton.styleFrom(
+                            iconSize: 30,
                             backgroundColor: Colors.grey.shade300),
                         onPressed: signInWithGoogle,
                         icon: const Icon(Icons.g_mobiledata)),
+                    const SizedBox(
+                      width: 10,
+                    ),
                     IconButton(
+                        color: Variables.primaryColor,
                         style: IconButton.styleFrom(
+                            iconSize: 30,
                             backgroundColor: Colors.grey.shade300),
                         onPressed: signInWithFacebook,
                         icon: const Icon(Icons.facebook))
                   ]),
               const SizedBox(height: 10.0),
-              GestureDetector(
-                child: const Padding(
-                  padding: EdgeInsets.only(right: 8.0),
-                  child: Text(
-                    'Forget password?',
-                    style: TextStyle(
-                      color: Colors.blue,
-                    ),
-                  ),
-                ),
-              ),
               const SizedBox(height: 20.0),
               GestureDetector(
                 onTap: () {
@@ -333,7 +365,7 @@ class _LoginPageState extends State<LoginPage> {
                 child: const Text(
                   "Don't have an account? Register here",
                   style: TextStyle(
-                    fontSize: 16.0,
+                    fontSize: 14.0,
                     color: Colors.black,
                   ),
                 ),
