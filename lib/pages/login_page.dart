@@ -160,7 +160,9 @@ class _LoginPageState extends State<LoginPage> {
             Color.fromRGBO(208, 196, 242, 1), // Secondary color
           ],
         )),
-        child: Form(
+        child: authState.isLoading
+            ? const Center(child: CircularProgressIndicator())
+            : Form(
           key: _formKey,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -168,11 +170,10 @@ class _LoginPageState extends State<LoginPage> {
               const SizedBox(height: 100.0),
               Image.asset(
                 'assets/images/logo.png',
-                width: 120,
+                      width: MediaQuery.of(context).size.width * 0.25,
                 fit: BoxFit.cover,
               ),
-              const SizedBox(height: 20.0),
-              const SizedBox(height: 20.0),
+                    const SizedBox(height: 20.0),
               if (!authState.isAuthenticated &&
                   authState.errorMessage.isNotEmpty)
                 Container(
@@ -314,17 +315,17 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
               ),
-              if (authState.isLoading)
-                const Column(
-                  children: [
-                    SizedBox(height: 10.0),
-                    SizedBox(
-                      height: 20.0,
-                      width: 20,
-                      child: CircularProgressIndicator(),
-                    )
-                  ],
-                ),
+                    // if (authState.isLoading)
+                    //   const Column(
+                    //     children: [
+                    //       SizedBox(height: 10.0),
+                    //       SizedBox(
+                    //         height: 20.0,
+                    //         width: 20,
+                    //         child: CircularProgressIndicator(),
+                    //       )
+                    //     ],
+                    //   ),
               const SizedBox(height: 10.0),
               const Text(
                 "Sign in using",
