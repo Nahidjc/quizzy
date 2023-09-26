@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:quizzy/configs/variables.dart';
 import 'package:quizzy/pages/login_page.dart';
 import 'package:quizzy/provider/login_provider.dart';
 
@@ -245,7 +246,7 @@ class _SignupPageState extends State<SignupPage> {
                           child: ElevatedButton(
                             style: ButtonStyle(
                               backgroundColor: MaterialStateProperty.all<Color>(
-                                  Colors.purple),
+                                  Variables.primaryColor),
                             ),
                             onPressed: _submitForm,
                             child: const Text(

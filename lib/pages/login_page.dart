@@ -155,10 +155,10 @@ class _LoginPageState extends State<LoginPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const SizedBox(height: 120.0),
+              const SizedBox(height: 100.0),
               Image.asset(
                 'assets/images/logo.png',
-                width: 100,
+                width: 120,
                 fit: BoxFit.cover,
               ),
               const SizedBox(height: 20.0),
