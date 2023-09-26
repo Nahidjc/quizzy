@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:quizzy/pages/coin_transfer.dart';
 import 'package:quizzy/pages/home.dart';
 import 'package:quizzy/pages/leaderboard.dart';
 import 'package:quizzy/pages/login_page.dart';
@@ -16,9 +17,11 @@ class AppRoutes {
   static const String register = '/register';
   static const String profile = '/profile';
   static const String leaderboard = '/leaderboard';
+  static const String coinTransferPage = "/cointransferpage";
 
   static Map<String, WidgetBuilder> routes = {
     splashscreen: (context) => const SplashScreen(),
+    coinTransferPage: (context) => const CoinTransferPage(),
     home: (context) => AuthenticatedRoute(
           page: const Home(),
           isAuthenticated: Provider.of<AuthProvider>(context).isAuthenticated,

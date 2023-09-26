@@ -46,7 +46,7 @@ class _LoginPageState extends State<LoginPage> {
       if (authState.isAuthenticated) {
         if (!isPushingHome) {
           isPushingHome = true;
-          Navigator.of(context).pushNamed("/home").then((value) {
+          Navigator.of(context).pushReplacementNamed("/home").then((value) {
             isPushingHome = false;
           });
         }

@@ -28,7 +28,7 @@ class CustomDrawer extends StatelessWidget {
             child: ListView(
               padding: EdgeInsets.zero,
               children: <Widget>[
-                 DrawerHeader(
+                DrawerHeader(
                   decoration: const BoxDecoration(
                     color: Color.fromARGB(255, 144, 106, 250),
                   ),
@@ -41,7 +41,8 @@ class CustomDrawer extends StatelessWidget {
                       ),
                       Text(
                         user.name,
-                        style: const TextStyle(color: Colors.white, fontSize: 20),
+                        style:
+                            const TextStyle(color: Colors.white, fontSize: 20),
                       ),
                       // const  Text(
                       //   'test@email.com',
@@ -79,9 +80,9 @@ class CustomDrawer extends StatelessWidget {
                     leading: const Icon(Icons.currency_exchange),
                     title: const Text('Accounts'),
                     onTap: () {
-                      
-                      Navigator.pop(context);
-                  
+                      //  Navigator.pop(context);
+                      Navigator.of(context)
+                          .popAndPushNamed("/cointransferpage");
                     },
                   ),
                 ),
@@ -90,9 +91,7 @@ class CustomDrawer extends StatelessWidget {
                     leading: const Icon(Icons.history_edu),
                     title: const Text('Quiz History'),
                     onTap: () {
-                     
                       Navigator.pop(context);
-              
                     },
                   ),
                 ),
