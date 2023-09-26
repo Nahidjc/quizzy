@@ -95,7 +95,7 @@ class _CampaignQuizItemState extends State<CampaignQuizItem> {
     bool isRunning = widget.startTime.isBefore(currentDate) == true &&
         widget.endTime.isAfter(currentDate) == true;
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+      margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         color: Variables.primaryColor,
@@ -128,13 +128,13 @@ class _CampaignQuizItemState extends State<CampaignQuizItem> {
                   children: [
                     Icon(
                       widget.isAttempted ? Icons.check_circle : Icons.cancel,
-                      color: Colors.green,
+                      color: Colors.white,
                     ),
                     const SizedBox(width: 5),
                     Text(
                       'Points: ${widget.points ?? 0}',
                       style: const TextStyle(
-                        color: Colors.blue,
+                        color: Colors.white,
                       ),
                     ),
                   ],

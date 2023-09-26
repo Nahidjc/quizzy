@@ -67,22 +67,14 @@ class _CampaignLeaderboardPageState extends State<CampaignLeaderboardPage> {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 8),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        color: Colors.grey[200],
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.4),
-            spreadRadius: 2,
-            blurRadius: 4,
-            offset: const Offset(0, 2),
-          ),
-        ],
+        borderRadius: BorderRadius.circular(12),
+        color: Variables.primaryColor,
       ),
       child: Row(
         children: [
           Container(
-            width: 60,
-            height: 60,
+            width: 40,
+            height: 40,
             margin: const EdgeInsets.all(10),
             decoration: BoxDecoration(
               shape: BoxShape.circle,
@@ -105,14 +97,15 @@ class _CampaignLeaderboardPageState extends State<CampaignLeaderboardPage> {
                   entry.name,
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
+                    color: Colors.white,
                     fontSize: 16,
                   ),
                 ),
                 Text(
                   '${entry.totalPoints} Points',
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontWeight: FontWeight.bold,
-                    color: Colors.grey[600],
+                    color: Colors.white,
                     fontSize: 14,
                   ),
                 ),
@@ -123,7 +116,7 @@ class _CampaignLeaderboardPageState extends State<CampaignLeaderboardPage> {
             alignment: Alignment.center,
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
             decoration: BoxDecoration(
-              color: Variables.primaryColor,
+              color: Variables.secondaryColor,
               borderRadius: BorderRadius.circular(20),
             ),
             child: Text(
@@ -159,10 +152,11 @@ class _CampaignLeaderboardPageState extends State<CampaignLeaderboardPage> {
       appBar: AppBar(
         title: const Text(
           "Campaign Leaderboard",
-          style: TextStyle(fontSize: 18),
+          style: TextStyle(fontSize: 18, color: Colors.white),
         ),
         centerTitle: true,
         elevation: 4,
+        backgroundColor: Variables.primaryColor,
       ),
       body: SafeArea(
         child: Column(

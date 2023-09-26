@@ -17,25 +17,68 @@ class CampaignQuizList extends StatefulWidget {
 }
 
 class _CampaignQuizListState extends State<CampaignQuizList> {
-  late List<CampaignModel> _campaignQuizList;
+  late List<CampaignModel> _currentQuizList;
+  late List<CampaignModel> closedCampaignQuizData = [];
+  late List<CampaignModel> upcomingCampaignQuizData = [];
+  late List<CampaignModel> runningCampaignQuizData = [];
   final CampaignApi campaignApi = CampaignApi();
   bool isLoading = false;
+  bool runningQuiz = false;
+  bool upcomingQuiz = true;
   @override
   void initState() {
     super.initState();
-    _fetchCampaignQuiz();
+    _upcomingCampaignQuiz();
   }
 
-  Future<void> _fetchCampaignQuiz() async {
+  Future<void> _upcomingCampaignQuiz() async {
     setState(() {
       isLoading = true;
     });
     try {
       String userId = Provider.of<AuthProvider>(context, listen: false).userId;
-      List<CampaignModel> campaignQuizList =
-          await campaignApi.getCampaignQuiz(widget.campaignId, userId);
+      upcomingCampaignQuizData =
+          await campaignApi.getCampaignUpcomingQuiz(widget.campaignId, userId);
+      _currentQuizList = upcomingCampaignQuizData;
       setState(() {
-        _campaignQuizList = campaignQuizList;
+        isLoading = false;
+      });
+    } catch (e) {
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
+
+  Future<void> _closedCampaignQuiz() async {
+    setState(() {
+      isLoading = true;
+    });
+    try {
+      String userId = Provider.of<AuthProvider>(context, listen: false).userId;
+      closedCampaignQuizData =
+          await campaignApi.getCampaignClosedQuiz(widget.campaignId, userId);
+      _currentQuizList = closedCampaignQuizData;
+      setState(() {
+        isLoading = false;
+      });
+    } catch (e) {
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
+
+  Future<void> _runningCampaignQuiz() async {
+    setState(() {
+      isLoading = true;
+    });
+    try {
+      String userId = Provider.of<AuthProvider>(context, listen: false).userId;
+      runningCampaignQuizData =
+          await campaignApi.getCampaignRunningQuiz(widget.campaignId, userId);
+      _currentQuizList = runningCampaignQuizData;
+      setState(() {
         isLoading = false;
       });
     } catch (e) {
@@ -49,31 +92,94 @@ class _CampaignQuizListState extends State<CampaignQuizList> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: const Text(
-            'Campaign Quiz',
-            style: TextStyle(color: Colors.white),
-          ),
-          backgroundColor: Variables.primaryColor,
+        title: const Text(
+          'Campaign Quiz',
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor: Variables.primaryColor,
         actions: [Container()],
       ),
-      body: isLoading
-          ? const SkeletonBoxes()
-            : _campaignQuizList.isEmpty
-                ? NoQuizzesMessage(
-                    refreshQuizzes: _fetchCampaignQuiz,
-                  )
-                : ListView(
-              children: _campaignQuizList.map((quiz) {
-                return CampaignQuizItem(
-                    title: quiz.title,
-                    isAttempted: quiz.isAttempted,
-                    points: quiz.point,
-                    startTime: quiz.startTime,
-                    endTime: quiz.endTime,
-                    quiz: quiz);
-              }).toList(),
+      body: Column(children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              buildQuizTypeOption('Running', runningQuiz),
+              const SizedBox(width: 10),
+              buildQuizTypeOption('Upcoming', upcomingQuiz),
+              const SizedBox(width: 10),
+              buildQuizTypeOption('Closed', !runningQuiz && !upcomingQuiz),
+            ],
+          ),
+        ),
+        Expanded(
+          child: isLoading
+              ? const SkeletonBoxes()
+              : _currentQuizList.isEmpty
+                  ? NoQuizzesMessage(
+                      refreshQuizzes: _upcomingCampaignQuiz,
+                    )
+                  : ListView(
+                      shrinkWrap: true,
+                      children: _currentQuizList.map((quiz) {
+                        return CampaignQuizItem(
+                          title: quiz.title,
+                          isAttempted: quiz.isAttempted,
+                          points: quiz.point,
+                          startTime: quiz.startTime,
+                          endTime: quiz.endTime,
+                          quiz: quiz,
+                        );
+                      }).toList(),
+                    ),
+        )
+      ]),
+      endDrawer: const CustomDrawer(),
+    );
+  }
+
+  Widget buildQuizTypeOption(String title, bool isSelected) {
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          upcomingQuiz = title == 'Upcoming';
+          runningQuiz = title == 'Running';
+          if (upcomingQuiz) {
+            _upcomingCampaignQuiz();
+          } else if (runningQuiz) {
+            _runningCampaignQuiz();
+          } else {
+            _closedCampaignQuiz();
+          }
+        });
+      },
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        decoration: BoxDecoration(
+          color: isSelected ? Variables.primaryColor : Colors.white,
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(
+            color: Variables.primaryColor,
+            width: isSelected ? 2.0 : 1.0,
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.3),
+              blurRadius: 3,
+              offset: const Offset(0, 2),
             ),
-        endDrawer: const CustomDrawer());
+          ],
+        ),
+        child: Text(
+          title,
+          style: TextStyle(
+            color: isSelected ? Colors.white : Colors.black,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
+    );
   }
 }
 
