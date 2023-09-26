@@ -2,10 +2,12 @@ class Leaderboard {
   final int totalPoints;
   final String userId;
   final String name;
+  final String? profileUrl; 
 
   Leaderboard({
     required this.totalPoints,
     required this.userId,
+    this.profileUrl,
     required this.name,
   });
 
@@ -13,6 +15,7 @@ class Leaderboard {
     return Leaderboard(
       totalPoints: json['totalPoints'] as int,
       userId: json['userId'] as String,
+      profileUrl: json['profileUrl'],
       name: json['name'] as String,
     );
   }

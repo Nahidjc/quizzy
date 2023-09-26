@@ -133,7 +133,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                     TextFormField(
                       controller: firstnameController,
                       decoration: const InputDecoration(
-                        labelText: 'First Name',
+                        labelText: 'Name',
                         prefixIcon: Icon(Icons.person),
                       ),
                     ),
