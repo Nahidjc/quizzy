@@ -6,7 +6,6 @@ import 'package:quizzy/components/custom_drawer.dart';
 import 'package:quizzy/configs/variables.dart';
 import 'package:quizzy/models/quiz_model.dart';
 import 'package:quizzy/pages/quiz_details.dart';
-import 'package:breadcrumbs/breadcrumbs.dart';
 
 class ListTable {
   final String title;
@@ -93,14 +92,13 @@ class _QuizListState extends State<QuizList> {
         centerTitle: true,
         backgroundColor: Variables.primaryColor,
         iconTheme: const IconThemeData(color: Colors.white),
-        title: Breadcrumbs(
-          crumbs: [
-            TextSpan(text: widget.displayName),
-            TextSpan(text: widget.subjectName),
-            TextSpan(text: widget.levelName),
-          ],
-          separator: ' > ',
-          style: const TextStyle(color: Colors.white, fontSize: 18.0),
+        title: Text(
+          widget.levelName,
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 20.0,
+            fontWeight: FontWeight.bold,
+          ),
         ),
         actions: [Container()],
       ),

@@ -9,7 +9,7 @@ class CategorySkeleton extends StatelessWidget {
     return Scaffold(
       body: GridView.builder(
         padding: const EdgeInsets.all(20.0),
-        itemCount: 6,
+        itemCount: 4,
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
           childAspectRatio: 1.0,
