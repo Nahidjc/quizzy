@@ -9,9 +9,7 @@ import 'package:quizzy/configs/variables.dart';
 import 'package:quizzy/models/stage_model.dart';
 import 'package:quizzy/pages/login_page.dart';
 import 'package:quizzy/pages/quiz_list.dart';
-import 'package:breadcrumbs/breadcrumbs.dart';
 import 'package:quizzy/provider/login_provider.dart';
-
 import 'package:panara_dialogs/panara_dialogs.dart';
 
 class QuizLevelList extends StatefulWidget {
@@ -108,14 +106,14 @@ class _QuizLevelListState extends State<QuizLevelList> {
           centerTitle: true,
           backgroundColor: const Color.fromARGB(255, 144, 106, 250),
           iconTheme: const IconThemeData(color: Colors.white),
-          title: Breadcrumbs(
-            crumbs: [
-              TextSpan(text: widget.displayName),
-              TextSpan(text: widget.subjectName),
-            ],
-            separator: ' > ',
-            style: const TextStyle(color: Colors.white, fontSize: 18.0),
+        title: Text(
+          widget.subjectName,
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 20.0,
+            fontWeight: FontWeight.bold,
           ),
+        ),
           actions: [Container()],
         ),
         body: Center(
