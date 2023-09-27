@@ -78,7 +78,7 @@ class CustomDrawer extends StatelessWidget {
                 Card(
                   child: ListTile(
                     leading: const Icon(Icons.currency_exchange),
-                    title: const Text('Accounts'),
+                    title: const Text('Coin Transfer'),
                     onTap: () {
                       //  Navigator.pop(context);
                       Navigator.of(context)
