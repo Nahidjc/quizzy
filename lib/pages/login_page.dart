@@ -167,7 +167,7 @@ class _LoginPageState extends State<LoginPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const SizedBox(height: 100.0),
+                    const SizedBox(height: 80.0),
               Image.asset(
                 'assets/images/logo.png',
                       width: MediaQuery.of(context).size.width * 0.25,
@@ -299,18 +299,18 @@ class _LoginPageState extends State<LoginPage> {
                       const SizedBox(
                         height: 10,
                       ),
-                      GestureDetector(
-                        child: const Padding(
-                          padding: EdgeInsets.only(right: 8.0),
-                          child: Text(
-                            'Forget password?',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Variables.primaryColor,
-                            ),
-                          ),
-                        ),
-                      ),
+                            // GestureDetector(
+                            //   child: const Padding(
+                            //     padding: EdgeInsets.only(right: 8.0),
+                            //     child: Text(
+                            //       'Forget password?',
+                            //       style: TextStyle(
+                            //         fontWeight: FontWeight.bold,
+                            //         color: Variables.primaryColor,
+                            //       ),
+                            //     ),
+                            //   ),
+                            // ),
                     ],
                   ),
                 ),
@@ -357,20 +357,35 @@ class _LoginPageState extends State<LoginPage> {
               const SizedBox(height: 10.0),
               const SizedBox(height: 20.0),
               GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const SignupPage()),
-                  );
-                },
-                child: const Text(
-                  "Don't have an account? Register here",
-                  style: TextStyle(
-                    fontSize: 14.0,
-                    color: Colors.black,
-                  ),
-                ),
-              ),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const SignupPage()),
+                        );
+                      },
+                      child: RichText(
+                        text: const TextSpan(
+                          children: [
+                            TextSpan(
+                              text: "Don't have an account? ",
+                              style: TextStyle(
+                                fontSize: 14.0,
+                                color: Colors.black,
+                              ),
+                            ),
+                            TextSpan(
+                              text: "Register here",
+                              style: TextStyle(
+                                fontSize: 14.0,
+                                color: Variables.primaryColor,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    )
+
             ],
           ),
         ),
