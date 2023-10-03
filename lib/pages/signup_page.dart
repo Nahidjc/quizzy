@@ -46,7 +46,7 @@ class _SignupPageState extends State<SignupPage> {
   }
 
   final textFieldFocusNode = FocusNode();
-  bool _obscured = false;
+  bool _obscured = true;
 
   void _toggleObscured() {
     setState(() {
@@ -172,7 +172,6 @@ class _SignupPageState extends State<SignupPage> {
                             TextFormField(
                               controller: _mobileNoController,
                               keyboardType: TextInputType.phone,
-                              maxLength: 11,
                               decoration: InputDecoration(
                                 labelText: 'Mobile Number',
                                 border: OutlineInputBorder(
@@ -194,7 +193,7 @@ class _SignupPageState extends State<SignupPage> {
                             const SizedBox(height: 10.0),
                             TextFormField(
                               controller: _passwordController,
-                              keyboardType: TextInputType.number,
+                              keyboardType: TextInputType.text,
                               obscureText: _obscured,
                               decoration: InputDecoration(
                                 labelText: 'Password',
@@ -295,14 +294,27 @@ class _SignupPageState extends State<SignupPage> {
                                 builder: (context) => const LoginPage()),
                           );
                         },
-                        child: const Text(
-                          "Already have an account? Login here",
-                          style: TextStyle(
-                            fontSize: 16.0,
-                            color: Colors.black,
+                        child: RichText(
+                          text: const TextSpan(
+                            children: [
+                              TextSpan(
+                                text: "Already have an account? ",
+                                style: TextStyle(
+                                  fontSize: 16.0,
+                                  color: Colors.black,
+                                ),
+                              ),
+                              TextSpan(
+                                text: "Login here",
+                                style: TextStyle(
+                                  fontSize: 16.0,
+                                  color: Variables.primaryColor,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
-                      ),
+                      )
                     ],
                   ),
                 ),
