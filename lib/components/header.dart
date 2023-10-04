@@ -180,11 +180,11 @@ class _MyAppBarState extends State<MyAppBar>
                             ),
                           ),
                         ),
-                        IconButton(
-                          onPressed: () {},
-                          icon: const Icon(Icons.notifications_outlined,
-                              color: Colors.white),
-                        ),
+                        // IconButton(
+                        //   onPressed: () {},
+                        //   icon: const Icon(Icons.notifications_outlined,
+                        //       color: Colors.white),
+                        // ),
                       ],
                     )
                   ],
