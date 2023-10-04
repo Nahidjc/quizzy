@@ -73,8 +73,8 @@ class AuthProvider extends ChangeNotifier {
     _userId = userDetails.id;
     _profileUrl = userDetails.profileUrl;
     await TokenManager.saveToken(userDetails.token);
-    notifyListeners();
     setAuthenticated(true);
+    notifyListeners();
     _errorMessage = '';
     setLoading(false);
   }
@@ -110,8 +110,6 @@ class AuthProvider extends ChangeNotifier {
         failedLoginHandler(response);
       }
     } catch (e) {
-      setLoading(false);
-    } finally {
       setLoading(false);
     }
   }
