@@ -90,7 +90,7 @@ class AuthProvider extends ChangeNotifier {
   }
 
   Future<void> loginProvider(
-      BuildContext context, String email, String password) async {
+       String email, String password) async {
     setLoading(true);
     final url = Uri.parse('${AppUrl.baseUrl}/auth/login');
     try {
@@ -109,7 +109,6 @@ class AuthProvider extends ChangeNotifier {
       } else {
         failedLoginHandler(response);
       }
-      notifyListeners();
     } catch (e) {
       setLoading(false);
     } finally {
