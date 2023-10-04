@@ -19,20 +19,19 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _passwordController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool isPushingHome = false;
-
+  late AuthProvider LoginProvider;
   @override
-  void dispose() {
-    _emailController.dispose();
-    _passwordController.dispose();
-    super.dispose();
+  void initState() {
+    isPushingHome = false;
+    LoginProvider = Provider.of<AuthProvider>(context, listen: false);
+    listenForAuthStateChange();
+    super.initState();
   }
-
   void _submitForm() {
     if (_formKey.currentState!.validate()) {
       String email = _emailController.text;
       String password = _passwordController.text;
-      Provider.of<AuthProvider>(context, listen: false)
-          .loginProvider(context, email, password);
+      LoginProvider.loginProvider(email, password);
       _emailController.clear();
       _passwordController.clear();
     }
@@ -54,13 +53,6 @@ class _LoginPageState extends State<LoginPage> {
     });
 
     super.didChangeDependencies();
-  }
-
-  @override
-  void initState() {
-    isPushingHome = false;
-    listenForAuthStateChange();
-    super.initState();
   }
 
   void listenForAuthStateChange() {
@@ -140,6 +132,13 @@ class _LoginPageState extends State<LoginPage> {
     } finally {
       provider.setLoading(false);
     }
+  }
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
   }
 
   @override
