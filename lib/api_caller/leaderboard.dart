@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:quizzy/models/leaderboard.dart';
+import 'package:quizzy/token/token_manager.dart';
 
 import 'app_url.dart';
 import 'package:http/http.dart' as http;
@@ -8,7 +9,11 @@ class LeaderboardAPi {
   Future<List<Leaderboard>> getDailyLeaderboard() async {
     try {
       final url = Uri.parse('${AppUrl.baseUrl}/user/today/leaderboard');
-      final response = await http.get(url);
+      String? authToken = await TokenManager.getToken();
+      final headers = {
+        'token': authToken!,
+      };
+      final response = await http.get(url, headers: headers);
       if (response.statusCode == 200) {
         var jsonData = json.decode(response.body);
         List<dynamic> dailyData = jsonData['data'];
@@ -26,7 +31,11 @@ class LeaderboardAPi {
   Future<List<Leaderboard>> getWeeklyLeaderboard() async {
     try {
       final url = Uri.parse('${AppUrl.baseUrl}/user/weekly/leaderboard');
-      final response = await http.get(url);
+      String? authToken = await TokenManager.getToken();
+      final headers = {
+        'token': authToken!,
+      };
+      final response = await http.get(url, headers: headers);
       if (response.statusCode == 200) {
         var jsonData = json.decode(response.body);
         List<dynamic> weeklyData = jsonData['data'];
@@ -44,7 +53,11 @@ class LeaderboardAPi {
   Future<List<Leaderboard>> getAllTimeLeaderboard() async {
     try {
       final url = Uri.parse('${AppUrl.baseUrl}/user/alltime/leaderboard');
-      final response = await http.get(url);
+      String? authToken = await TokenManager.getToken();
+      final headers = {
+        'token': authToken!,
+      };
+      final response = await http.get(url, headers: headers);
       if (response.statusCode == 200) {
         var jsonData = json.decode(response.body);
         List<dynamic> weeklyData = jsonData['data'];
@@ -62,7 +75,11 @@ class LeaderboardAPi {
   Future<List<CampaignUserLeaderboard>> getCampaignLeaderboard() async {
     try {
       final url = Uri.parse('${AppUrl.baseUrl}/quiz/campaign/leaderboard');
-      final response = await http.get(url);
+      String? authToken = await TokenManager.getToken();
+      final headers = {
+        'token': authToken!,
+      };
+      final response = await http.get(url, headers: headers);
       if (response.statusCode == 200) {
         var jsonData = json.decode(response.body);
         List<dynamic> campaignData = jsonData['data'];

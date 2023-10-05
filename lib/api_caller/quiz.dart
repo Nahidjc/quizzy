@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:quizzy/models/quiz_model.dart';
+import 'package:quizzy/token/token_manager.dart';
 
 import 'app_url.dart';
 import 'package:http/http.dart' as http;
@@ -7,7 +8,12 @@ import 'package:http/http.dart' as http;
 class QuizApi {
   Future<List<QuizData>> fetchQuiz(String stageId, String subjectId) async {
     final url = Uri.parse('${AppUrl.baseUrl}/quiz/subject/stage');
-    final headers = {'stageid': stageId, 'subjectid': subjectId};
+    String? authToken = await TokenManager.getToken();
+    final headers = {
+      'stageid': stageId,
+      'subjectid': subjectId,
+      'token': authToken!
+    };
     final response = await http.get(url, headers: headers);
     if (response.statusCode == 200) {
       var jsonData = json.decode(response.body);
@@ -36,9 +42,10 @@ class QuizApi {
 
   Future<void> attemptQuiz(String quizId, String userId, int point) async {
     final url = Uri.parse('${AppUrl.baseUrl}/quiz/attemp');
+    String? authToken = await TokenManager.getToken();
     await http.post(
       url,
-      headers: {'Content-Type': 'application/json'},
+      headers: {'Content-Type': 'application/json', 'token': authToken!},
       body: json.encode(
         {
           'quizId': quizId,

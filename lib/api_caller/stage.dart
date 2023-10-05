@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:quizzy/models/stage_model.dart';
+import 'package:quizzy/token/token_manager.dart';
 
 import 'app_url.dart';
 import 'package:http/http.dart' as http;
@@ -7,7 +8,8 @@ import 'package:http/http.dart' as http;
 class StageList {
   Future<List<StageData>> fetchStage(String userid) async {
     final url = Uri.parse('${AppUrl.baseUrl}/stage/all');
-    final headers = {'userid': userid};
+    String? authToken = await TokenManager.getToken();
+    final headers = {'token': authToken!};
     final response = await http.get(url, headers: headers);
     if (response.statusCode == 200) {
       var jsonData = json.decode(response.body);
@@ -21,8 +23,9 @@ class StageList {
 
   Future subscribeStage(String userId, String stageId) async {
     final url = Uri.parse('${AppUrl.baseUrl}/stage/subscribe');
+    String? authToken = await TokenManager.getToken();
     final body = {'userId': userId, 'stageId': stageId};
-    final headers = {'Content-Type': 'application/json'};
+    final headers = {'Content-Type': 'application/json', 'token': authToken!};
 
     try {
       final response =
