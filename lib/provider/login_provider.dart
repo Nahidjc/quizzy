@@ -89,8 +89,7 @@ class AuthProvider extends ChangeNotifier {
     });
   }
 
-  Future<void> loginProvider(
-       String email, String password) async {
+  Future<void> loginProvider(String email, String password) async {
     setLoading(true);
     final url = Uri.parse('${AppUrl.baseUrl}/auth/login');
     try {
@@ -162,7 +161,10 @@ class AuthProvider extends ChangeNotifier {
     try {
       final response = await http.get(
         url,
-        headers: {'Content-Type': 'application/json', 'userid': userid},
+        headers: {
+          'Content-Type': 'application/json',
+          'userid': userid,
+        },
       );
       if (response.statusCode == 200) {
         var jsonResponse = json.decode(response.body);

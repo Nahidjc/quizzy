@@ -7,6 +7,7 @@ import 'package:quizzy/components/header.dart';
 import 'package:quizzy/api_caller/categories.dart';
 // import 'package:quizzy/components/slider.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:quizzy/token/token_manager.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -39,7 +40,8 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       isLoading = true;
     });
-    List<dynamic> levels = await CategoryList().fetchData();
+    String? authToken = await TokenManager.getToken();
+    List<dynamic> levels = await CategoryList().fetchData(authToken!);
     categoryList = levels.sublist(0, 4);
     setState(() {
       isLoading = false;

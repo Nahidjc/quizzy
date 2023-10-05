@@ -8,6 +8,7 @@ import 'package:quizzy/api_caller/categories.dart';
 // import 'package:quizzy/components/slider.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:quizzy/configs/variables.dart';
+import 'package:quizzy/token/token_manager.dart';
 
 class AllQuizCategories extends StatefulWidget {
   const AllQuizCategories({super.key});
@@ -40,7 +41,8 @@ class _AllQuizCategoriesState extends State<AllQuizCategories> {
     setState(() {
       isLoading = true;
     });
-    List<dynamic> levels = await CategoryList().fetchData();
+    String? authToken = await TokenManager.getToken();
+    List<dynamic> levels = await CategoryList().fetchData(authToken!);
     categoryList = levels;
     setState(() {
       isLoading = false;

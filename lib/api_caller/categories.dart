@@ -4,9 +4,12 @@ import 'package:http/http.dart' as http;
 import 'package:quizzy/models/level_model.dart';
 
 class CategoryList {
-  Future<List<dynamic>> fetchData() async {
+  Future<List<dynamic>> fetchData(String token) async {
     final url = Uri.parse('${AppUrl.baseUrl}/level/all');
-    final response = await http.get(url);
+    final headers = {
+      'token': token,
+    };
+    final response = await http.get(url, headers: headers);
     if (response.statusCode == 200) {
       var data = json.decode(response.body);
       var quizLevelResponse = QuizLevelResponse.fromJson(data);
