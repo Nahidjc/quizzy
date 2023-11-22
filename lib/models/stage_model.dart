@@ -13,7 +13,7 @@ class StageData {
 
   factory StageData.fromJson(Map<String, dynamic> json) {
     return StageData(
-      id: json['_id'],
+      id: json['id'],
       levelName: json['levelName'],
       cost: json['cost'] as int? ?? 0,
       isAccessible: json['isAccessible'],

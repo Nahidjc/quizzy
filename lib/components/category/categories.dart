@@ -28,9 +28,7 @@ class Categories extends StatelessWidget {
               context,
               MaterialPageRoute(
                 builder: (context) => SubjectList(
-                  displayName: category.displayName,
-                  categoryId: category.id
-                ),
+                    displayName: category.displayName, categoryId: category.id),
               ),
             ),
             child: Container(
@@ -50,6 +48,7 @@ class Categories extends StatelessWidget {
                         double fontSize = constraints.maxWidth * 0.10;
                         return Text(
                           category.displayName,
+                          textAlign: TextAlign.center,
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: fontSize,

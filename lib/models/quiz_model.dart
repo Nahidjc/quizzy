@@ -32,13 +32,14 @@ class QuizData {
 
   factory QuizData.fromJson(Map<String, dynamic> json) {
     return QuizData(
-      id: json['_id'],
-      mentor: json['mentor'],
+      id: json['quizId'],
+      mentor: json['userId'],
       title: json['title'],
       subjectId: json['subjectId'],
+      // questions: [],
       questions: List<Question>.from(
           json['questions'].map((data) => Question.fromJson(data))),
-      difficultyLevel: json['difficultyLevel'],
+      difficultyLevel: json['levelId'],
     );
   }
 }
@@ -59,23 +60,22 @@ class Question {
     this.correctAnswers,
   });
 
-factory Question.fromJson(Map<String, dynamic> json) {
+  factory Question.fromJson(Map<String, dynamic> json) {
     final hasCorrectAnswer = json.containsKey('correctAnswer');
-    final hasCorrectAnswers = json.containsKey('correctAnswers');
-
-    if (hasCorrectAnswer && hasCorrectAnswers) {
-      throw ArgumentError(
-          'Both correctAnswer and correctAnswers are present. Only one should be provided.');
-    }
+    // final hasCorrectAnswers = json.containsKey('correctAnswers');
+    // if (hasCorrectAnswer && hasCorrectAnswers) {
+    //   throw ArgumentError(
+    //       'Both correctAnswer and correctAnswers are present. Only one should be provided.');
+    // }
     return Question(
       question: json['question'],
       options:
           List<String>.from(json['options'].map((option) => option.toString())),
       correctAnswer: hasCorrectAnswer ? json['correctAnswer'] : null,
-      correctAnswers:
-          hasCorrectAnswers ? List<int>.from(json['correctAnswers']) : null,
-      id: json['_id'],
+      correctAnswers: null,
+      // correctAnswers:
+      //     hasCorrectAnswers ? List<int>.from(json['correctAnswers']) : null,
+      id: json['questionId'],
     );
   }
-
 }

@@ -62,9 +62,8 @@ class _QuizLevelListState extends State<QuizLevelList> {
     });
     try {
       String userId = Provider.of<AuthProvider>(context, listen: false).userId;
-      List<dynamic> stageData = await _stageList.fetchStage(userId);
-      print(stageData);
-      print("========================data featched korche==================");
+      List<dynamic> stageData =
+          await _stageList.fetchStage(userId, widget.subjectId);
       setState(() {
         _stages = stageData;
         isLoading = false;
