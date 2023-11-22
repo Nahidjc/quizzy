@@ -1,20 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:quizzy/ads/banner_ads.dart';
+import 'package:quizzy/api_caller/subject_api.dart';
+import 'package:quizzy/components/category/category_skeleton.dart';
 import 'package:quizzy/components/custom_drawer.dart';
 import 'package:quizzy/components/info_message.dart';
 import 'package:quizzy/configs/variables.dart';
-import 'package:quizzy/models/level_model.dart';
+import 'package:quizzy/models/subject_model.dart';
 import 'package:quizzy/pages/quiz_level.dart';
+import 'package:quizzy/token/token_manager.dart';
 
 class SubjectList extends StatefulWidget {
-  final List<dynamic> subjectList;
   final String displayName;
+  final String categoryId;
 
   const SubjectList({
     Key? key,
-    required this.subjectList,
     required this.displayName,
+    required this.categoryId,
   }) : super(key: key);
 
   @override
@@ -27,6 +30,7 @@ class _SubjectListState extends State<SubjectList> {
   @override
   void initState() {
     super.initState();
+    fetchSubjectList();
     _bannerAdManager = BannerAdManager();
     _loadAd();
   }
@@ -43,6 +47,21 @@ class _SubjectListState extends State<SubjectList> {
   void dispose() {
     _bannerAdManager.dispose();
     super.dispose();
+  }
+
+  bool isLoading = false;
+  List subjects = [];
+  Future<void> fetchSubjectList() async {
+    setState(() {
+      isLoading = true;
+    });
+    String? authToken = await TokenManager.getToken();
+    List<dynamic> subjectListData =
+        await SubjectListAPi().fetchData(authToken!, widget.categoryId);
+    subjects = subjectListData;
+    setState(() {
+      isLoading = false;
+    });
   }
 
   @override
@@ -63,70 +82,78 @@ class _SubjectListState extends State<SubjectList> {
           ),
         ),
       ),
-      body: widget.subjectList.isNotEmpty
-          ? Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10),
-              child: GridView.builder(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: _getCrossAxisCount(context),
-                  crossAxisSpacing: 20.0,
-                  mainAxisSpacing: 20.0,
-                ),
-                itemCount: widget.subjectList.length,
-                itemBuilder: (context, index) {
-                  Subject subject = widget.subjectList[index];
-                  return GestureDetector(
-                      onTap: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => QuizLevelList(
-                            subjectName: subject.subjectName,
-                            displayName: widget.displayName,
-                            subjectId: subject.id,
+      body: isLoading
+          ? const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 10),
+              child: CategorySkeleton())
+          : subjects.isNotEmpty
+              ? Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 16.0, vertical: 10),
+                  child: GridView.builder(
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: _getCrossAxisCount(context),
+                      childAspectRatio: 1.0,
+                      crossAxisSpacing: 22.0,
+                      mainAxisSpacing: 22.0,
+                    ),
+                    itemCount: subjects.length,
+                    itemBuilder: (context, index) {
+                      Subject subject = subjects[index];
+                      return GestureDetector(
+                        onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => QuizLevelList(
+                              subjectName: subject.displayName,
+                              displayName: widget.displayName,
+                              subjectId: subject.id,
+                            ),
                           ),
                         ),
-                      ),
-                    child: Container(
-                      decoration: gradientBoxDecoration,
-                      child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Icon(
-                              Icons.subject_outlined,
-                              size: 40.0,
-                              color: Colors.white,
-                            ),
-                            const SizedBox(height: 8.0),
-                            Center(
-                              child: LayoutBuilder(
-                                builder: (context, constraints) {
-                                  double fontSize = constraints.maxWidth * 0.12;
-                                  return Text(
-                                    subject.subjectName,
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: fontSize,
-                                      fontWeight: FontWeight.bold,
-                                      shadows: [
-                                        Shadow(
-                                          color: Colors.black.withOpacity(0.2),
-                                          offset: const Offset(1, 1),
-                                          blurRadius: 1.0,
+                        child: Container(
+                          decoration: gradientBoxDecoration,
+                          child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Icon(
+                                  Icons.subject_outlined,
+                                  size: 40.0,
+                                  color: Colors.white,
+                                ),
+                                const SizedBox(height: 8.0),
+                                Center(
+                                  child: LayoutBuilder(
+                                    builder: (context, constraints) {
+                                      double fontSize =
+                                          constraints.maxWidth * 0.10;
+                                      return Text(
+                                        subject.displayName,
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: fontSize,
+                                          fontWeight: FontWeight.bold,
+                                          shadows: [
+                                            Shadow(
+                                              color:
+                                                  Colors.black.withOpacity(0.2),
+                                              offset: const Offset(1, 1),
+                                              blurRadius: 1.0,
+                                            ),
+                                          ],
                                         ),
-                                      ],
-                                    ),
-                                  );
-                                },
-                              ),
-                            ),
-                          ]),
-                    ),
-                  );
-                },
-              ),
-            )
-          : InfoMessage('No data available for ${widget.displayName}'),
+                                      );
+                                    },
+                                  ),
+                                ),
+                              ]),
+                        ),
+                      );
+                    },
+                  ),
+                )
+              : InfoMessage('No data available for ${widget.displayName}'),
       endDrawer: const CustomDrawer(),
       bottomNavigationBar: BottomAppBar(
         child: SizedBox(
@@ -151,7 +178,6 @@ class _SubjectListState extends State<SubjectList> {
     }
   }
 }
-
 
 final gradientBoxDecoration = BoxDecoration(
   gradient: const LinearGradient(

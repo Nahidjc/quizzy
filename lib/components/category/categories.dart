@@ -28,8 +28,9 @@ class Categories extends StatelessWidget {
               context,
               MaterialPageRoute(
                 builder: (context) => SubjectList(
-                    subjectList: category.subjectList,
-                    displayName: category.displayName),
+                  displayName: category.displayName,
+                  categoryId: category.id
+                ),
               ),
             ),
             child: Container(

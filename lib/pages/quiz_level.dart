@@ -5,6 +5,7 @@ import 'package:quickalert/quickalert.dart';
 import 'package:quizzy/ads/banner_ads.dart';
 import 'package:quizzy/api_caller/stage.dart';
 import 'package:quizzy/components/custom_drawer.dart';
+import 'package:quizzy/components/info_message.dart';
 import 'package:quizzy/configs/variables.dart';
 import 'package:quizzy/models/stage_model.dart';
 import 'package:quizzy/pages/login_page.dart';
@@ -40,6 +41,7 @@ class _QuizLevelListState extends State<QuizLevelList> {
     user = Provider.of<AuthProvider>(context, listen: false);
     _fetchStages();
   }
+
   void _loadAd() {
     _bannerAdManager.loadAd((ad) {
       setState(() {
@@ -53,6 +55,7 @@ class _QuizLevelListState extends State<QuizLevelList> {
     _bannerAdManager.dispose();
     super.dispose();
   }
+
   Future<void> _fetchStages() async {
     setState(() {
       isLoading = true;
@@ -60,6 +63,8 @@ class _QuizLevelListState extends State<QuizLevelList> {
     try {
       String userId = Provider.of<AuthProvider>(context, listen: false).userId;
       List<dynamic> stageData = await _stageList.fetchStage(userId);
+      print(stageData);
+      print("========================data featched korche==================");
       setState(() {
         _stages = stageData;
         isLoading = false;
@@ -101,11 +106,11 @@ class _QuizLevelListState extends State<QuizLevelList> {
       return const LoginPage();
     }
     return Scaffold(
-        appBar: AppBar(
-          toolbarHeight: 80.0,
-          centerTitle: true,
-          backgroundColor: const Color.fromARGB(255, 144, 106, 250),
-          iconTheme: const IconThemeData(color: Colors.white),
+      appBar: AppBar(
+        toolbarHeight: 80.0,
+        centerTitle: true,
+        backgroundColor: const Color.fromARGB(255, 144, 106, 250),
+        iconTheme: const IconThemeData(color: Colors.white),
         title: Text(
           widget.subjectName,
           style: const TextStyle(
@@ -114,43 +119,44 @@ class _QuizLevelListState extends State<QuizLevelList> {
             fontWeight: FontWeight.bold,
           ),
         ),
-          actions: [Container()],
-        ),
-        body: Center(
-          child: isLoading
-              ? const Center(child: CircularProgressIndicator())
-            : GridView.builder(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3,
-                  mainAxisSpacing: 20.0,
-                  crossAxisSpacing: 20.0,
-                ),
-                padding: const EdgeInsets.all(10.0),
-                itemBuilder: (BuildContext context, int index) {
-                  if (index >= _stages.length) {
-                    return Container();
-                  }
+        actions: [Container()],
+      ),
+      body: Center(
+        child: isLoading
+            ? const Center(child: CircularProgressIndicator())
+            : _stages.isNotEmpty
+                ? GridView.builder(
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 3,
+                      mainAxisSpacing: 20.0,
+                      crossAxisSpacing: 20.0,
+                    ),
+                    padding: const EdgeInsets.all(10.0),
+                    itemBuilder: (BuildContext context, int index) {
+                      if (index >= _stages.length) {
+                        return Container();
+                      }
 
-                  StageData levelData = _stages[index];
-                  String levelName = levelData.levelName;
-                  bool isUnlocked = levelData.isAccessible;
-                  String stageId = levelData.id;
-                  int cost = levelData.cost;
-                  StageData? previousStage;
-                  if (index > 0) {
-                    previousStage = _stages[index - 1];
-                  }
-                  bool isPreviousUnlocked =
-                      previousStage != null && previousStage.isAccessible;
-                  return buildLevelButton(context, levelName, isUnlocked,
-                      stageId, cost, isPreviousUnlocked);
-                },
-                itemCount: _stages.length,
-              ),
-
-
-        ),
-        endDrawer: const CustomDrawer(),
+                      StageData levelData = _stages[index];
+                      String levelName = levelData.levelName;
+                      bool isUnlocked = levelData.isAccessible;
+                      String stageId = levelData.id;
+                      int cost = levelData.cost;
+                      StageData? previousStage;
+                      if (index > 0) {
+                        previousStage = _stages[index - 1];
+                      }
+                      bool isPreviousUnlocked =
+                          previousStage != null && previousStage.isAccessible;
+                      return buildLevelButton(context, levelName, isUnlocked,
+                          stageId, cost, isPreviousUnlocked);
+                    },
+                    itemCount: _stages.length,
+                  )
+                : InfoMessage('No data available for ${widget.subjectName}'),
+      ),
+      endDrawer: const CustomDrawer(),
       bottomNavigationBar: BottomAppBar(
         child: SizedBox(
           height: _bannerAd?.size.height.toDouble() ?? 0,

@@ -7,7 +7,8 @@ import 'package:http/http.dart' as http;
 
 class StageList {
   Future<List<StageData>> fetchStage(String userid) async {
-    final url = Uri.parse('${AppUrl.baseUrl}/stage/all');
+    final url = Uri.parse('${AppUrl.baseUrl}/level/all');
+    print(url);
     String? authToken = await TokenManager.getToken();
     final headers = {'token': authToken!};
     final response = await http.get(url, headers: headers);

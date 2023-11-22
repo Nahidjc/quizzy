@@ -5,7 +5,7 @@ import 'package:quizzy/models/level_model.dart';
 
 class CategoryList {
   Future<List<dynamic>> fetchData(String token) async {
-    final url = Uri.parse('${AppUrl.baseUrl}/level/all');
+    final url = Uri.parse('${AppUrl.baseUrl}/category/all');
     final headers = {
       'token': token,
     };
