@@ -219,7 +219,6 @@ class _QuizListState extends State<QuizList> {
   }
 }
 
-
 final gradientBoxDecoration = BoxDecoration(
   gradient: const LinearGradient(
     begin: Alignment.topLeft,

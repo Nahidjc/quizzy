@@ -6,11 +6,10 @@ import 'app_url.dart';
 import 'package:http/http.dart' as http;
 
 class StageList {
-  Future<List<StageData>> fetchStage(String userid) async {
-    final url = Uri.parse('${AppUrl.baseUrl}/level/all');
-    print(url);
+  Future<List<StageData>> fetchStage(String userid, String subjectId) async {
+    final url = Uri.parse('${AppUrl.baseUrl}/level/$subjectId');
     String? authToken = await TokenManager.getToken();
-    final headers = {'token': authToken!};
+    final headers = {'token': authToken!, 'userid': userid};
     final response = await http.get(url, headers: headers);
     if (response.statusCode == 200) {
       var jsonData = json.decode(response.body);
