@@ -7,6 +7,7 @@ import 'package:quizzy/models/jwt_token_util.dart';
 import 'dart:async';
 import 'package:quizzy/models/user_model.dart';
 import 'package:quizzy/token/token_manager.dart';
+import 'package:quizzy/token/user_manager.dart';
 
 class AuthProvider extends ChangeNotifier {
   bool _isAuthenticated = false;
@@ -73,6 +74,8 @@ class AuthProvider extends ChangeNotifier {
     _userId = userDetails.id;
     _profileUrl = userDetails.profileUrl;
     await TokenManager.saveToken(userDetails.token);
+    await UserManager.saveUserData(userDetails.name, userDetails.id,
+        userDetails.coin, userDetails.profileUrl!);
     setAuthenticated(true);
     setLoading(false);
     notifyListeners();
@@ -173,6 +176,7 @@ class AuthProvider extends ChangeNotifier {
         _coin = userData.coin;
         _name = userData.name;
         _profileUrl = userData.profileUrl;
+        await UserManager.saveUserData(_name, _userId, _coin, profileUrl!);
       }
     } catch (e) {
       _errorMessage = 'An error occurred.';
@@ -189,6 +193,7 @@ class AuthProvider extends ChangeNotifier {
 
   void logout() {
     TokenManager.deleteToken();
+    UserManager.deleteUserData();
     _errorMessage = '';
     _userId = '';
     _name = '';
@@ -216,6 +221,21 @@ class AuthProvider extends ChangeNotifier {
     _userId = userData.id;
     _coin = userData.coin;
     _profileUrl = userData.profileUrl;
+    notifyListeners();
+    setLoading(false);
+    setAuthenticated(true);
+    _errorMessage = '';
+  }
+
+  void userDataFromShared(Map<String, dynamic> userData) {
+    String name = userData['name'];
+    String userId = userData['userId'];
+    int coin = userData['coin'];
+    String profileUrl = userData['profileUrl'];
+    _name = name;
+    _userId = userId;
+    _coin = coin;
+    _profileUrl = profileUrl;
     notifyListeners();
     setLoading(false);
     setAuthenticated(true);
