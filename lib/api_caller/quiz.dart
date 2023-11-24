@@ -42,7 +42,7 @@ class QuizApi {
   }
 
   Future<void> attemptQuiz(String quizId, String userId, int point) async {
-    final url = Uri.parse('${AppUrl.baseUrl}/quiz/attemp');
+    final url = Uri.parse('${AppUrl.baseUrl}/quiz/$quizId/attempt');
     String? authToken = await TokenManager.getToken();
     await http.post(
       url,

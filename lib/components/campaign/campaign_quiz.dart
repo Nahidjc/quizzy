@@ -11,6 +11,7 @@ import 'dart:async';
 import 'package:quizzy/utils/quiz_points.dart';
 import 'package:quizzy/widget/circular_progress.dart';
 import 'package:panara_dialogs/panara_dialogs.dart';
+import 'package:quizzy/configs/variables.dart';
 
 class CampaignQuiz extends StatefulWidget {
   final CampaignModel quiz;
@@ -404,19 +405,70 @@ class _CampaignQuizState extends State<CampaignQuiz> {
                         if (currentQuestionIndex > 0)
                           ElevatedButton(
                             onPressed: previousQuestion,
-                            child: const Text('Previous'),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Variables.primaryColor,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              padding: const EdgeInsets.symmetric(vertical: 16),
+                              minimumSize: Size(
+                                  MediaQuery.of(context).size.width * 0.4, 0),
+                            ),
+                            child: Text(
+                              'Previous',
+                              style: TextStyle(
+                                fontSize:
+                                    MediaQuery.of(context).size.height * 0.018,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
+                            ),
                           ),
                         const SizedBox(width: 20),
                         if (currentQuestionIndex < quizData.length - 1)
                           ElevatedButton(
                             onPressed: nextQuestion,
-                            child: const Text('Next'),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Variables.primaryColor,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              padding: const EdgeInsets.symmetric(vertical: 16),
+                              minimumSize: Size(
+                                  MediaQuery.of(context).size.width * 0.4, 0),
+                            ),
+                            child: Text(
+                              'Next',
+                              style: TextStyle(
+                                fontSize:
+                                    MediaQuery.of(context).size.height * 0.018,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
+                            ),
                           ),
                         const SizedBox(width: 20),
                         if (currentQuestionIndex == quizData.length - 1)
                           ElevatedButton(
                             onPressed: showWarningIfQuestionsNotFilled,
-                            child: const Text('Submit Quiz'),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Variables.primaryColor,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              padding: const EdgeInsets.symmetric(vertical: 16),
+                              minimumSize: Size(
+                                  MediaQuery.of(context).size.width * 0.4, 0),
+                            ),
+                            child: Text(
+                              'Submit Quiz',
+                              style: TextStyle(
+                                fontSize:
+                                    MediaQuery.of(context).size.height * 0.018,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
+                            ),
                           ),
                       ],
                     )

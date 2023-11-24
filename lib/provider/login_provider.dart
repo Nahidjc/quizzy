@@ -74,9 +74,9 @@ class AuthProvider extends ChangeNotifier {
     _profileUrl = userDetails.profileUrl;
     await TokenManager.saveToken(userDetails.token);
     setAuthenticated(true);
+    setLoading(false);
     notifyListeners();
     _errorMessage = '';
-    setLoading(false);
   }
 
   failedLoginHandler(http.Response response) async {
@@ -85,6 +85,7 @@ class AuthProvider extends ChangeNotifier {
     _errorMessage = responseBody['message'] ?? 'Unknown error';
     Timer(const Duration(seconds: 3), () {
       _errorMessage = '';
+      setLoading(false);
       notifyListeners();
     });
   }
