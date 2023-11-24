@@ -383,33 +383,33 @@ class _QuizResultPageState extends State<QuizResultPage>
                       mainAxisSpacing: 0.0,
                       crossAxisSpacing: 0.0,
                       children: [
-                        GestureDetector(
-                          onTap: () {
-                            // Handle 'Play again' tapped
-                          },
-                          child: const Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              CircleAvatar(
-                                backgroundColor: Colors.blue,
-                                child: Icon(
-                                  Icons.refresh,
-                                  color: Colors.white,
-                                  size: 25.0,
-                                ),
-                              ),
-                              SizedBox(height: 2.0),
-                              Text(
-                                'Play again',
-                                style: TextStyle(
-                                  fontSize: 14.0,
-                                  color: Colors.black,
-                                ),
-                                textAlign: TextAlign.center,
-                              ),
-                            ],
-                          ),
-                        ),
+                        // GestureDetector(
+                        //   onTap: () {
+                        //     // Handle 'Play again' tapped
+                        //   },
+                        //   child: const Column(
+                        //     mainAxisAlignment: MainAxisAlignment.center,
+                        //     children: [
+                        //       CircleAvatar(
+                        //         backgroundColor: Colors.blue,
+                        //         child: Icon(
+                        //           Icons.refresh,
+                        //           color: Colors.white,
+                        //           size: 25.0,
+                        //         ),
+                        //       ),
+                        //       SizedBox(height: 2.0),
+                        //       Text(
+                        //         'Play again',
+                        //         style: TextStyle(
+                        //           fontSize: 14.0,
+                        //           color: Colors.black,
+                        //         ),
+                        //         textAlign: TextAlign.center,
+                        //       ),
+                        //     ],
+                        //   ),
+                        // ),
                         GestureDetector(
                           onTap: () {
                             Navigator.pushReplacement(
@@ -443,60 +443,60 @@ class _QuizResultPageState extends State<QuizResultPage>
                             ],
                           ),
                         ),
-                        GestureDetector(
-                          onTap: () {
-                            // Handle 'Share score' tapped
-                          },
-                          child: const Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              CircleAvatar(
-                                backgroundColor: Colors.purple,
-                                child: Icon(
-                                  Icons.share,
-                                  color: Colors.white,
-                                  size: 25.0,
-                                ),
-                              ),
-                              SizedBox(height: 2.0),
-                              Text(
-                                'Share score',
-                                style: TextStyle(
-                                  fontSize: 14.0,
-                                  color: Colors.black,
-                                ),
-                                textAlign: TextAlign.center,
-                              ),
-                            ],
-                          ),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            // Handle 'Generate PDF' tapped
-                          },
-                          child: const Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              CircleAvatar(
-                                backgroundColor: Colors.indigo,
-                                child: Icon(
-                                  Icons.picture_as_pdf,
-                                  color: Colors.white,
-                                  size: 25.0,
-                                ),
-                              ),
-                              SizedBox(height: 2.0),
-                              Text(
-                                'Generate PDF',
-                                style: TextStyle(
-                                  fontSize: 14.0,
-                                  color: Colors.black,
-                                ),
-                                textAlign: TextAlign.center,
-                              ),
-                            ],
-                          ),
-                        ),
+                        // GestureDetector(
+                        //   onTap: () {
+                        //     // Handle 'Share score' tapped
+                        //   },
+                        //   child: const Column(
+                        //     mainAxisAlignment: MainAxisAlignment.center,
+                        //     children: [
+                        //       CircleAvatar(
+                        //         backgroundColor: Colors.purple,
+                        //         child: Icon(
+                        //           Icons.share,
+                        //           color: Colors.white,
+                        //           size: 25.0,
+                        //         ),
+                        //       ),
+                        //       SizedBox(height: 2.0),
+                        //       Text(
+                        //         'Share score',
+                        //         style: TextStyle(
+                        //           fontSize: 14.0,
+                        //           color: Colors.black,
+                        //         ),
+                        //         textAlign: TextAlign.center,
+                        //       ),
+                        //     ],
+                        //   ),
+                        // ),
+                        // GestureDetector(
+                        //   onTap: () {
+                        //     // Handle 'Generate PDF' tapped
+                        //   },
+                        //   child: const Column(
+                        //     mainAxisAlignment: MainAxisAlignment.center,
+                        //     children: [
+                        //       CircleAvatar(
+                        //         backgroundColor: Colors.indigo,
+                        //         child: Icon(
+                        //           Icons.picture_as_pdf,
+                        //           color: Colors.white,
+                        //           size: 25.0,
+                        //         ),
+                        //       ),
+                        //       SizedBox(height: 2.0),
+                        //       Text(
+                        //         'Generate PDF',
+                        //         style: TextStyle(
+                        //           fontSize: 14.0,
+                        //           color: Colors.black,
+                        //         ),
+                        //         textAlign: TextAlign.center,
+                        //       ),
+                        //     ],
+                        //   ),
+                        // ),
                         GestureDetector(
                           onTap: () {
                             Navigator.of(context).pushNamed("/home");

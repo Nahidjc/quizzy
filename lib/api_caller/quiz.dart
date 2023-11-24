@@ -27,7 +27,7 @@ class QuizApi {
   }
 
   Future<List<Question>> fetchRandomQuestions(String subject) async {
-    final url = Uri.parse('${AppUrl.baseUrl}/quiz/random/questions');
+    final url = Uri.parse('${AppUrl.baseUrl}/quiz/questions/$subject/random');
     final headers = {'subject': subject};
     final response = await http.get(url, headers: headers);
     if (response.statusCode == 200) {
