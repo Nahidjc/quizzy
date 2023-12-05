@@ -27,11 +27,15 @@ class _LoginPageState extends State<LoginPage> {
     listenForAuthStateChange();
     super.initState();
   }
+
   void _submitForm() {
     if (_formKey.currentState!.validate()) {
       String email = _emailController.text;
       String password = _passwordController.text;
       LoginProvider.loginProvider(email, password);
+      if (LoginProvider.errorMessage.isNotEmpty) {
+        showLoginFailureToast();
+      }
       _emailController.clear();
       _passwordController.clear();
     }
@@ -162,142 +166,145 @@ class _LoginPageState extends State<LoginPage> {
         child: authState.isLoading
             ? const Center(child: CircularProgressIndicator())
             : Form(
-          key: _formKey,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
+                key: _formKey,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
                     const SizedBox(height: 80.0),
-              Image.asset(
-                'assets/images/logo.png',
+                    Image.asset(
+                      'assets/images/logo.png',
                       width: MediaQuery.of(context).size.width * 0.25,
-                fit: BoxFit.cover,
-              ),
+                      fit: BoxFit.cover,
+                    ),
                     const SizedBox(height: 20.0),
-              if (!authState.isAuthenticated &&
-                  authState.errorMessage.isNotEmpty)
-                Container(
-                  margin: const EdgeInsets.only(bottom: 16.0),
-                  padding: const EdgeInsets.all(16.0),
-                  decoration: BoxDecoration(
-                    color: Colors.red,
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                  child: Row(
-                    children: [
-                      const Icon(
-                        Icons.error_outline,
-                        color: Colors.white,
-                        size: 24.0,
-                      ),
-                      const SizedBox(width: 8.0),
-                      Expanded(
-                        child: Text(
-                          authState.errorMessage,
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16.0,
-                          ),
+                    if (!authState.isAuthenticated &&
+                        authState.errorMessage.isNotEmpty)
+                      Container(
+                        margin: const EdgeInsets.only(bottom: 16.0),
+                        padding: const EdgeInsets.all(16.0),
+                        decoration: BoxDecoration(
+                          color: Colors.red,
+                          borderRadius: BorderRadius.circular(8.0),
                         ),
-                      ),
-                    ],
-                  ),
-                ),
-              if (authState.isRegistered && authState.successMessage.isNotEmpty)
-                Container(
-                  margin: const EdgeInsets.only(bottom: 16.0),
-                  padding: const EdgeInsets.all(16.0),
-                  decoration: BoxDecoration(
-                    color: Colors.green,
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: Text(
-                          authState.successMessage,
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16.0,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              Container(
-                decoration: BoxDecoration(
-                  color: Colors.white38,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: Column(
-                    children: [
-                      const SizedBox(height: 20.0),
-                      TextFormField(
-                        controller: _emailController,
-                        keyboardType: TextInputType.emailAddress,
-                        decoration: InputDecoration(
-                          labelText: 'Email',
-                          border: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.circular(8), // Apply corner radius
-                          ),
-                          prefixIcon:
-                              const Icon(Icons.email_outlined, size: 24),
-                        ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter your email';
-                          }
-                          if (!value.contains('@')) {
-                            return 'Invalid email format';
-                          }
-                          return null;
-                        },
-                      ),
-                      const SizedBox(height: 20.0),
-                      TextFormField(
-                        controller: _passwordController,
-                        keyboardType: TextInputType.text,
-                        obscureText: true,
-                        decoration: InputDecoration(
-                            labelText: 'Password',
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8),
+                        child: Row(
+                          children: [
+                            const Icon(
+                              Icons.error_outline,
+                              color: Colors.white,
+                              size: 24.0,
                             ),
-                            prefixIcon: const Icon(Icons.lock, size: 24)),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter your password';
-                          }
-                          return null;
-                        },
-                      ),
-                      const SizedBox(height: 20.0),
-                      SizedBox(
-                        width: double.infinity,
-                        height: 50.0,
-                        child: ElevatedButton(
-                          style: ButtonStyle(
-                            shape: MaterialStateProperty.all<
-                                RoundedRectangleBorder>(RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            )),
-                            backgroundColor: MaterialStateProperty.all<Color>(
-                                Variables.primaryColor),
-                          ),
-                          onPressed: _submitForm,
-                          child: const Text("SIGN IN",
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 18)),
+                            const SizedBox(width: 8.0),
+                            Expanded(
+                              child: Text(
+                                authState.errorMessage,
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16.0,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                      const SizedBox(
-                        height: 10,
+                    if (authState.isRegistered &&
+                        authState.successMessage.isNotEmpty)
+                      Container(
+                        margin: const EdgeInsets.only(bottom: 16.0),
+                        padding: const EdgeInsets.all(16.0),
+                        decoration: BoxDecoration(
+                          color: Colors.green,
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Text(
+                                authState.successMessage,
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16.0,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white38,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(20),
+                        child: Column(
+                          children: [
+                            const SizedBox(height: 20.0),
+                            TextFormField(
+                              controller: _emailController,
+                              keyboardType: TextInputType.emailAddress,
+                              decoration: InputDecoration(
+                                labelText: 'Email',
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(
+                                      8), // Apply corner radius
+                                ),
+                                prefixIcon:
+                                    const Icon(Icons.email_outlined, size: 24),
+                              ),
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Please enter your email';
+                                }
+                                if (!value.contains('@')) {
+                                  return 'Invalid email format';
+                                }
+                                return null;
+                              },
+                            ),
+                            const SizedBox(height: 20.0),
+                            TextFormField(
+                              controller: _passwordController,
+                              keyboardType: TextInputType.text,
+                              obscureText: true,
+                              decoration: InputDecoration(
+                                  labelText: 'Password',
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  prefixIcon: const Icon(Icons.lock, size: 24)),
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Please enter your password';
+                                }
+                                return null;
+                              },
+                            ),
+                            const SizedBox(height: 20.0),
+                            SizedBox(
+                              width: double.infinity,
+                              height: 50.0,
+                              child: ElevatedButton(
+                                style: ButtonStyle(
+                                  shape: MaterialStateProperty.all<
+                                          RoundedRectangleBorder>(
+                                      RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  )),
+                                  backgroundColor:
+                                      MaterialStateProperty.all<Color>(
+                                          Variables.primaryColor),
+                                ),
+                                onPressed: _submitForm,
+                                child: const Text("SIGN IN",
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 18)),
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
                             // GestureDetector(
                             //   child: const Padding(
                             //     padding: EdgeInsets.only(right: 8.0),
@@ -310,10 +317,10 @@ class _LoginPageState extends State<LoginPage> {
                             //     ),
                             //   ),
                             // ),
-                    ],
-                  ),
-                ),
-              ),
+                          ],
+                        ),
+                      ),
+                    ),
                     // if (authState.isLoading)
                     //   const Column(
                     //     children: [
@@ -325,37 +332,37 @@ class _LoginPageState extends State<LoginPage> {
                     //       )
                     //     ],
                     //   ),
-              const SizedBox(height: 10.0),
-              const Text(
-                "Sign in using",
-                style: TextStyle(),
-              ),
-              const SizedBox(height: 10.0),
-              Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    IconButton(
-                        color: Variables.primaryColor,
-                        style: IconButton.styleFrom(
-                            iconSize: 30,
-                            backgroundColor: Colors.grey.shade300),
-                        onPressed: signInWithGoogle,
-                        icon: const Icon(Icons.g_mobiledata)),
-                    const SizedBox(
-                      width: 10,
+                    const SizedBox(height: 10.0),
+                    const Text(
+                      "Sign in using",
+                      style: TextStyle(),
                     ),
-                    IconButton(
-                        color: Variables.primaryColor,
-                        style: IconButton.styleFrom(
-                            iconSize: 30,
-                            backgroundColor: Colors.grey.shade300),
-                        onPressed: signInWithFacebook,
-                        icon: const Icon(Icons.facebook))
-                  ]),
-              const SizedBox(height: 10.0),
-              const SizedBox(height: 20.0),
-              GestureDetector(
+                    const SizedBox(height: 10.0),
+                    Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          IconButton(
+                              color: Variables.primaryColor,
+                              style: IconButton.styleFrom(
+                                  iconSize: 30,
+                                  backgroundColor: Colors.grey.shade300),
+                              onPressed: signInWithGoogle,
+                              icon: const Icon(Icons.g_mobiledata)),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          IconButton(
+                              color: Variables.primaryColor,
+                              style: IconButton.styleFrom(
+                                  iconSize: 30,
+                                  backgroundColor: Colors.grey.shade300),
+                              onPressed: signInWithFacebook,
+                              icon: const Icon(Icons.facebook))
+                        ]),
+                    const SizedBox(height: 10.0),
+                    const SizedBox(height: 20.0),
+                    GestureDetector(
                       onTap: () {
                         Navigator.push(
                           context,
@@ -385,9 +392,9 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     )
 
-            ],
-          ),
-        ),
+                  ],
+                ),
+              ),
       ),
     ));
   }

@@ -75,7 +75,7 @@ class AuthProvider extends ChangeNotifier {
     _profileUrl = userDetails.profileUrl;
     await TokenManager.saveToken(userDetails.token);
     await UserManager.saveUserData(userDetails.name, userDetails.id,
-        userDetails.coin, userDetails.profileUrl!);
+        userDetails.coin, userDetails.profileUrl ?? '');
     setAuthenticated(true);
     setLoading(false);
     notifyListeners();
@@ -110,6 +110,7 @@ class AuthProvider extends ChangeNotifier {
       if (response.statusCode == 200) {
         successfulLoginHandler(response);
       } else {
+        setLoading(false);
         failedLoginHandler(response);
       }
     } catch (e) {
@@ -228,14 +229,16 @@ class AuthProvider extends ChangeNotifier {
   }
 
   void userDataFromShared(Map<String, dynamic> userData) {
-    String name = userData['name'];
-    String userId = userData['userId'];
-    int coin = userData['coin'];
-    String profileUrl = userData['profileUrl'];
+    String name = userData['name'] ?? '';
+    String userId = userData['userId'] ?? '';
+    int coin = userData['coin'] ?? 0;
+    String? profileUrl = userData['profileUrl'];
+
     _name = name;
     _userId = userId;
     _coin = coin;
     _profileUrl = profileUrl;
+
     notifyListeners();
     setLoading(false);
     setAuthenticated(true);

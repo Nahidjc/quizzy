@@ -227,7 +227,7 @@ class _SignupPageState extends State<SignupPage> {
                             TextFormField(
                               controller: _confirmPasswordController,
                               obscureText: _obscured,
-                              keyboardType: TextInputType.number,
+                              keyboardType: TextInputType.text,
                               focusNode: textFieldFocusNode,
                               decoration: InputDecoration(
                                 labelText: 'Confirm Password',

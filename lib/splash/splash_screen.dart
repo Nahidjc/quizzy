@@ -24,6 +24,8 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   Future<void> navigateToNextScreen(BuildContext context) async {
+    // TokenManager.deleteToken();
+    // UserManager.deleteUserData();
     String? authToken = await TokenManager.getToken();
     Map<String, dynamic> userData = await UserManager.getUserData();
     await Future.delayed(const Duration(milliseconds: 800));
