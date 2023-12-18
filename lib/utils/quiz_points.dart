@@ -4,7 +4,7 @@ class QuizPoints {
     double percentage = correctAnswers / quizLength;
     int timeBonus;
     if (percentage == 1.0) {
-      timeBonus = remainingTime;
+      timeBonus = (remainingTime * 0.10).round();
     } else if (percentage >= 0.9) {
       timeBonus = (remainingTime * 0.09).round();
     } else if (percentage >= 0.8) {
