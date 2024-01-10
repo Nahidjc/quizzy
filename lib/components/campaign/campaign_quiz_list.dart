@@ -105,9 +105,9 @@ class _CampaignQuizListState extends State<CampaignQuizList> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              buildQuizTypeOption('Running', runningQuiz),
-              const SizedBox(width: 10),
               buildQuizTypeOption('Upcoming', upcomingQuiz),
+              const SizedBox(width: 10),
+              buildQuizTypeOption('Running', runningQuiz),
               const SizedBox(width: 10),
               buildQuizTypeOption('Closed', !runningQuiz && !upcomingQuiz),
             ],

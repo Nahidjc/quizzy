@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:quizzy/provider/login_provider.dart';
 import 'package:quizzy/routes/app_routes.dart';
 import 'package:quizzy/token/token_manager.dart';
+import 'package:quizzy/token/user_manager.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -23,10 +24,13 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   Future<void> navigateToNextScreen(BuildContext context) async {
+    // TokenManager.deleteToken();
+    // UserManager.deleteUserData();
     String? authToken = await TokenManager.getToken();
+    Map<String, dynamic> userData = await UserManager.getUserData();
     await Future.delayed(const Duration(milliseconds: 800));
     if (authToken != null) {
-      userProvider.tokenToData(authToken);
+      userProvider.userDataFromShared(userData);
       Navigator.pushReplacementNamed(context, AppRoutes.home);
     } else {
       Navigator.pushReplacementNamed(context, AppRoutes.login);
