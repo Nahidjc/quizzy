@@ -332,34 +332,34 @@ class _LoginPageState extends State<LoginPage> {
                     //       )
                     //     ],
                     //   ),
-                    const SizedBox(height: 10.0),
-                    const Text(
-                      "Sign in using",
-                      style: TextStyle(),
-                    ),
-                    const SizedBox(height: 10.0),
-                    Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          IconButton(
-                              color: Variables.primaryColor,
-                              style: IconButton.styleFrom(
-                                  iconSize: 30,
-                                  backgroundColor: Colors.grey.shade300),
-                              onPressed: signInWithGoogle,
-                              icon: const Icon(Icons.g_mobiledata)),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          IconButton(
-                              color: Variables.primaryColor,
-                              style: IconButton.styleFrom(
-                                  iconSize: 30,
-                                  backgroundColor: Colors.grey.shade300),
-                              onPressed: signInWithFacebook,
-                              icon: const Icon(Icons.facebook))
-                        ]),
+                    // const SizedBox(height: 10.0),
+                    // const Text(
+                    //   "Sign in using",
+                    //   style: TextStyle(),
+                    // ),
+                    // const SizedBox(height: 10.0),
+                    // Row(
+                    //     crossAxisAlignment: CrossAxisAlignment.center,
+                    //     mainAxisAlignment: MainAxisAlignment.center,
+                    //     children: [
+                    //       IconButton(
+                    //           color: Variables.primaryColor,
+                    //           style: IconButton.styleFrom(
+                    //               iconSize: 30,
+                    //               backgroundColor: Colors.grey.shade300),
+                    //           onPressed: signInWithGoogle,
+                    //           icon: const Icon(Icons.g_mobiledata)),
+                    //       const SizedBox(
+                    //         width: 10,
+                    //       ),
+                    //       IconButton(
+                    //           color: Variables.primaryColor,
+                    //           style: IconButton.styleFrom(
+                    //               iconSize: 30,
+                    //               backgroundColor: Colors.grey.shade300),
+                    //           onPressed: signInWithFacebook,
+                    //           icon: const Icon(Icons.facebook))
+                    //     ]),
                     const SizedBox(height: 10.0),
                     const SizedBox(height: 20.0),
                     GestureDetector(

@@ -1,4 +1,4 @@
-package com.example.quizzy
+package com.springrain.quizzy
 
 import io.flutter.embedding.android.FlutterActivity
 

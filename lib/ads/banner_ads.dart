@@ -3,7 +3,7 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 class BannerAdManager {
   BannerAd? _bannerAd;
   final String _adUnitId =
-      'ca-app-pub-3940256099942544/6300978111'; // Set the ad unit ID here
+      'ca-app-pub-5140754333447071/6903131995'; // Set the ad unit ID here
 
   void loadAd(void Function(BannerAd?) onAdLoaded) {
     _bannerAd = BannerAd(

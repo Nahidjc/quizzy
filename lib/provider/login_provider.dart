@@ -96,6 +96,7 @@ class AuthProvider extends ChangeNotifier {
   Future<void> loginProvider(String email, String password) async {
     setLoading(true);
     final url = Uri.parse('${AppUrl.baseUrl}/auth/login');
+
     try {
       final response = await http.post(
         url,
