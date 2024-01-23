@@ -33,7 +33,7 @@ class QuizData {
   factory QuizData.fromJson(Map<String, dynamic> json) {
     return QuizData(
       id: json['quizId'],
-      mentor: json['userId'],
+      mentor: json['userName'],
       title: json['title'],
       subjectId: json['subjectId'],
       // questions: [],

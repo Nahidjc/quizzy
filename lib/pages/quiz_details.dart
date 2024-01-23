@@ -144,15 +144,16 @@ class _QuizDetailsState extends State<QuizDetails> {
                             child: Icon(
                               Icons.info_outline,
                               size: 60,
-                              color: Variables.primaryColor,
+                              color: Colors.red,
                             ),
                           ),
                         ),
                         Text(
-                          'No description available',
+                          "Select Prepare Yourself to get ready for the quiz, or click Attempt Quiz to proceed directly.",
+                          textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: 16,
-                            color: Variables.primaryColor,
+                            color: Colors.black,
                           ),
                         ),
                       ],
