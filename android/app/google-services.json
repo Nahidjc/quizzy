@@ -1,44 +1,26 @@
 {
   "project_info": {
-    "project_number": "733623030521",
-    "project_id": "quizzy-4a9ce",
-    "storage_bucket": "quizzy-4a9ce.appspot.com"
+    "project_number": "208095620232",
+    "project_id": "springrain-quizzy",
+    "storage_bucket": "springrain-quizzy.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:733623030521:android:a1d76105c38d6ed2aec828",
+        "mobilesdk_app_id": "1:208095620232:android:d391f6e1a122170f21c33d",
         "android_client_info": {
-          "package_name": "com.example.quizzy"
+          "package_name": "com.springrain.quizzy"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "733623030521-3ni75foff703r57jj5r6k27cne3fc9er.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.quizzy",
-            "certificate_hash": "703f2f1190a4cd89a6efab79ca2f76b90203e224"
-          }
-        },
-        {
-          "client_id": "733623030521-2cakrugtfnug0kecckjfqorog7npul7n.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyAnr9R4J1ywfp-bdt4F_Nh1hlvaeQPTlI8"
+          "current_key": "AIzaSyBETUOGTr6nNY4F4ZMNta29hlW-9l1kPRI"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "733623030521-2cakrugtfnug0kecckjfqorog7npul7n.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     }

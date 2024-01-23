@@ -25,8 +25,8 @@ class DefaultFirebaseOptions {
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
         return android;
-      case TargetPlatform.iOS:
-        return ios;
+      // case TargetPlatform.iOS:
+      //   return ios;
       case TargetPlatform.macOS:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for macos - '
@@ -50,21 +50,23 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyAnr9R4J1ywfp-bdt4F_Nh1hlvaeQPTlI8',
-    appId: '1:733623030521:android:a1d76105c38d6ed2aec828',
-    messagingSenderId: '733623030521',
-    projectId: 'quizzy-4a9ce',
-    storageBucket: 'quizzy-4a9ce.appspot.com',
+    apiKey: 'AIzaSyBETUOGTr6nNY4F4ZMNta29hlW-9l1kPRI',
+    appId: '1:208095620232:android:d391f6e1a122170f21c33d',
+    messagingSenderId: '208095620232',
+    projectId: 'springrain-quizzy',
+    storageBucket: 'springrain-quizzy.appspot.com',
   );
 
-  static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyDs0fYjdNL4-f_3dg4UCwBejkvPG90qcTo',
-    appId: '1:733623030521:ios:daa25a498da23b8eaec828',
-    messagingSenderId: '733623030521',
-    projectId: 'quizzy-4a9ce',
-    storageBucket: 'quizzy-4a9ce.appspot.com',
-    androidClientId: '733623030521-3ni75foff703r57jj5r6k27cne3fc9er.apps.googleusercontent.com',
-    iosClientId: '733623030521-0gefiutja9tmk8u0vmnbnlf2a1733i44.apps.googleusercontent.com',
-    iosBundleId: 'com.example.quizzy',
-  );
+  // static const FirebaseOptions ios = FirebaseOptions(
+  //   apiKey: 'AIzaSyBETUOGTr6nNY4F4ZMNta29hlW-9l1kPRI',
+  //   appId: '1:208095620232:android:d391f6e1a122170f21c33d',
+  //   messagingSenderId: '208095620232',
+  //   projectId: 'springrain-quizzy',
+  //   storageBucket: 'springrain-quizzy.appspot.com',
+  //   androidClientId:
+  //       '523404024585-llm65p9gefh96qaiun5dlu3t46n6udlb.apps.googleusercontent.com',
+  //   iosClientId:
+  //       '733623030521-0gefiutja9tmk8u0vmnbnlf2a1733i44.apps.googleusercontent.com',
+  //   iosBundleId: 'com.springrain.quizzy',
+  // );
 }

@@ -7,7 +7,7 @@ class InterstitialAdManager {
   final String adUnitId;
 
   // Use the test ad unit ID as a constant
-  static const String testAdUnitId = 'ca-app-pub-3940256099942544/1033173712';
+  static const String testAdUnitId = 'ca-app-pub-5140754333447071/3099618350';
 
   InterstitialAdManager({this.adUnitId = testAdUnitId});
 
