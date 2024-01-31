@@ -50,11 +50,11 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyBETUOGTr6nNY4F4ZMNta29hlW-9l1kPRI',
-    appId: '1:208095620232:android:d391f6e1a122170f21c33d',
-    messagingSenderId: '208095620232',
-    projectId: 'springrain-quizzy',
-    storageBucket: 'springrain-quizzy.appspot.com',
+    apiKey: 'AIzaSyBYog6l-EwGc085OUx1lfoSp2eIp9qbtnU',
+    appId: '1:383218072411:android:3da8e40d027517d5a4787e',
+    messagingSenderId: '383218072411',
+    projectId: 'springrain-quizzy-b27a4',
+    storageBucket: 'springrain-quizzy-b27a4.appspot.com',
   );
 
   // static const FirebaseOptions ios = FirebaseOptions(
