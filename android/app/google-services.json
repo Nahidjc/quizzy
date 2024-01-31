@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "208095620232",
-    "project_id": "springrain-quizzy",
-    "storage_bucket": "springrain-quizzy.appspot.com"
+    "project_number": "383218072411",
+    "project_id": "springrain-quizzy-b27a4",
+    "storage_bucket": "springrain-quizzy-b27a4.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:208095620232:android:d391f6e1a122170f21c33d",
+        "mobilesdk_app_id": "1:383218072411:android:3da8e40d027517d5a4787e",
         "android_client_info": {
           "package_name": "com.springrain.quizzy"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyBETUOGTr6nNY4F4ZMNta29hlW-9l1kPRI"
+          "current_key": "AIzaSyBYog6l-EwGc085OUx1lfoSp2eIp9qbtnU"
         }
       ],
       "services": {
