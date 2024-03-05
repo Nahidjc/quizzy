@@ -40,7 +40,6 @@ class ForgotPasswordInitiate {
     if (response.statusCode == 200) {
       return response.body;
     } else {
-      print('Failed to confirm forgot password. Status code: ${response.body}');
       throw Exception('Failed to confirm forgot password');
     }
   }

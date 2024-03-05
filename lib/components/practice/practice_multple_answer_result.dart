@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:quizzy/pages/quiz_report/quiz_report_page.dart';
 
 class PracticeMultipleCorrectAnswerWidget extends StatelessWidget {
   final int questionIndex;
   final String question;
+  final String questionId;
   final List<String> options;
   final List<int> correctAnswers;
 
@@ -10,6 +12,7 @@ class PracticeMultipleCorrectAnswerWidget extends StatelessWidget {
     Key? key,
     required this.questionIndex,
     required this.question,
+    required this.questionId,
     required this.options,
     required this.correctAnswers,
   }) : super(key: key);
@@ -42,6 +45,23 @@ class PracticeMultipleCorrectAnswerWidget extends StatelessWidget {
                 style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
+                ),
+              ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => QuestionReportScreen(
+                        question: question,
+                        questionId: questionId,
+                      ),
+                    ),
+                  );
+                },
+                child: const Icon(
+                  Icons.report,
+                  color: Colors.red,
                 ),
               ),
             ],

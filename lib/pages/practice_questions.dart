@@ -69,7 +69,8 @@ class _PracticeQuestionPageState extends State<PracticeQuestionPage> {
                               question: quizData[i]['question'] as String,
                               options: quizData[i]['options'] as List<String>,
                               correctAnswer:
-                                  quizData[i]['correctAnswer'] as int),
+                                  quizData[i]['correctAnswer'] as int,
+                              questionId: quizData[i]['questionId'] as String),
                         if (quizData[i].containsKey('correctAnswers'))
                           PracticeMultipleCorrectAnswerWidget(
                             questionIndex: i + 1,
@@ -77,6 +78,7 @@ class _PracticeQuestionPageState extends State<PracticeQuestionPage> {
                             options: quizData[i]['options'] as List<String>,
                             correctAnswers:
                                 quizData[i]['correctAnswers'] as List<int>,
+                            questionId: quizData[i]['questionId'] as String
                           ),
                       ],
                     ),
