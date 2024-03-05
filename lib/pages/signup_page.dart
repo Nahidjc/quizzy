@@ -136,8 +136,7 @@ class _SignupPageState extends State<SignupPage> {
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(8),
                                 ),
-                                prefixIcon:
-                                    const Icon(Icons.email_outlined, size: 24),
+                                prefixIcon: const Icon(Icons.person, size: 24),
                               ),
                               validator: (value) {
                                 if (value == null || value.isEmpty) {

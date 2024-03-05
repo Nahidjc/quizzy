@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:quizzy/configs/variables.dart';
+import 'package:quizzy/pages/forgetpassword/forgetpassword.dart';
 import 'package:quizzy/pages/signup_page.dart';
 import 'package:quizzy/provider/login_provider.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -305,18 +306,26 @@ class _LoginPageState extends State<LoginPage> {
                             const SizedBox(
                               height: 10,
                             ),
-                            // GestureDetector(
-                            //   child: const Padding(
-                            //     padding: EdgeInsets.only(right: 8.0),
-                            //     child: Text(
-                            //       'Forget password?',
-                            //       style: TextStyle(
-                            //         fontWeight: FontWeight.bold,
-                            //         color: Variables.primaryColor,
-                            //       ),
-                            //     ),
-                            //   ),
-                            // ),
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          ForgetPasswordPage()),
+                                );
+                              },
+                              child: const Padding(
+                                padding: EdgeInsets.only(right: 8.0),
+                                child: Text(
+                                  'Forget password?',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Variables.primaryColor,
+                                  ),
+                                ),
+                              ),
+                            ),
                           ],
                         ),
                       ),
@@ -391,7 +400,6 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                       ),
                     )
-
                   ],
                 ),
               ),
