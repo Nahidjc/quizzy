@@ -147,7 +147,7 @@ class _CampaignQuizState extends State<CampaignQuiz> {
     setState(() {
       isSubmitting = false;
     });
-    gottoNextPage(
+    gotoNextPage(
         correctAnswers, quizpoint, selectedArray, skipQuestion, timeSpent);
   }
 
@@ -155,7 +155,7 @@ class _CampaignQuizState extends State<CampaignQuiz> {
     authProvider.userDetails(authProvider.userId);
   }
 
-  void gottoNextPage(
+  void gotoNextPage(
       correctAnswers, quizpoint, selectedArray, skipQuestion, timeSpent) {
     Navigator.pushReplacement(
       context,
