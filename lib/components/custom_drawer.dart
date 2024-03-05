@@ -64,17 +64,17 @@ class CustomDrawer extends StatelessWidget {
                     },
                   ),
                 ),
-                Card(
-                  child: ListTile(
-                    leading: const Icon(Icons.add_chart),
-                    title: const Text('Statistics'),
-                    onTap: () {
-                      // Handle the drawer item tap here
-                      Navigator.pop(context);
-                      // Implement your logic here
-                    },
-                  ),
-                ),
+                // Card(
+                //   child: ListTile(
+                //     leading: const Icon(Icons.add_chart),
+                //     title: const Text('Statistics'),
+                //     onTap: () {
+                //       // Handle the drawer item tap here
+                //       Navigator.pop(context);
+                //       // Implement your logic here
+                //     },
+                //   ),
+                // ),
                 Card(
                   child: ListTile(
                     leading: const Icon(Icons.currency_exchange),
@@ -86,15 +86,15 @@ class CustomDrawer extends StatelessWidget {
                     },
                   ),
                 ),
-                Card(
-                  child: ListTile(
-                    leading: const Icon(Icons.history_edu),
-                    title: const Text('Quiz History'),
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                  ),
-                ),
+                // Card(
+                //   child: ListTile(
+                //     leading: const Icon(Icons.history_edu),
+                //     title: const Text('Quiz History'),
+                //     onTap: () {
+                //       Navigator.pop(context);
+                //     },
+                //   ),
+                // ),
                 Card(
                   child: ListTile(
                     leading: const Icon(Icons.leaderboard),

@@ -101,7 +101,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          "Update your Prfile",
+          "Update your Profile",
           style: TextStyle(fontSize: 18),
         ),
         centerTitle: true,
