@@ -175,7 +175,7 @@ class _CampaignQuizItemState extends State<CampaignQuizItem> {
                 if (isRunning)
                   ElevatedButton(
                     onPressed: () {
-                      Navigator.push(
+                      Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
                             builder: (context) =>
